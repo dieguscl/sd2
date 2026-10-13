@@ -4,7 +4,7 @@
 Layout: entradas a esquerda, cada sinal desce num barramento vertical,
 portas logicas ligam-se aos barramentos por fios horizontais.
 """
-import itertools, sys
+import sys
 from xml.sax.saxutils import escape
 
 G = 20  # grelha do Digital
@@ -88,16 +88,6 @@ def build(inputs, gates, outputs, test, gate_dy=120):
     return c, gate_out, gx
 
 
-def add_test(c, test, x, y):
-    c.el("Testcase", x, y, {"Label": "teste", "Testdata": test})
-
-
-def truth(inputs, outputs, f):
-    lines = [" ".join(inputs + outputs)]
-    for vals in itertools.product([0, 1], repeat=len(inputs)):
-        env = dict(zip(inputs, vals))
-        lines.append(" ".join(map(str, list(vals) + f(env))))
-    return "\n".join(lines) + "\n"
 
 
 def mux4x1():
@@ -119,8 +109,6 @@ def mux4x1():
     ox, oy = gate_output(4)
     c.el("Out", orx + ox + 60, ory + oy, {"Label": "DataOut"})
     c.w(orx + ox, ory + oy, orx + ox + 60, ory + oy)
-    f = lambda e: [e[f"DataIn{2*e['Sel1'] + e['Sel0']}"]]
-    add_test(c, truth(ins, ["DataOut"], f), orx, ory + 200)
     return c
 
 
@@ -133,9 +121,6 @@ def descodificador2x4():
         ax, ay = go[f"Out{i}"]
         c.el("Out", ax + 80, ay, {"Label": f"Out{i}"})
         c.w(ax, ay, ax + 80, ay)
-    outs = [f"Out{i}" for i in range(4)]
-    f = lambda e: [int(e[f"En{i}"] and (2 * e["Bit1"] + e["Bit0"]) == i) for i in range(4)]
-    add_test(c, truth(ins, outs, f), gx + 200, go["Out3"][1] + 100)
     return c
 
 

@@ -3,6 +3,8 @@
 // Transcodificador de BCD (e simbolos 10 a 15) para display de 7 segmentos.
 // Segmentos[6] = a ... Segmentos[0] = g, ativos a Low (0 = segmento aceso).
 // O ponto decimal nao e tratado neste modulo.
+// Adaptado do modulo Transcod7Seg dos exemplos Verilog do Moodle (verilog_examples.txt),
+// com os erros corrigidos e simbolos 10 a 15 originais (ver relatorio, seccao 9.2).
 module Transcod7Seg(
     input [3:0] Numero,
     output reg [6:0] Segmentos

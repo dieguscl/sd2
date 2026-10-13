@@ -19,80 +19,52 @@
       <NameColumnWidth column_width="220"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="8" />
-   <wvobject type="divider" fp_name="divider1">
-      <obj_property name="label">Entradas</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
-   </wvobject>
+   <WVObjectSize size="6" />
    <wvobject type="array" fp_name="/multiplexer16x4_teste1/S">
       <obj_property name="ElementShortName">S[1:0]</obj_property>
       <obj_property name="ObjectShortName">S[1:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/multiplexer16x4_teste1/D0">
       <obj_property name="ElementShortName">D0[3:0]</obj_property>
       <obj_property name="ObjectShortName">D0[3:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/multiplexer16x4_teste1/D1">
       <obj_property name="ElementShortName">D1[3:0]</obj_property>
       <obj_property name="ObjectShortName">D1[3:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/multiplexer16x4_teste1/D2">
       <obj_property name="ElementShortName">D2[3:0]</obj_property>
       <obj_property name="ObjectShortName">D2[3:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/multiplexer16x4_teste1/D3">
       <obj_property name="ElementShortName">D3[3:0]</obj_property>
       <obj_property name="ObjectShortName">D3[3:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-   </wvobject>
-   <wvobject type="divider" fp_name="divider2">
-      <obj_property name="label">Saida</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/multiplexer16x4_teste1/Z">
       <obj_property name="ElementShortName">Z[3:0]</obj_property>
       <obj_property name="ObjectShortName">Z[3:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#00FF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/multiplexer16x4_teste1/Z[3]">
          <obj_property name="ElementShortName">[3]</obj_property>
          <obj_property name="ObjectShortName">Z[3]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/multiplexer16x4_teste1/Z[2]">
          <obj_property name="ElementShortName">[2]</obj_property>
          <obj_property name="ObjectShortName">Z[2]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/multiplexer16x4_teste1/Z[1]">
          <obj_property name="ElementShortName">[1]</obj_property>
          <obj_property name="ObjectShortName">Z[1]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/multiplexer16x4_teste1/Z[0]">
          <obj_property name="ElementShortName">[0]</obj_property>
          <obj_property name="ObjectShortName">Z[0]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>

@@ -2,7 +2,7 @@
 """Gera as vistas das formas de onda (.wcfg) usadas nas simulacoes do Vivado.
 
 Cada testbench fica com um ficheiro <testbench>.wcfg ao lado, com os sinais mais
-importantes, a base numerica de cada um, cores e o intervalo de tempo a mostrar.
+importantes, a base numerica de cada um e o intervalo de tempo a mostrar (cores do Vivado).
 O scripts/build.tcl acrescenta-os ao projeto: ao correr a simulacao no Vivado
 (Run Behavioral Simulation) a janela das formas de onda abre ja assim.
 Uso (na raiz do repositorio): python3 scripts/gera_wcfg.py
@@ -75,16 +75,12 @@ def objeto(tb, caminho, radix, cor, expandir, largura, ind):
          f'{ind}   <obj_property name="ObjectShortName">{curto}</obj_property>']
     if largura > 1:
         s.append(f'{ind}   <obj_property name="Radix">{RADIX[radix]}</obj_property>')
-    s.append(f'{ind}   <obj_property name="CustomSignalColor">{CORES[cor]}</obj_property>')
-    s.append(f'{ind}   <obj_property name="UseCustomSignalColor">true</obj_property>')
     if expandir and largura > 1:
         s.append(f'{ind}   <obj_property name="isExpanded"></obj_property>')
         for b in range(largura - 1, -1, -1):
             s += [f'{ind}   <wvobject type="logic" fp_name="{fp}[{b}]">',
                   f'{ind}      <obj_property name="ElementShortName">[{b}]</obj_property>',
                   f'{ind}      <obj_property name="ObjectShortName">{nome}[{b}]</obj_property>',
-                  f'{ind}      <obj_property name="CustomSignalColor">{CORES[cor]}</obj_property>',
-                  f'{ind}      <obj_property name="UseCustomSignalColor">true</obj_property>',
                   f'{ind}   </wvobject>']
     s.append(f'{ind}</wvobject>')
     return s
@@ -95,6 +91,7 @@ def gera(tb, larguras, saida=None):
     objs, n, div = [], 0, 0
     for s in sinais:
         if s[0] == '--':
+            continue                      # sem separadores: aspeto por omissao do Vivado
             div += 1
             objs += [f'   <wvobject type="divider" fp_name="divider{div}">',
                      f'      <obj_property name="label">{s[1]}</obj_property>',

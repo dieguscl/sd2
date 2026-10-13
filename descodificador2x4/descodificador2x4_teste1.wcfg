@@ -19,97 +19,63 @@
       <NameColumnWidth column_width="220"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="5" />
-   <wvobject type="divider" fp_name="divider1">
-      <obj_property name="label">Entradas</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
-   </wvobject>
+   <WVObjectSize size="3" />
    <wvobject type="array" fp_name="/descodificador2x4_teste1/B">
       <obj_property name="ElementShortName">B[1:0]</obj_property>
       <obj_property name="ObjectShortName">B[1:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/descodificador2x4_teste1/B[1]">
          <obj_property name="ElementShortName">[1]</obj_property>
          <obj_property name="ObjectShortName">B[1]</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/descodificador2x4_teste1/B[0]">
          <obj_property name="ElementShortName">[0]</obj_property>
          <obj_property name="ObjectShortName">B[0]</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
    </wvobject>
    <wvobject type="array" fp_name="/descodificador2x4_teste1/E">
       <obj_property name="ElementShortName">E[3:0]</obj_property>
       <obj_property name="ObjectShortName">E[3:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/descodificador2x4_teste1/E[3]">
          <obj_property name="ElementShortName">[3]</obj_property>
          <obj_property name="ObjectShortName">E[3]</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/descodificador2x4_teste1/E[2]">
          <obj_property name="ElementShortName">[2]</obj_property>
          <obj_property name="ObjectShortName">E[2]</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/descodificador2x4_teste1/E[1]">
          <obj_property name="ElementShortName">[1]</obj_property>
          <obj_property name="ObjectShortName">E[1]</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/descodificador2x4_teste1/E[0]">
          <obj_property name="ElementShortName">[0]</obj_property>
          <obj_property name="ObjectShortName">E[0]</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
-   </wvobject>
-   <wvobject type="divider" fp_name="divider2">
-      <obj_property name="label">Saidas</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/descodificador2x4_teste1/O">
       <obj_property name="ElementShortName">O[3:0]</obj_property>
       <obj_property name="ObjectShortName">O[3:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#00FF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/descodificador2x4_teste1/O[3]">
          <obj_property name="ElementShortName">[3]</obj_property>
          <obj_property name="ObjectShortName">O[3]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/descodificador2x4_teste1/O[2]">
          <obj_property name="ElementShortName">[2]</obj_property>
          <obj_property name="ObjectShortName">O[2]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/descodificador2x4_teste1/O[1]">
          <obj_property name="ElementShortName">[1]</obj_property>
          <obj_property name="ObjectShortName">O[1]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/descodificador2x4_teste1/O[0]">
          <obj_property name="ElementShortName">[0]</obj_property>
          <obj_property name="ObjectShortName">O[0]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>

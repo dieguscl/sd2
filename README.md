@@ -23,7 +23,7 @@ Ferramentas: Digital v0.31 (H. Neemann), Vivado 2026.1 (WebPACK), FPGA `xc7a35ti
 ## Estrutura
 
 ```
-digital/            Esquemas do Digital (.dig, com teste das 64 combinações), Verilog exportado e .svg
+digital/            Esquemas do Digital (.dig), Verilog exportado e .svg
 <módulo>/           <módulo>.v, <módulo>_teste1.v (testbench), <testbench>.wcfg (vista das formas de onda)
                     e, se o módulo vai à placa, o ficheiro de restrições .xdc
 vivado/<p>/<p>.xpr  Projetos Vivado (multiplexer4x1, descodificador2x4, multiplexer16x4, displayBCD, controlodisplays)

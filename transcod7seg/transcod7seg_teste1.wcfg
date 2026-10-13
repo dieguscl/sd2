@@ -19,70 +19,44 @@
       <NameColumnWidth column_width="220"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="4" />
-   <wvobject type="divider" fp_name="divider1">
-      <obj_property name="label">Entrada</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
-   </wvobject>
+   <WVObjectSize size="2" />
    <wvobject type="array" fp_name="/transcod7seg_teste1/N">
       <obj_property name="ElementShortName">N[3:0]</obj_property>
       <obj_property name="ObjectShortName">N[3:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-   </wvobject>
-   <wvobject type="divider" fp_name="divider2">
-      <obj_property name="label">Saida a..g (ativa a Low)</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/transcod7seg_teste1/S">
       <obj_property name="ElementShortName">S[6:0]</obj_property>
       <obj_property name="ObjectShortName">S[6:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#00FF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/transcod7seg_teste1/S[6]">
          <obj_property name="ElementShortName">[6]</obj_property>
          <obj_property name="ObjectShortName">S[6]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/transcod7seg_teste1/S[5]">
          <obj_property name="ElementShortName">[5]</obj_property>
          <obj_property name="ObjectShortName">S[5]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/transcod7seg_teste1/S[4]">
          <obj_property name="ElementShortName">[4]</obj_property>
          <obj_property name="ObjectShortName">S[4]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/transcod7seg_teste1/S[3]">
          <obj_property name="ElementShortName">[3]</obj_property>
          <obj_property name="ObjectShortName">S[3]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/transcod7seg_teste1/S[2]">
          <obj_property name="ElementShortName">[2]</obj_property>
          <obj_property name="ObjectShortName">S[2]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/transcod7seg_teste1/S[1]">
          <obj_property name="ElementShortName">[1]</obj_property>
          <obj_property name="ObjectShortName">S[1]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/transcod7seg_teste1/S[0]">
          <obj_property name="ElementShortName">[0]</obj_property>
          <obj_property name="ObjectShortName">S[0]</obj_property>
-         <obj_property name="CustomSignalColor">#00FF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>
