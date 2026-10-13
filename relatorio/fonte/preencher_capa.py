@@ -11,7 +11,7 @@ DADOS = {
     'ano': '2026/27',
     'laboratorio': '1',
     'data': '09/10/2026',
-    'docente': 'Paul Lopes',
+    'docente': 'José Sousa',
     'curso': 'LEEC',
     'turma': '02',
     'alunos': [('202300553', 'Rodrigo Silva Costa'), ('2025184378', 'Diego Alejandro Castro Laya')],
