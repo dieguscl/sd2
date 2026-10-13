@@ -70,7 +70,7 @@ module.exports = function aula3(N, R) {
 
     // =====================================================================================
     H1('9 Análise crítica do código de fontes externas'),
-    P('Nesta secção analisa-se o código Verilog que não foi escrito de raiz: o código gerado pelo Digital, os exemplos Verilog disponibilizados no Moodle da unidade curricular (ficheiro `verilog_examples.txt`, que, como indica o enunciado, têm erros introduzidos intencionalmente), o modelo da primitiva FDCE e o código produzido com apoio de IA generativa.'),
+    P('Nesta secção analisa-se o código Verilog que não foi escrito de raiz: o código gerado pelo Digital, os exemplos Verilog disponibilizados no Moodle da unidade curricular (que, como indica o enunciado, têm erros introduzidos intencionalmente), o modelo da primitiva FDCE e o código produzido com apoio de IA generativa.'),
     H2('9.1 Código gerado pelo Digital'),
     P('Os ficheiros `multiplexer4x1.v` e `descodificador2x4.v` foram gerados pelo Digital e usados sem alterações (o próprio Digital avisa no cabeçalho que o ficheiro não deve ser modificado, porque as alterações se perdem quando é exportado de novo). O código é correto e legível: uma atribuição contínua por saída, com a mesma expressão lógica do esquema. Os nomes das portas são os nomes dados no esquema, o que mostra a importância de escolher nomes simples e com as maiúsculas certas, já que o Verilog distingue maiúsculas de minúsculas. As simulações no Digital e os *testbenches* no Vivado confirmaram que a exportação não alterou a função dos circuitos.'),
     H2('9.2 Transcodificador do Moodle'),

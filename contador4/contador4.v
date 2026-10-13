@@ -2,7 +2,7 @@
 
 // Contador de modulo 4 (0, 1, 2, 3, 0, ...) que avanca no flanco ascendente de Clock.
 // Q1 Q0 vao atuar nas selecoes dos multiplexers e nas entradas do descodificador.
-// Baseado no "Contador simples" dos exemplos Verilog do Moodle (verilog_examples.txt),
+// Baseado no "Contador simples" dos exemplos Verilog do Moodle,
 // reduzido a 2 bits com atribuicao nao bloqueante (relatorio, seccao 9.4).
 module Contador4(
     input Clock,
