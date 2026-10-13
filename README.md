@@ -1,4 +1,4 @@
-# SD2 — 1.º Trabalho de Laboratório
+# SD2 - 1.º Trabalho de Laboratório
 
 **Sistemas Digitais II · LEEC · ESTSetúbal/IPS · 2026/27**
 Gestão do *display* da placa Basys3 (Tutorial Digital e Vivado).
@@ -43,7 +43,7 @@ relatorio/          Relatório (PDF e DOCX do corpo), capa oficial preenchida (.
 | `displayBCD` | `displayBCD` | `transcod7seg_teste1`, `displayBCD_teste1` |
 | `controlodisplays` | `TesteDisplays` | `registo4_teste1`, `divisorclock_teste1`, `contador4_teste1`, `controlodisplays_teste1`, `testedisplays_teste1` |
 
-Abrir com **File – Project – Open** e escolher `vivado/<projeto>/<projeto>.xpr`. Os ficheiros fonte estão nas pastas dos módulos e são referidos por caminhos relativos.
+Abrir com **File > Project > Open** e escolher `vivado/<projeto>/<projeto>.xpr`. Os ficheiros fonte estão nas pastas dos módulos e são referidos por caminhos relativos.
 Para simular um testbench: em *Simulation Sources*, botão direito no testbench → **Set as Top** → **Run Behavioral Simulation**. A janela das formas de onda abre logo com os sinais mais importantes (ficheiro `.wcfg`).
 
 Os `.xpr` foram criados com o Vivado 2026.1; se não abrirem noutra versão (por exemplo, a 2025.1 do laboratório), recriam-se com o comando abaixo, que só depende das pastas dos módulos.
@@ -62,10 +62,10 @@ Todos os testbenches verificam as saídas automaticamente e terminam com `Simula
 | Bitstream | Como ensaiar |
 |---|---|
 | `multiplexer4x1.bit` | SW15/SW14 escolhem a tecla (00 BTND, 01 BTNR, 10 BTNC, 11 BTNL); LD7 acende enquanto essa tecla estiver premida |
-| `descodificador2x4.bit` | SW15/SW14 escolhem a saída, SW0–SW3 são os *enables*; acende no máximo um LED (LD0–LD3) |
-| `multiplexer16x4.bit` | LD3–LD0 mostram SW3–0 (sem teclas), SW7–4 (BTNR), SW11–8 (BTNL) ou SW15–12 (BTNL+BTNR) |
-| `displayBCD.bit` | SW3–SW0 = símbolo; SW15–SW12 escolhem os *displays* acesos |
-| `controlodisplays.bit` | SW10 = EN; valor em SW3–SW0; ligar/desligar SW15…SW12 carrega o *display* da esquerda…direita; SW11 carrega os pontos decimais; BTNC = *clear* |
+| `descodificador2x4.bit` | SW15/SW14 escolhem a saída, SW0 a SW3 são os *enables*; acende no máximo um LED (LD0 a LD3) |
+| `multiplexer16x4.bit` | LD3 a LD0 mostram SW3 a SW0 (sem teclas), SW7 a SW4 (BTNR), SW11 a SW8 (BTNL) ou SW15 a SW12 (BTNL+BTNR) |
+| `displayBCD.bit` | SW3 a SW0 = símbolo; SW15 a SW12 escolhem os *displays* acesos |
+| `controlodisplays.bit` | SW10 = EN; valor em SW3 a SW0; ligar/desligar SW15…SW12 carrega o *display* da esquerda…direita; SW11 carrega os pontos decimais; BTNC = *clear* |
 
 Exemplo no controlador: SW10 ligado; 0010 + SW15, 0000 + SW14, 0010 + SW13, 0110 + SW12 → **2026**; 0100 + SW11 → **20.26**.
 

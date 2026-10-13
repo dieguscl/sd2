@@ -93,7 +93,7 @@ const listas = (ref, formato, texto) => ({
   reference: ref,
   levels: [{ level: 0, format: formato, text: texto, alignment: AlignmentType.LEFT,
     style: { paragraph: { indent: { left: 720, hanging: 360 } } } },
-  { level: 1, format: LevelFormat.BULLET, text: '–', alignment: AlignmentType.LEFT,
+  { level: 1, format: LevelFormat.BULLET, text: '◦', alignment: AlignmentType.LEFT,
     style: { paragraph: { indent: { left: 1080, hanging: 360 } } } }],
 });
 
@@ -102,8 +102,8 @@ const cabecalho = new Header({
     tabStops: [{ type: TabStopType.RIGHT, position: 9638 }],
     border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: '808080', space: 4 } },
     children: [
-      new TextRun({ text: '1.º Trabalho de Laboratório – Gestão do display da placa Basys3', size: 16, color: '595959' }),
-      new TextRun({ text: '\tSistemas Digitais II (LEEC) – 2026/27', size: 16, color: '595959' }),
+      new TextRun({ text: '1.º Trabalho de Laboratório: Gestão do display da placa Basys3', size: 16, color: '595959' }),
+      new TextRun({ text: '\tSistemas Digitais II (LEEC), 2026/27', size: 16, color: '595959' }),
     ],
   })],
 });
@@ -119,7 +119,7 @@ const rodape = new Footer({
 
 const doc = new Document({
   creator: 'Rodrigo Silva Costa, Diego Alejandro Castro Laya',
-  title: 'SD2 – 1.º Trabalho de Laboratório – Gestão do display da placa Basys3',
+  title: 'SD2, 1.º Trabalho de Laboratório: Gestão do display da placa Basys3',
   description: 'Relatório do 1.º trabalho de laboratório de Sistemas Digitais II',
   styles: {
     default: { document: { run: { font: FONTE, size: 21, language: { value: 'pt-PT' } } } },

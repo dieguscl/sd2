@@ -133,7 +133,7 @@ function Figura(N, id, ficheiro, larguraCm, texto) {
         altText: { title: texto, description: texto, name: ficheiro },
       })],
     }),
-    legenda(`Figura ${n} – ${texto}`),
+    legenda(`Figura ${n}: ${texto}`),
   ];
 }
 
@@ -158,7 +158,7 @@ function FiguraPorTirar(N, id, texto, instrucao) {
         })],
       })],
     }),
-    legenda(`Figura ${n} – ${texto}`),
+    legenda(`Figura ${n}: ${texto}`),
   ];
 }
 
@@ -198,7 +198,7 @@ function Tabela(N, id, texto, cab, linhas, colunas, opts = {}) {
   }
   return [
     new Paragraph({ alignment: AlignmentType.CENTER, keepNext: true, spacing: { before: 120, after: 60 },
-      children: runs(`Tabela ${n} – ${texto}`, { italics: true, size: 18 }) }),
+      children: runs(`Tabela ${n}: ${texto}`, { italics: true, size: 18 }) }),
     new Table({ width: { size: larg, type: WidthType.DXA }, columnWidths: w, alignment: AlignmentType.CENTER, rows: linhasTab }),
     new Paragraph({ spacing: { after: 120 }, children: [] }),
   ];
@@ -227,7 +227,7 @@ function Listagem(N, id, ficheiroOuCodigo, texto, opts = {}) {
   }));
   return [
     new Paragraph({ keepNext: true, spacing: { before: 120, after: 60 },
-      children: runs(`Listagem ${n} – ${texto}` + (nome ? ` (\`${nome}\`)` : ''), { italics: true, size: 18 }) }),
+      children: runs(`Listagem ${n}: ${texto}` + (nome ? ` (\`${nome}\`)` : ''), { italics: true, size: 18 }) }),
     new Table({
       width: { size: LARGURA, type: WidthType.DXA }, columnWidths: [LARGURA],
       rows: [new TableRow({ children: [new TableCell({

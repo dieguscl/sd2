@@ -8,7 +8,7 @@ module.exports = function aula3(N, R) {
   return [
     // =====================================================================================
     H1('8 Controlador dos displays da placa Basys3'),
-    P('O controlador `ControloDisplays` (' + r('lst_controlo') + ') integra, conforme a Fig. 31 do enunciado, os módulos desenvolvidos, de modo a apresentar, de forma consecutiva, um algarismo ou símbolo independente em cada um dos quatro *displays*. Os módulos das aulas anteriores foram reutilizados **sem alterações**, bastando adicionar os respetivos ficheiros ao novo projeto Vivado `controlodisplays`. A ' + r('tab_controlo') + ' resume a função de cada instância e a ' + r('fig_rtl') + ' mostra o esquema RTL gerado pelo Vivado (RTL Analysis – Open Elaborated Design), que reproduz a arquitetura da Fig. 31.'),
+    P('O controlador `ControloDisplays` (' + r('lst_controlo') + ') integra, conforme a Fig. 31 do enunciado, os módulos desenvolvidos, de modo a apresentar, de forma consecutiva, um algarismo ou símbolo independente em cada um dos quatro *displays*. Os módulos das aulas anteriores foram reutilizados **sem alterações**, bastando adicionar os respetivos ficheiros ao novo projeto Vivado `controlodisplays`. A ' + r('tab_controlo') + ' resume a função de cada instância e a ' + r('fig_rtl') + ' mostra o esquema RTL gerado pelo Vivado (RTL Analysis > Open Elaborated Design), que reproduz a arquitetura da Fig. 31.'),
     ...Tabela(N, 'tab_controlo', 'Módulos que constituem o controlador dos *displays*.',
       ['Instância', 'Módulo', 'Função'],
       [['reg0 a reg3', 'Registo4', 'Guardam o código do símbolo de cada *display* (carga com `Load`*i*, *clear* com `Clr`*i*)'],
@@ -112,10 +112,10 @@ module.exports = function aula3(N, R) {
     P('Ficam por realizar, no laboratório, o ensaio físico dos circuitos na placa Basys3 e a sua apresentação ao docente; os respetivos registos fotográficos completarão as figuras assinaladas.', { run: { color: 'C00000' } }),
 
     // =====================================================================================
-    H1('Anexo A – Organização dos ficheiros'),
+    H1('Anexo A: Organização dos ficheiros'),
     P('Os ficheiros do trabalho estão organizados com uma pasta por módulo, que contém o código, o *testbench* (`<nome>_teste1.v`), a vista das formas de onda (`.wcfg`) e, quando o módulo é ensaiado na placa, o ficheiro de restrições (`.xdc`):'),
     ...Listagem(N, 'lst_arvore', R.arvore, 'Estrutura das pastas do trabalho', { tamanho: 15 }),
-    P('Os projetos Vivado (`vivado/<projeto>/<projeto>.xpr`) referem os ficheiros das pastas dos módulos por caminhos relativos e podem ser abertos com File – Project – Open. Para os recriar de raiz, executar todas as simulações e gerar todos os *bitstreams*, basta correr `vivado -mode batch -source scripts/build.tcl` na pasta do trabalho. A ' + r('tab_projetos') + ' indica o conteúdo de cada projeto.'),
+    P('Os projetos Vivado (`vivado/<projeto>/<projeto>.xpr`) referem os ficheiros das pastas dos módulos por caminhos relativos e podem ser abertos com File > Project > Open. Para os recriar de raiz, executar todas as simulações e gerar todos os *bitstreams*, basta correr `vivado -mode batch -source scripts/build.tcl` na pasta do trabalho. A ' + r('tab_projetos') + ' indica o conteúdo de cada projeto.'),
     ...Tabela(N, 'tab_projetos', 'Projetos Vivado do trabalho.',
       ['Projeto', 'Topo', '*Testbenches*', 'LUT / FF'],
       [['multiplexer4x1', 'multiplexer4x1', 'multiplexer4x1_teste1', `${R.util.multiplexer4x1.lut} / ${R.util.multiplexer4x1.ff}`],

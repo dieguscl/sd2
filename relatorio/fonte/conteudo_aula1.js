@@ -9,9 +9,9 @@ module.exports = function aula1(N, R) {
     H1('1 Introdução', false),
     P('No âmbito da unidade curricular de Sistemas Digitais II, o presente relatório descreve o desenvolvimento do 1.º Trabalho de Laboratório, cujo objetivo é projetar o controlo do *display* de 7 segmentos e 4 dígitos da placa Basys3 e, com isso, percorrer o fluxo completo de projeto na ferramenta Vivado da Xilinx (licença WebPACK). Utilizou-se a versão ' + R.versaoVivado + ' do Vivado e a versão ' + R.versaoDigital + ' do Digital, de Helmut Neemann.'),
     P('O trabalho foi realizado em três aulas, seguindo a ordem do enunciado:'),
-    Bullet('**Aula 1** – desenho, simulação e implementação de um *multiplexer* 4x1, de um descodificador 2x4 com *enables* individuais e de um *multiplexer* 16x4 construído por hierarquia de módulos a partir do *multiplexer* 4x1;'),
-    Bullet('**Aula 2** – desenho e simulação de um registo de 4 *bits* com *clear* e *enable* (baseado na primitiva FDCE), de um transcodificador para *display* de 7 segmentos, de um divisor de *clock* e de um contador de módulo 4;'),
-    Bullet('**Aula 3** – integração de todos os módulos no controlador dos quatro *displays* (Fig. 31 do enunciado) e no circuito de teste para a placa (Fig. 32 do enunciado).'),
+    Bullet('**Aula 1**: desenho, simulação e implementação de um *multiplexer* 4x1, de um descodificador 2x4 com *enables* individuais e de um *multiplexer* 16x4 construído por hierarquia de módulos a partir do *multiplexer* 4x1;'),
+    Bullet('**Aula 2**: desenho e simulação de um registo de 4 *bits* com *clear* e *enable* (baseado na primitiva FDCE), de um transcodificador para *display* de 7 segmentos, de um divisor de *clock* e de um contador de módulo 4;'),
+    Bullet('**Aula 3**: integração de todos os módulos no controlador dos quatro *displays* (Fig. 31 do enunciado) e no circuito de teste para a placa (Fig. 32 do enunciado).'),
     P('Os módulos mais simples foram desenhados na aplicação Digital, simulados, exportados para Verilog e importados para o Vivado, onde foram novamente simulados (simulação comportamental), sintetizados, implementados e convertidos em *bitstream*. Os restantes módulos foram escritos diretamente em Verilog no Vivado. Para cada módulo apresentam-se o código, o *testbench*, o ficheiro de restrições (quando aplicável) e os resultados da simulação, devidamente comentados.'),
     P('Todos os *testbenches* verificam automaticamente as saídas da unidade em teste (UUT) e terminam com a mensagem `Simulacao OK` ou `Simulacao FALHOU`, pelo que o resultado não depende apenas da inspeção visual das formas de onda. A organização dos ficheiros entregues está descrita no Anexo A.'),
 
@@ -32,11 +32,11 @@ module.exports = function aula1(N, R) {
       [1, 1, 2, 2], { largura: 6500 }),
 
     H2('2.3 Exportação para Verilog'),
-    P('O circuito foi exportado através de File – Export – Export to Verilog, o que gerou o ficheiro `multiplexer4x1.v` (' + r('lst_mux_v') + '). O código gerado pelo Digital é uma descrição **comportamental**: uma única atribuição contínua (`assign`) descreve a função do circuito, sem instanciar portas lógicas nem definir as ligações entre elas. Os nomes das portas do módulo são os nomes atribuídos às entradas e saídas no esquema; por isso foi importante usar nomes simples, sem espaços nem acentos, e ter atenção às maiúsculas, já que o Verilog distingue maiúsculas de minúsculas.'),
+    P('O circuito foi exportado através de File > Export > Export to Verilog, o que gerou o ficheiro `multiplexer4x1.v` (' + r('lst_mux_v') + '). O código gerado pelo Digital é uma descrição **comportamental**: uma única atribuição contínua (`assign`) descreve a função do circuito, sem instanciar portas lógicas nem definir as ligações entre elas. Os nomes das portas do módulo são os nomes atribuídos às entradas e saídas no esquema; por isso foi importante usar nomes simples, sem espaços nem acentos, e ter atenção às maiúsculas, já que o Verilog distingue maiúsculas de minúsculas.'),
     ...Listagem(N, 'lst_mux_v', 'multiplexer4x1/multiplexer4x1.v', 'Código Verilog do *multiplexer* 4x1 gerado pelo Digital'),
 
     H2('2.4 Projeto no Vivado e ficheiro de restrições'),
-    P('No Vivado foi criado um projeto RTL (File – Project – New) com o nome `multiplexer4x1`, para a FPGA da Basys3 (`xc7a35ticpg236-1L`), ao qual se adicionou o ficheiro exportado. O ficheiro de restrições `multiplexer4x1.xdc` (' + r('lst_mux_xdc') + ') é o indicado no enunciado: associa as variáveis de seleção a dois interruptores, as entradas de dados a quatro teclas e a saída a um LED (' + r('tab_mux_pinos') + '). As duas últimas linhas definem a tensão de configuração da placa (3,3 V).'),
+    P('No Vivado foi criado um projeto RTL (File > Project > New) com o nome `multiplexer4x1`, para a FPGA da Basys3 (`xc7a35ticpg236-1L`), ao qual se adicionou o ficheiro exportado. O ficheiro de restrições `multiplexer4x1.xdc` (' + r('lst_mux_xdc') + ') é o indicado no enunciado: associa as variáveis de seleção a dois interruptores, as entradas de dados a quatro teclas e a saída a um LED (' + r('tab_mux_pinos') + '). As duas últimas linhas definem a tensão de configuração da placa (3,3 V).'),
     ...Tabela(N, 'tab_mux_pinos', 'Ligação dos sinais do *multiplexer* 4x1 aos pinos da FPGA.',
       ['Sinal', 'Pino da FPGA', 'Elemento da Basys3'],
       [['Sel1 / Sel0', 'R2 / T1', 'Interruptores SW15 / SW14'],
@@ -74,7 +74,7 @@ module.exports = function aula1(N, R) {
 
     H2('2.6 Geração do bitstream e ensaio na Basys3'),
     P('Depois de confirmar o ficheiro de restrições, executaram-se, com as opções por omissão, a síntese (Run Synthesis), a implementação (Run Implementation) e a geração do *bitstream* (Generate Bitstream), sem erros. O circuito ocupa ' + R.util.multiplexer4x1.lut + ' LUT da FPGA, o que é coerente com uma função de 6 variáveis, que cabe numa única LUT de 6 entradas da Artix-7. O ficheiro `multiplexer4x1.bit` é carregado na placa com a aplicação Adept da Digilent (botão Program); a programação termina com a mensagem *Programming Successful*.'),
-    P('No ensaio na placa, os interruptores SW15 e SW14 escolhem a tecla cujo estado aparece no LED LD7 (00 – BTND, 01 – BTNR, 10 – BTNC, 11 – BTNL): o LED só acende enquanto a tecla selecionada está premida, sendo indiferente o estado das outras teclas.'),
+    P('No ensaio na placa, os interruptores SW15 e SW14 escolhem a tecla cujo estado aparece no LED LD7 (00: BTND, 01: BTNR, 10: BTNC, 11: BTNL): o LED só acende enquanto a tecla selecionada está premida, sendo indiferente o estado das outras teclas.'),
     ...FiguraPorTirar(N, 'fig_placa_mux', 'Ensaio do *multiplexer* 4x1 na placa Basys3.', 'fotografia da Basys3 com, por exemplo, SW15 = 1, SW14 = 0 e a tecla BTNC premida (LD7 aceso)'),
 
     // =====================================================================================
@@ -88,7 +88,7 @@ module.exports = function aula1(N, R) {
     ...Tabela(N, 'tab_dec', 'Funcionamento do descodificador 2x4 com *enables* individuais (X = indiferente).',
       ['Bit1', 'Bit0', 'En3 En2 En1 En0', 'Out3 Out2 Out1 Out0'],
       [['0', '0', 'X X X 1', '0 0 0 1'], ['0', '1', 'X X 1 X', '0 0 1 0'], ['1', '0', 'X 1 X X', '0 1 0 0'], ['1', '1', '1 X X X', '1 0 0 0'],
-       ['—', '—', 'En*i* = 0 (*i* = código selecionado)', '0 0 0 0']],
+       ['X', 'X', 'En*i* = 0 (*i* = código selecionado)', '0 0 0 0']],
       [1, 1, 2, 2], { largura: 7000, mono: [false, false, true, true] }),
     P('O código exportado pelo Digital (' + r('lst_dec_v') + ') volta a ser comportamental, com uma atribuição contínua por saída. No ficheiro de restrições (' + r('lst_dec_xdc') + ') as entradas de seleção ficaram nos mesmos interruptores do *multiplexer* (SW15 e SW14), os *enables* em SW0 a SW3 e as saídas nos LEDs LD0 a LD3, de modo que cada *enable* fica imediatamente abaixo do LED da saída que controla.'),
     ...Listagem(N, 'lst_dec_v', 'descodificador2x4/descodificador2x4.v', 'Código Verilog do descodificador 2x4 gerado pelo Digital'),
