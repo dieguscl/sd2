@@ -18,7 +18,7 @@ Trabalho completo das três aulas do enunciado:
 
 O relatório final está em **`relatorio/SD2_Lab1_Relatorio.pdf`** (capa oficial + corpo).
 
-Ferramentas: Digital v0.31 (H. Neemann), Vivado 2026.1 (WebPack), FPGA `xc7a35ticpg236-1L` (Basys3).
+Ferramentas: Digital v0.31 (H. Neemann), Vivado 2026.1 (WebPACK), FPGA `xc7a35ticpg236-1L` (Basys3).
 
 ## Estrutura
 
@@ -45,6 +45,8 @@ relatorio/          Relatório (PDF e DOCX do corpo), capa oficial preenchida (.
 
 Abrir com **File – Project – Open** e escolher `vivado/<projeto>/<projeto>.xpr`. Os ficheiros fonte estão nas pastas dos módulos e são referidos por caminhos relativos.
 Para simular um testbench: em *Simulation Sources*, botão direito no testbench → **Set as Top** → **Run Behavioral Simulation**. A janela das formas de onda abre logo com os sinais mais importantes (ficheiro `.wcfg`).
+
+Os `.xpr` foram criados com o Vivado 2026.1; se não abrirem noutra versão (por exemplo, a 2025.1 do laboratório), recriam-se com o comando abaixo, que só depende das pastas dos módulos.
 
 Para recriar todos os projetos de raiz, correr todas as simulações e gerar todos os bitstreams:
 

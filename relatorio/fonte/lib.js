@@ -14,14 +14,25 @@ const MONO = 'Consolas';
 
 // --- Texto com marcacao simples: **negrito**, *italico*, `codigo` -------------------
 function runs(texto, base = {}) {
+  // primeiro o negrito (pode conter italico ou codigo), depois italico e codigo
   const out = [];
-  const re = /(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
+  const partes = texto.split(/(\*\*.+?\*\*(?!\*))/g);
+  for (const parte of partes) {
+    if (!parte) continue;
+    if (parte.startsWith('**') && parte.endsWith('**') && parte.length > 4) out.push(...simples(parte.slice(2, -2), { ...base, bold: true }));
+    else out.push(...simples(parte, base));
+  }
+  return out;
+}
+
+function simples(texto, base) {
+  const out = [];
+  const re = /(\*[^*]+\*|`[^`]+`)/g;
   let i = 0, m;
   while ((m = re.exec(texto))) {
     if (m.index > i) out.push(new TextRun({ text: texto.slice(i, m.index), ...base }));
     const t = m[0];
-    if (t.startsWith('**')) out.push(new TextRun({ text: t.slice(2, -2), bold: true, ...base }));
-    else if (t.startsWith('`')) out.push(new TextRun({ text: t.slice(1, -1), font: MONO, size: 19, ...base }));
+    if (t.startsWith('`')) out.push(new TextRun({ text: t.slice(1, -1), font: MONO, size: 19, ...base }));
     else out.push(new TextRun({ text: t.slice(1, -1), italics: true, ...base }));
     i = m.index + t.length;
   }

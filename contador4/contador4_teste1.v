@@ -28,7 +28,7 @@ module contador4_teste1();
      time flanco = -1;
      integer erros = 0, mudancas = 0;
      always @(posedge Clk) flanco = $time;
-     always @(Q1 or Q0)
+     always @({Q1, Q0})
          if ($time > 0) begin
              mudancas = mudancas + 1;
              if ($time != flanco) begin

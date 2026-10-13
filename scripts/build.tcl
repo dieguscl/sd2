@@ -70,6 +70,9 @@ foreach {nome def} $projetos {
     foreach t $testes {
         set tb [file rootname [file tail $t]]
         set_property top $tb [get_filesets sim_1]
+        # abre so a vista .wcfg deste testbench (as outras referem sinais que nao existem)
+        set wcfg [get_files -quiet -of_objects [get_filesets sim_1] *${tb}.wcfg]
+        if {[llength $wcfg]} { set_property xsim.view $wcfg [get_filesets sim_1] }
         update_compile_order -fileset sim_1
         launch_simulation -simset sim_1 -mode behavioral
         open_vcd $root/simulacao/$tb.vcd

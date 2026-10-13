@@ -5,14 +5,14 @@ Uso: python3 render.py <entrada.docx> <saida.docx> <saida.pdf>
 Abre o LibreOffice em modo headless, atualiza os campos e o indice (o docx gerado pelo
 docx-js traz o indice vazio), grava o .docx atualizado e o .pdf.
 """
-import os, sys, time, subprocess, uno
+import os, sys, time, subprocess, tempfile, uno
 from com.sun.star.beans import PropertyValue
 
 def prop(n, v):
     p = PropertyValue(); p.Name = n; p.Value = v; return p
 
 ent, sai_docx, sai_pdf = map(os.path.abspath, sys.argv[1:4])
-perfil = '/tmp/claude-1000/-home-diegus/4c1f1cbc-197f-45ae-ab9b-4f8bc4bb78d9/scratchpad/lo_perfil'
+perfil = tempfile.mkdtemp(prefix='lo_perfil_')
 porta = '2002'
 proc = subprocess.Popen(['soffice', '--headless', '--invisible', '--norestore', f'-env:UserInstallation=file://{perfil}',
                          f'--accept=socket,host=localhost,port={porta};urp;'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

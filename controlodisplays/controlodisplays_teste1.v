@@ -118,7 +118,7 @@ module controlodisplays_teste1();
      endtask
 
 //   Definicao do valor das entradas ao longo do tempo
-//   (as entradas mudam sempre 2ns depois de um flanco ascendente)
+//   (as entradas mudam sempre 2ns depois de um flanco descendente)
      initial begin
          #202;                                  // configuracoes iniciais da FPGA
                                                 // registos a 0 e displays desligados

@@ -7,7 +7,7 @@
 <Project Product="Vivado" Version="7" Minor="72" Path="/home/diegus/Documents/uni/sd2lab1-wt/vivado/multiplexer4x1/multiplexer4x1.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="e1a5387e247548b7b719b06934cec947"/>
+    <Option Name="Id" Val="e8d487d6e1ea454a9f349045ae64efdb"/>
     <Option Name="Part" Val="xc7a35ticpg236-1L"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -123,6 +123,7 @@
         <Option Name="PamSignalDriverFile" Val="xil_bypass_driver"/>
         <Option Name="PamPseudoTop" Val="pseudo_tb"/>
         <Option Name="SrcSet" Val="sources_1"/>
+        <Option Name="XSimWcfgFile" Val="$PPRDIR/../../multiplexer4x1/multiplexer4x1_teste1.wcfg"/>
         <Option Name="CosimPdi" Val=""/>
         <Option Name="CosimPlatform" Val=""/>
         <Option Name="CosimElf" Val=""/>

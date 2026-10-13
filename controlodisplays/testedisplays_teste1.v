@@ -117,7 +117,7 @@ module testedisplays_teste1();
 //   Definicao do valor das entradas ao longo do tempo
      initial begin
          #202;                         // configuracoes iniciais da FPGA
-                                       // (as entradas mudam 2ns depois de um flanco ascendente)
+                                       // (as entradas mudam 2ns depois de um flanco descendente)
          EN = 1;          #400;        // displays ligados: "0000"
          escreve(3, 4'd10);            // d no display da esquerda
          escreve(2, 4'd11);            // I
