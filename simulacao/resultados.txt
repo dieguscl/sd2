@@ -1,0 +1,10 @@
+Simulacao OK: multiplexer4x1 sem erros
+Simulacao OK: descodificador2x4 sem erros
+Simulacao OK: multiplexer16x4 sem erros
+Simulacao OK: Transcod7Seg sem erros (48 verificacoes)
+Simulacao OK: displayBCD sem erros (256 combinacoes)
+Simulacao OK: Registo4 sem erros (3056 verificacoes)
+Simulacao OK: DivisorClock sem erros
+Simulacao OK: Contador4 sem erros (100 ciclos)
+Simulacao OK: ControloDisplays sem erros (469 verificacoes)
+Simulacao OK: TesteDisplays sem erros (391 verificacoes)

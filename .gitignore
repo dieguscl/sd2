@@ -12,3 +12,5 @@ logs/
 webtalk*
 .omc/
 *.pb
+__pycache__/
+relatorio/fonte/corpo.docx

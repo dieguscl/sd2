@@ -4,10 +4,10 @@
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.                   -->
 <!-- Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.   -->
 
-<Project Product="Vivado" Version="7" Minor="72" Path="/home/diegus/Documents/uni/sd2lab1/vivado/multiplexer16x4/multiplexer16x4.xpr">
+<Project Product="Vivado" Version="7" Minor="72" Path="/home/diegus/Documents/uni/sd2lab1-wt/vivado/multiplexer16x4/multiplexer16x4.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="5216886a58e249c084962a3cf3d512df"/>
+    <Option Name="Id" Val="830028ef7b90417a99a4bc21acfbacf5"/>
     <Option Name="Part" Val="xc7a35ticpg236-1L"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -111,6 +111,11 @@
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../../multiplexer16x4/multiplexer16x4_teste1.wcfg">
+        <FileInfo>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
