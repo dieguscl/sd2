@@ -91,7 +91,7 @@ foreach {nome def} $projetos {
         # guarda a mensagem final do testbench (Simulacao OK / FALHOU) em simulacao/resultados.txt
         set fh [open $dir/$nome.sim/sim_1/behav/xsim/simulate.log]
         foreach linha [split [read $fh] "\n"] {
-            if {[string match "Simulacao *" $linha]} { lappend ::resultados_sim "$tb: $linha" }
+            if {[string match "Simulacao *" $linha] && [lsearch -exact $::resultados_sim "$tb: $linha"] < 0} { lappend ::resultados_sim "$tb: $linha" }
         }
         close $fh
     }

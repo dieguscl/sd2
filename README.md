@@ -10,7 +10,7 @@ Trabalho completo das três aulas do enunciado:
 | 1 | Multiplexer 4x1 (Digital → Verilog) | `multiplexer4x1/` |
 | 1 | Descodificador 2x4 com *enables* individuais (Digital → Verilog) | `descodificador2x4/` |
 | 1 | Multiplexer 16x4 por hierarquia de módulos (4 × multiplexer 4x1) | `multiplexer16x4/` |
-| 2 | Transcodificador para 7 segmentos (símbolos originais "dIEGo-") e circuito de ensaio `displayBCD` | `transcod7seg/` |
+| 2 | Transcodificador para 7 segmentos (símbolos originais "rdLEC-") e circuito de ensaio `displayBCD` | `transcod7seg/` |
 | 2 | Registo de 4 bits com *clear* e *enable* (4 primitivas FDCE) | `registo4/` |
 | 2 | Divisor de *clock* (100 MHz → 2 kHz, parametrizável) | `divisorclock/` |
 | 2 | Contador de módulo 4 | `contador4/` |

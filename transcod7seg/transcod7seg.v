@@ -22,12 +22,13 @@ module Transcod7Seg(
              4'd7:  Segmentos = 7'b0001111;   // 7
              4'd8:  Segmentos = 7'b0000000;   // 8
              4'd9:  Segmentos = 7'b0000100;   // 9
-             // Simbolos originais nas combinacoes nao BCD: "dIEGo-"
-             4'd10: Segmentos = 7'b1000010;   // d (b c d e g)
-             4'd11: Segmentos = 7'b1111001;   // I do lado esquerdo (e f), diferente do 1
-             4'd12: Segmentos = 7'b0110000;   // E (a d e f g)
-             4'd13: Segmentos = 7'b0100001;   // G (a c d e f)
-             4'd14: Segmentos = 7'b1100010;   // o (c d e g)
+             // Simbolos originais nas combinacoes nao BCD: iniciais do grupo (r, d),
+             // LEC (de LEEC) e um traco: "rdLEC-"
+             4'd10: Segmentos = 7'b1111010;   // r (e g)
+             4'd11: Segmentos = 7'b1000010;   // d (b c d e g)
+             4'd12: Segmentos = 7'b1110001;   // L (d e f)
+             4'd13: Segmentos = 7'b0110000;   // E (a d e f g)
+             4'd14: Segmentos = 7'b0110001;   // C (a d e f)
              4'd15: Segmentos = 7'b1111110;   // - (g)
              default: Segmentos = 7'b1111111; // tudo apagado (nunca usado: os 16 casos estao cobertos)
          endcase

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2026.1 (lin64) Build 6511674 Tue Jun 16 11:01:26 MDT 2026
-| Date         : Tue Oct 13 21:36:56 2026
+| Date         : Tue Oct 13 22:53:00 2026
 | Host         : diegus running 64-bit Linux Mint 22.2
 | Command      : report_utilization -file /home/diegus/Documents/uni/sd2lab1-wt/bitstreams/relatorios/controlodisplays_utilizacao.txt
 | Design       : TesteDisplays
@@ -71,8 +71,8 @@ Table of Contents
 +--------------------------------------------+------+-------+------------+-----------+-------+
 |                  Site Type                 | Used | Fixed | Prohibited | Available | Util% |
 +--------------------------------------------+------+-------+------------+-----------+-------+
-| Slice                                      |   22 |     0 |          0 |      8150 |  0.27 |
-|   SLICEL                                   |   14 |     0 |            |           |       |
+| Slice                                      |   20 |     0 |          0 |      8150 |  0.25 |
+|   SLICEL                                   |   12 |     0 |            |           |       |
 |   SLICEM                                   |    8 |     0 |            |           |       |
 | LUT as Logic                               |   20 |     0 |          0 |     20800 |  0.10 |
 |   using O5 output only                     |    0 |       |            |           |       |
@@ -90,8 +90,8 @@ Table of Contents
 | Slice Registers                            |   55 |     0 |          0 |     41600 |  0.13 |
 |   Register driven from within the Slice    |   35 |       |            |           |       |
 |   Register driven from outside the Slice   |   20 |       |            |           |       |
-|     LUT in front of the register is unused |   15 |       |            |           |       |
-|     LUT in front of the register is used   |    5 |       |            |           |       |
+|     LUT in front of the register is unused |   11 |       |            |           |       |
+|     LUT in front of the register is used   |    9 |       |            |           |       |
 +--------------------------------------------+------+-------+------------+-----------+-------+
 
 

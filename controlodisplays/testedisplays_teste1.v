@@ -42,9 +42,9 @@ module testedisplays_teste1();
          acesos[4]  = 7'b0110011;  acesos[5]  = 7'b1011011;
          acesos[6]  = 7'b1011111;  acesos[7]  = 7'b1110000;
          acesos[8]  = 7'b1111111;  acesos[9]  = 7'b1111011;
-         acesos[10] = 7'b0111101;  acesos[11] = 7'b0000110;
-         acesos[12] = 7'b1001111;  acesos[13] = 7'b1011110;
-         acesos[14] = 7'b0011101;  acesos[15] = 7'b0000001;
+         acesos[10] = 7'b0000101;  acesos[11] = 7'b0111101;
+         acesos[12] = 7'b0001110;  acesos[13] = 7'b1001111;
+         acesos[14] = 7'b1001110;  acesos[15] = 7'b0000001;
      end
 
 //   O que deve estar guardado em cada display (atualizado como os registos)
@@ -119,16 +119,16 @@ module testedisplays_teste1();
          #202;                         // configuracoes iniciais da FPGA
                                        // (as entradas mudam 2ns depois de um flanco descendente)
          EN = 1;          #400;        // displays ligados: "0000"
-         escreve(3, 4'd10);            // d no display da esquerda
-         escreve(2, 4'd11);            // I
-         escreve(1, 4'd12);            // E
-         escreve(0, 4'd13);            // G
-                          #400;        // "dIEG"
-         escreve(4, 4'b0101);          // pontos nos displays 2 e 0: "dI.EG."
+         escreve(3, 4'd10);            // r no display da esquerda
+         escreve(2, 4'd11);            // d
+         escreve(1, 4'd12);            // L
+         escreve(0, 4'd13);            // E
+                          #400;        // "rdLE"
+         escreve(4, 4'b0101);          // pontos nos displays 2 e 0: "rd.LE."
                           #400;
-         escreve(1, 4'd14);            // o
+         escreve(1, 4'd14);            // C
          escreve(0, 4'd15);            // -
-                          #400;        // "dI.o-."
+                          #400;        // "rd.C-."
          Data = 4'd8;     #400;        // mudar Data sem carregar nao altera nada
          EN = 0;          #400;        // displays desligados
          EN = 1;          #400;        // voltam a mostrar o mesmo

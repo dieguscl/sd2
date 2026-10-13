@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Desenha os 16 simbolos do transcodificador (Fig. 30 + simbolos originais "dIEGo-").
+"""Desenha os 16 simbolos do transcodificador (Fig. 30 + simbolos originais "rdLEC-").
 
 Le os valores dos segmentos diretamente de transcod7seg/transcod7seg.v, para a figura
 do relatorio ser sempre igual ao que esta no codigo.

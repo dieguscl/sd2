@@ -44,7 +44,7 @@ muts = [
  ('registo4', R, 'bit 3 preso a 0',      reg_beh % ('posedge Clk or posedge CLR', 'CLR', 'CE', "{1'b0,Data[2:0]}")),
  ('transcod7seg', T, '7 com segmento f',  ("4'd7:  Segmentos = 7'b0001111", "4'd7:  Segmentos = 7'b0001101")),
  ('transcod7seg', T, 'ativo a High',      None),
- ('transcod7seg', T, 'G igual a 6',       ("4'd13: Segmentos = 7'b0100001", "4'd13: Segmentos = 7'b0100000")),
+ ('transcod7seg', T, 'C igual a 0',       ("4'd14: Segmentos = 7'b0110001", "4'd14: Segmentos = 7'b0000001")),
  ('transcod7seg', T, 'valor 15 em falta', ("4'd15: Segmentos = 7'b1111110;", "")),
  ('divisorclock', DV, 'conta METADE+1',   ("contagem == METADE - 1", "contagem == METADE")),
  ('divisorclock', DV, 'flanco descendente', ("posedge ClockIn", "negedge ClockIn")),

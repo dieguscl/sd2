@@ -32,9 +32,9 @@ module displayBCD_teste1();
          acesos[4]  = 7'b0110011;  acesos[5]  = 7'b1011011;
          acesos[6]  = 7'b1011111;  acesos[7]  = 7'b1110000;
          acesos[8]  = 7'b1111111;  acesos[9]  = 7'b1111011;
-         acesos[10] = 7'b0111101;  acesos[11] = 7'b0000110;
-         acesos[12] = 7'b1001111;  acesos[13] = 7'b1011110;
-         acesos[14] = 7'b0011101;  acesos[15] = 7'b0000001;
+         acesos[10] = 7'b0000101;  acesos[11] = 7'b0111101;
+         acesos[12] = 7'b0001110;  acesos[13] = 7'b1001111;
+         acesos[14] = 7'b1001110;  acesos[15] = 7'b0000001;
      end
 
      integer n, erros = 0;

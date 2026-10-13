@@ -40,7 +40,7 @@ module controlodisplays_teste1();
 //   Selecao atual do varrimento (variaveis Control1 e Control0 do controlador)
      wire [1:0] Sel = {UUT.Control1, UUT.Control0};
 
-//   Segmentos acesos (ativo a High) de cada simbolo, a partir da Fig. 30 e de "dIEGo-"
+//   Segmentos acesos (ativo a High) de cada simbolo, a partir da Fig. 30 e de "rdLEC-"
      reg [6:0] acesos [0:15];
      initial begin           //  abcdefg
          acesos[0]  = 7'b1111110;  acesos[1]  = 7'b0110000;
@@ -48,9 +48,9 @@ module controlodisplays_teste1();
          acesos[4]  = 7'b0110011;  acesos[5]  = 7'b1011011;
          acesos[6]  = 7'b1011111;  acesos[7]  = 7'b1110000;
          acesos[8]  = 7'b1111111;  acesos[9]  = 7'b1111011;
-         acesos[10] = 7'b0111101;  acesos[11] = 7'b0000110;
-         acesos[12] = 7'b1001111;  acesos[13] = 7'b1011110;
-         acesos[14] = 7'b0011101;  acesos[15] = 7'b0000001;
+         acesos[10] = 7'b0000101;  acesos[11] = 7'b0111101;
+         acesos[12] = 7'b0001110;  acesos[13] = 7'b1001111;
+         acesos[14] = 7'b1001110;  acesos[15] = 7'b0000001;
      end
 
 //   Modelo de referencia dos 5 registos (clear assincrono, carga no flanco ascendente)
@@ -131,16 +131,16 @@ module controlodisplays_teste1();
                                     #400;       // "20.27": so o display 0 muda
          D1 = 4'd9;                 #400;       // sem Load o registo nao muda
          // cada registo carregado sozinho, com valores diferentes nas outras entradas
-         carrega(4'b1000, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 3: "d0.27"
-         carrega(4'b0100, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 2: "dI.27"
-         carrega(4'b0010, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 1: "dI.E7"
-         carrega(4'b0001, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 0: "dI.EG"
-                                    #400;       // "dI.EG" (simbolos originais)
-         En = 4'b1011;              #400;       // display 2 desligado: "d EG"
+         carrega(4'b1000, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 3: "r0.27"
+         carrega(4'b0100, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 2: "rd.27"
+         carrega(4'b0010, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 1: "rd.L7"
+         carrega(4'b0001, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 0: "rd.LE"
+                                    #400;       // "rd.LE" (simbolos originais)
+         En = 4'b1011;              #400;       // display 2 desligado: "r LE"
          #3 Clr[3] = 1; #4 Clr[3] = 0;          // clear assincrono, entre flancos
-                                    #400;       // "0 EG"
+                                    #400;       // "0 LE"
          En = 4'b1111; ClrDP = 1;   #10 ClrDP = 0;
-                                    #400;       // pontos apagados: "0IEG"
+                                    #400;       // pontos apagados: "0dLE"
          Clr = 4'b1111;             #10 Clr = 4'b0000;
                                     #400;       // "0000"
          En = 4'b0000;              #400;       // todos os displays desligados
