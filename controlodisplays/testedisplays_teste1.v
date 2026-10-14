@@ -3,23 +3,23 @@
 // Testbench do circuito de teste na placa (TesteDisplays, Fig. 32).
 // Reproduz o que se faz na Basys3: escolher um valor nos interruptores Data,
 // ligar e desligar o interruptor LDx do display pretendido, etc.
-// Ve o circuito so pelos pinos (caixa preta): descobre o display ativo pelos
-// anodos e confirma que os segmentos e o ponto sao os que foram carregados nele.
-// METADE = 5: cada display fica ativo 100ns (na placa sao 0,5 ms).
+// Vê o circuito só pelos pinos (caixa preta): descobre o display ativo pelos
+// ânodos e confirma que os segmentos e o ponto são os que foram carregados nele.
+// METADE = 5: cada display fica ativo 100ns (na placa são 0,5 ms).
 module testedisplays_teste1();
 
-//   Declaracao das entradas
+//   Declaração das entradas
      reg [3:0] Data = 0;
      reg LD3 = 0, LD2 = 0, LD1 = 0, LD0 = 0, LDDP = 0;
      reg EN = 0, Clear = 0;
      reg CLKBasys = 0;
 
-//   Declaracao das saidas
+//   Declaração das saídas
      wire [6:0] Seg;
      wire DP;
      wire [3:0] An;
 
-//   Instanciacao da UUT e ligacao das entradas e saidas
+//   Instanciação da UUT e ligação das entradas e saídas
      TesteDisplays #(.METADE(5)) UUT (
          .Data(Data),
          .LD3(LD3), .LD2(LD2), .LD1(LD1), .LD0(LD0), .LDDP(LDDP),
@@ -31,10 +31,10 @@ module testedisplays_teste1();
          .An(An)
      );
 
-//   Relogio de 100 MHz da Basys3
+//   Relógio de 100 MHz da Basys3
      always #5 CLKBasys = ~CLKBasys;
 
-//   Segmentos acesos (ativo a High) de cada simbolo
+//   Segmentos acesos (ativo a High) de cada símbolo
      reg [6:0] acesos [0:15];
      initial begin           //  abcdefg
          acesos[0]  = 7'b1111110;  acesos[1]  = 7'b0110000;
@@ -65,10 +65,10 @@ module testedisplays_teste1();
              if (LDDP) pontos    <= Data;
          end
 
-//   Verificacao pelos pinos, a meio de cada ciclo de relogio
+//   Verificação pelos pinos, a meio de cada ciclo de relógio
      integer erros = 0, verificacoes = 0, k;
      integer ativo, anterior = -1, visitas = 0;
-     always @(negedge CLKBasys) if ($time > 0) begin   // em t=0 a inicializacao do relogio conta como flanco
+     always @(negedge CLKBasys) if ($time > 0) begin   // em t=0 a inicialização do relógio conta como flanco
          verificacoes = verificacoes + 1;
          if (!EN) begin
              if (An !== 4'b1111) begin
@@ -114,9 +114,9 @@ module testedisplays_teste1();
          end
      endtask
 
-//   Definicao do valor das entradas ao longo do tempo
+//   Definição do valor das entradas ao longo do tempo
      initial begin
-         #202;                         // configuracoes iniciais da FPGA
+         #202;                         // configurações iniciais da FPGA
                                        // (as entradas mudam 2ns depois de um flanco descendente)
          EN = 1;          #400;        // displays ligados: "0000"
          escreve(3, 4'd10);            // r no display da esquerda
@@ -129,7 +129,7 @@ module testedisplays_teste1();
          escreve(1, 4'd14);            // C
          escreve(0, 4'd15);            // -
                           #400;        // "rd.C-."
-         Data = 4'd8;     #400;        // mudar Data sem carregar nao altera nada
+         Data = 4'd8;     #400;        // mudar Data sem carregar não altera nada
          EN = 0;          #400;        // displays desligados
          EN = 1;          #400;        // voltam a mostrar o mesmo
          #3 Clear = 1;    #20 Clear = 0;

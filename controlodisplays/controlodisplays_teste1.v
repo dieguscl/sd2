@@ -1,27 +1,27 @@
 `timescale 1ns / 1ps
 
 // Testbench do controlador dos displays (ControloDisplays).
-// Usa METADE = 5 para o varrimento ser visivel em poucas centenas de ns:
+// Usa METADE = 5 para o varrimento ser visível em poucas centenas de ns:
 // cada display fica ativo durante 2 x 5 ciclos de 10ns = 100ns.
-// Verifica continuamente (a meio de cada ciclo de relogio) que:
-//   - so o anodo do display selecionado esta ativo (a Low), e so se o enable estiver a 1;
-//   - os segmentos sao os do simbolo guardado no registo desse display;
-//   - o ponto decimal e o bit desse display no registo dos pontos;
-//   - o varrimento avanca 0, 1, 2, 3, 0, ... de 100 em 100ns.
+// Verifica continuamente (a meio de cada ciclo de relógio) que:
+//   - só o ânodo do display selecionado está ativo (a Low), e só se o enable estiver a 1;
+//   - os segmentos são os do símbolo guardado no registo desse display;
+//   - o ponto decimal é o bit desse display no registo dos pontos;
+//   - o varrimento avança 0, 1, 2, 3, 0, ... de 100 em 100ns.
 module controlodisplays_teste1();
 
-//   Declaracao das entradas
+//   Declaração das entradas
      reg [3:0] D3 = 0, D2 = 0, D1 = 0, D0 = 0, DP = 0;
-     reg [3:0] Load = 0, Clr = 0, En = 0;      // indice i = display i
+     reg [3:0] Load = 0, Clr = 0, En = 0;      // índice i = display i
      reg LoadDP = 0, ClrDP = 0;
      reg Clk = 0;
 
-//   Declaracao das saidas
+//   Declaração das saídas
      wire [6:0] Segmentos;
      wire DotPoint;
      wire [3:0] Anodos;
 
-//   Instanciacao da UUT e ligacao das entradas e saidas
+//   Instanciação da UUT e ligação das entradas e saídas
      ControloDisplays #(.METADE(5)) UUT (
          .Data3(D3), .Load3(Load[3]), .Clr3(Clr[3]), .Enable3(En[3]),
          .Data2(D2), .Load2(Load[2]), .Clr2(Clr[2]), .Enable2(En[2]),
@@ -34,13 +34,13 @@ module controlodisplays_teste1();
          .Anodos(Anodos)
      );
 
-//   Relogio de 100 MHz (periodo de 10ns), como o da Basys3
+//   Relógio de 100 MHz (período de 10ns), como o da Basys3
      always #5 Clk = ~Clk;
 
-//   Selecao atual do varrimento (variaveis Control1 e Control0 do controlador)
+//   Seleção atual do varrimento (variáveis Control1 e Control0 do controlador)
      wire [1:0] Sel = {UUT.Control1, UUT.Control0};
 
-//   Segmentos acesos (ativo a High) de cada simbolo, a partir da Fig. 30 e de "rdLEC-"
+//   Segmentos acesos (ativo a High) de cada símbolo, a partir da Fig. 30 e de "rdLEC-"
      reg [6:0] acesos [0:15];
      initial begin           //  abcdefg
          acesos[0]  = 7'b1111110;  acesos[1]  = 7'b0110000;
@@ -53,7 +53,7 @@ module controlodisplays_teste1();
          acesos[14] = 7'b1001110;  acesos[15] = 7'b0000001;
      end
 
-//   Modelo de referencia dos 5 registos (clear assincrono, carga no flanco ascendente)
+//   Modelo de referência dos 5 registos (clear assíncrono, carga no flanco ascendente)
      reg [3:0] ref3 = 0, ref2 = 0, ref1 = 0, ref0 = 0, refDP = 0;
      always @(posedge Clk or posedge Clr[3]) if (Clr[3]) ref3 <= 0; else if (Load[3]) ref3 <= D3;
      always @(posedge Clk or posedge Clr[2]) if (Clr[2]) ref2 <= 0; else if (Load[2]) ref2 <= D2;
@@ -61,14 +61,14 @@ module controlodisplays_teste1();
      always @(posedge Clk or posedge Clr[0]) if (Clr[0]) ref0 <= 0; else if (Load[0]) ref0 <= D0;
      always @(posedge Clk or posedge ClrDP)  if (ClrDP)  refDP <= 0; else if (LoadDP) refDP <= DP;
 
-//   Verificacao continua, a meio de cada ciclo de relogio:
-//   compara as saidas com as esperadas para a selecao atual
+//   Verificação contínua, a meio de cada ciclo de relógio:
+//   compara as saídas com as esperadas para a seleção atual
      reg [3:0] valor;
      reg [6:0] seg_esperado;
      reg       dp_esperado;
      reg [3:0] an_esperado;
      integer erros = 0, verificacoes = 0;
-     always @(negedge Clk) if ($time > 0) begin   // em t=0 a inicializacao de Clk conta como flanco
+     always @(negedge Clk) if ($time > 0) begin   // em t=0 a inicialização de Clk conta como flanco
          case (Sel)
              2'd0: valor = ref0;
              2'd1: valor = ref1;
@@ -87,7 +87,7 @@ module controlodisplays_teste1();
          end
      end
 
-//   Verificacao do varrimento: a selecao avanca 1 (modulo 4) a cada 2 x METADE ciclos
+//   Verificação do varrimento: a seleção avança 1 (módulo 4) a cada 2 x METADE ciclos
      integer ciclos = 0, trocas = 0;
      reg [1:0] sel_ant = 0;
      always @(posedge Clk) begin
@@ -108,7 +108,7 @@ module controlodisplays_teste1();
          end
      end
 
-//   Impulso de carga com a duracao de um ciclo de relogio (como uma tecla sincronizada)
+//   Impulso de carga com a duração de um ciclo de relógio (como uma tecla sincronizada)
      task carrega(input [3:0] quais, input [3:0] v3, v2, v1, v0);
          begin
              D3 = v3; D2 = v2; D1 = v1; D0 = v0;
@@ -117,10 +117,10 @@ module controlodisplays_teste1();
          end
      endtask
 
-//   Definicao do valor das entradas ao longo do tempo
+//   Definição do valor das entradas ao longo do tempo
 //   (as entradas mudam sempre 2ns depois de um flanco descendente)
      initial begin
-         #202;                                  // configuracoes iniciais da FPGA
+         #202;                                  // configurações iniciais da FPGA
                                                 // registos a 0 e displays desligados
          En = 4'b1111;              #400;       // 4 displays ligados: "0000"
          carrega(4'b1111, 4'd2, 4'd0, 4'd2, 4'd6);
@@ -128,16 +128,16 @@ module controlodisplays_teste1();
          DP = 4'b0100; LoadDP = 1;  #10 LoadDP = 0;
                                     #400;       // "20.26" (ponto no display 2)
          carrega(4'b0001, 4'd0, 4'd0, 4'd0, 4'd7);
-                                    #400;       // "20.27": so o display 0 muda
-         D1 = 4'd9;                 #400;       // sem Load o registo nao muda
+                                    #400;       // "20.27": só o display 0 muda
+         D1 = 4'd9;                 #400;       // sem Load o registo não muda
          // cada registo carregado sozinho, com valores diferentes nas outras entradas
-         carrega(4'b1000, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 3: "r0.27"
-         carrega(4'b0100, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 2: "rd.27"
-         carrega(4'b0010, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 1: "rd.L7"
-         carrega(4'b0001, 4'd10, 4'd11, 4'd12, 4'd13);   // so o display 0: "rd.LE"
-                                    #400;       // "rd.LE" (simbolos originais)
+         carrega(4'b1000, 4'd10, 4'd11, 4'd12, 4'd13);   // só o display 3: "r0.27"
+         carrega(4'b0100, 4'd10, 4'd11, 4'd12, 4'd13);   // só o display 2: "rd.27"
+         carrega(4'b0010, 4'd10, 4'd11, 4'd12, 4'd13);   // só o display 1: "rd.L7"
+         carrega(4'b0001, 4'd10, 4'd11, 4'd12, 4'd13);   // só o display 0: "rd.LE"
+                                    #400;       // "rd.LE" (símbolos originais)
          En = 4'b1011;              #400;       // display 2 desligado: "r LE"
-         #3 Clr[3] = 1; #4 Clr[3] = 0;          // clear assincrono, entre flancos
+         #3 Clr[3] = 1; #4 Clr[3] = 0;          // clear assíncrono, entre flancos
                                     #400;       // "0 LE"
          En = 4'b1111; ClrDP = 1;   #10 ClrDP = 0;
                                     #400;       // pontos apagados: "0dLE"

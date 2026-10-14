@@ -2,27 +2,27 @@
 
 // Testbench do transcodificador para 7 segmentos.
 // Percorre os 16 valores de Numero e verifica, para cada um:
-//   - que a saida e igual a tabela de referencia (Fig. 30 e simbolos 10 a 15);
-//   - que nenhum bit da saida fica indefinido (X ou Z);
-//   - que os 16 simbolos sao todos diferentes entre si (nenhum e ambiguo no display).
-// Depois repete os 16 valores por ordem aleatoria, para garantir que a saida
-// so depende do valor atual e nao do valor anterior (circuito combinatorio).
+//   - que a saída é igual à tabela de referência (Fig. 30 e símbolos 10 a 15);
+//   - que nenhum bit da saída fica indefinido (X ou Z);
+//   - que os 16 símbolos são todos diferentes entre si (nenhum é ambíguo no display).
+// Depois repete os 16 valores por ordem aleatória, para garantir que a saída
+// só depende do valor atual e não do valor anterior (circuito combinatório).
 module transcod7seg_teste1();
 
-//   Declaracao das entradas
+//   Declaração das entradas
      reg [3:0] N;
 
-//   Declaracao da saida (a..g, ativos a Low)
+//   Declaração da saída (a..g, ativos a Low)
      wire [6:0] S;
 
-//   Instanciacao da UUT e ligacao das entradas e saidas
+//   Instanciação da UUT e ligação das entradas e saídas
      Transcod7Seg UUT (
          .Numero(N),
          .Segmentos(S)
      );
 
-//   Tabela de referencia, escrita com os segmentos ACESOS (ativo a High) para
-//   ser facil de comparar com a Fig. 30; a saida esperada e a sua negacao.
+//   Tabela de referência, escrita com os segmentos ACESOS (ativo a High) para
+//   ser fácil de comparar com a Fig. 30; a saída esperada é a sua negação.
      reg [6:0] acesos [0:15];
      initial begin           //  abcdefg
          acesos[0]  = 7'b1111110;  acesos[1]  = 7'b0110000;
@@ -35,7 +35,7 @@ module transcod7seg_teste1();
          acesos[14] = 7'b1001110;  acesos[15] = 7'b0000001;  // C  -
      end
 
-//   Declaracao de vars auxiliares
+//   Declaração de vars auxiliares
      integer n, m, k, erros = 0, verificacoes = 0;
      integer semente = 7;
      reg [6:0] obtido [0:15];
@@ -56,10 +56,10 @@ module transcod7seg_teste1();
          end
      endtask
 
-//   Definicao do valor das entradas ao longo do tempo
+//   Definição do valor das entradas ao longo do tempo
      initial begin
          N = 4'h0;
-         #200;                    // Aguardar as configuracoes iniciais da FPGA
+         #200;                    // Aguardar as configurações iniciais da FPGA
 
          // 1) Os 16 valores por ordem crescente
          for (n=0; n<16; n=n+1)
@@ -70,7 +70,7 @@ module transcod7seg_teste1();
              obtido[n] = S;
          end
 
-         // 2) Os 16 simbolos tem de ser todos diferentes
+         // 2) Os 16 símbolos têm de ser todos diferentes
          for (n=0; n<16; n=n+1)
              for (m=n+1; m<16; m=m+1)
                  if (obtido[n] === obtido[m]) begin
@@ -78,7 +78,7 @@ module transcod7seg_teste1();
                      erros = erros + 1;
                  end
 
-         // 3) Os 16 valores por ordem aleatoria (baralhados), duas vezes
+         // 3) Os 16 valores por ordem aleatória (baralhados), duas vezes
          for (k=0; k<2; k=k+1) begin
              for (n=0; n<16; n=n+1) ordem[n] = n;
              for (n=15; n>0; n=n-1) begin

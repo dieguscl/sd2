@@ -1,4 +1,4 @@
-# Variaveis de selecao do multiplexer 16x4 (teclas BTNL e BTNR)
+# Variáveis de seleção do multiplexer 16x4 (teclas BTNL e BTNR)
 set_property PACKAGE_PIN W19 [get_ports {Sel[1]}]
     set_property IOSTANDARD LVCMOS33 [get_ports {Sel[1]}]
 set_property PACKAGE_PIN T17 [get_ports {Sel[0]}]
@@ -32,13 +32,13 @@ set_property PACKAGE_PIN U1 [get_ports {DataIn3[1]}]
 set_property PACKAGE_PIN W2 [get_ports {DataIn3[0]}]
     set_property IOSTANDARD LVCMOS33 [get_ports {DataIn3[*]}]
 
-# Saida do multiplexer 16x4 (LEDs LD3 a LD0)
+# Saída do multiplexer 16x4 (LEDs LD3 a LD0)
 set_property PACKAGE_PIN V19 [get_ports {DataOut[3]}]
 set_property PACKAGE_PIN U19 [get_ports {DataOut[2]}]
 set_property PACKAGE_PIN E19 [get_ports {DataOut[1]}]
 set_property PACKAGE_PIN U16 [get_ports {DataOut[0]}]
     set_property IOSTANDARD LVCMOS33 [get_ports {DataOut[*]}]
 
-# Definir a tensao correta da placa Basys3
+# Definir a tensão correta da placa Basys3
 set_property CFGBVS VCCO [current_design]
 set_property CONFIG_VOLTAGE 3.3 [current_design]

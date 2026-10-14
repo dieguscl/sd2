@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 
 // Circuito de ensaio do transcodificador na Basys3.
-// SW3..SW0 escolhem o simbolo e SW15..SW12 escolhem quais displays acendem.
-// Os anodos sao comuns e ativos a Low, por isso inverte-se o valor dos interruptores.
+// SW3..SW0 escolhem o símbolo e SW15..SW12 escolhem quais displays acendem.
+// Os ânodos são comuns e ativos a Low, por isso inverte-se o valor dos interruptores.
 module displayBCD(
     input [3:0] Numero,
     input [3:0] Liga,

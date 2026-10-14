@@ -1,36 +1,36 @@
 `timescale 1ns / 1ps
 
 // Testbench do divisor de clock.
-// Verifica, para varios valores do parametro METADE, que ClockOut:
-//   - tem periodo 2 x METADE ciclos de ClockIn (f_out = f_in / (2 x METADE));
+// Verifica, para vários valores do parâmetro METADE, que ClockOut:
+//   - tem período 2 x METADE ciclos de ClockIn (f_out = f_in / (2 x METADE));
 //   - tem duty cycle de 50% (METADE ciclos a 1 e METADE ciclos a 0);
-//   - so muda no flanco ascendente de ClockIn;
-//   - mantem esse comportamento ao longo de muitos periodos.
-// Inclui o valor usado na placa (METADE = 25000), simulando 12 periodos de saida (6 ms),
-// e confirma que a frequencia real fica entre 1 kHz e 10 kHz.
+//   - só muda no flanco ascendente de ClockIn;
+//   - mantém esse comportamento ao longo de muitos períodos.
+// Inclui o valor usado na placa (METADE = 25000), simulando 12 períodos de saída (6 ms),
+// e confirma que a frequência real fica entre 1 kHz e 10 kHz.
 module divisorclock_teste1();
 
-//   Declaracao das entradas: relogio de 100 MHz (periodo de 10ns), como o da Basys3
+//   Declaração das entradas: relógio de 100 MHz (período de 10ns), como o da Basys3
      reg Clk = 0;
      always #5 Clk = ~Clk;
 
-//   Declaracao das saidas
+//   Declaração das saídas
      wire Out1, Out2, Out5, Out7, OutPlaca;
 
-//   Instanciacao das UUT com varios valores de METADE (o circuito e o mesmo)
+//   Instanciação das UUT com vários valores de METADE (o circuito é o mesmo)
      DivisorClock #(.METADE(1))  UUT1 (.ClockIn(Clk), .ClockOut(Out1));
      DivisorClock #(.METADE(2))  UUT2 (.ClockIn(Clk), .ClockOut(Out2));
      DivisorClock #(.METADE(5))  UUT5 (.ClockIn(Clk), .ClockOut(Out5));
      DivisorClock #(.METADE(7))  UUT7 (.ClockIn(Clk), .ClockOut(Out7));
-     DivisorClock                UUTP (.ClockIn(Clk), .ClockOut(OutPlaca));   // valor por omissao
+     DivisorClock                UUTP (.ClockIn(Clk), .ClockOut(OutPlaca));   // valor por omissão
 
-//   Instante do ultimo flanco ascendente de ClockIn
+//   Instante do último flanco ascendente de ClockIn
      time flanco_in = 0;
      always @(posedge Clk) flanco_in = $time;
 
      integer erros = 0;
 
-//   Monitor generico de uma saida: mede tempo a 1, tempo a 0 e periodo
+//   Monitor genérico de uma saída: mede tempo a 1, tempo a 0 e período
      task automatic monitoriza(input integer metade, input integer periodos_min, input [8*12:1] nome);
          time t_sobe, t_desce, t_sobe_ant, alto, baixo;
          integer p;
@@ -92,7 +92,7 @@ module divisorclock_teste1();
          $finish;
      end
 
-//   Seguranca: termina se alguma saida nunca chegar a mudar
+//   Segurança: termina se alguma saída nunca chegar a mudar
      initial begin
          #10_000_000;
          $display("Simulacao FALHOU: DivisorClock nao produziu os periodos esperados (fim1=%b fim2=%b fim5=%b fim7=%b placa=%b)",

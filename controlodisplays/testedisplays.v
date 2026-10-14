@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 
 // Circuito de teste do controlador dos displays na Basys3 (Fig. 32 do enunciado).
-// O mesmo barramento Data alimenta os 4 registos dos simbolos e o registo dos pontos
-// decimais; cada registo so carrega quando o respetivo sinal LDx esta a 1.
+// O mesmo barramento Data alimenta os 4 registos dos símbolos e o registo dos pontos
+// decimais; cada registo só carrega quando o respetivo sinal LDx está a 1.
 // Clear limpa todos os registos e EN liga ou desliga os 4 displays.
 module TesteDisplays #(
     parameter METADE = 25000        // passado ao divisor de clock do controlador

@@ -1,6 +1,6 @@
-# Ensaio do transcodificador para 7 segmentos (modulo de topo displayBCD)
+# Ensaio do transcodificador para 7 segmentos (módulo de topo displayBCD)
 
-# Numero a apresentar (interruptores SW3 a SW0)
+# Número a apresentar (interruptores SW3 a SW0)
 set_property PACKAGE_PIN W17 [get_ports {Numero[3]}]
 set_property PACKAGE_PIN W16 [get_ports {Numero[2]}]
 set_property PACKAGE_PIN V16 [get_ports {Numero[1]}]
@@ -28,13 +28,13 @@ set_property PACKAGE_PIN U7 [get_ports {Segmentos[0]}]
 set_property PACKAGE_PIN V7 [get_ports DotPoint]
     set_property IOSTANDARD LVCMOS33 [get_ports DotPoint]
 
-# Anodos comuns dos 4 displays (ativos a Low); Anodos[0] e o display da direita
+# Ânodos comuns dos 4 displays (ativos a Low); Anodos[0] é o display da direita
 set_property PACKAGE_PIN U2 [get_ports {Anodos[0]}]
 set_property PACKAGE_PIN U4 [get_ports {Anodos[1]}]
 set_property PACKAGE_PIN V4 [get_ports {Anodos[2]}]
 set_property PACKAGE_PIN W4 [get_ports {Anodos[3]}]
     set_property IOSTANDARD LVCMOS33 [get_ports {Anodos[*]}]
 
-# Definir a tensao correta da placa Basys3
+# Definir a tensão correta da placa Basys3
 set_property CFGBVS VCCO [current_design]
 set_property CONFIG_VOLTAGE 3.3 [current_design]

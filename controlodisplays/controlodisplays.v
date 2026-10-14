@@ -1,15 +1,15 @@
 `timescale 1ns / 1ps
 
 // Controlador dos 4 displays de 7 segmentos da Basys3 (Fig. 31 do enunciado).
-// Reutiliza os modulos ja desenvolvidos:
-//   - 5 x Registo4: 4 registos com o simbolo de cada display e 1 com os pontos decimais;
+// Reutiliza os módulos já desenvolvidos:
+//   - 5 x Registo4: 4 registos com o símbolo de cada display e 1 com os pontos decimais;
 //   - multiplexer16x4: liga ao transcodificador o registo do display ativo;
 //   - multiplexer4x1: escolhe o ponto decimal do display ativo;
-//   - Transcod7Seg: converte o simbolo nos segmentos a acender;
+//   - Transcod7Seg: converte o símbolo nos segmentos a acender;
 //   - descodificador2x4: escolhe o display ativo (com um enable por display);
-//   - DivisorClock + Contador4: geram as variaveis de varrimento Control1 e Control0.
-// O display i (Anodos[i]) mostra o registo i; Anodos[0] e o display da direita.
-// Segmentos, ponto decimal e anodos sao ativos a Low na Basys3.
+//   - DivisorClock + Contador4: geram as variáveis de varrimento Control1 e Control0.
+// O display i (Anodos[i]) mostra o registo i; Anodos[0] é o display da direita.
+// Segmentos, ponto decimal e ânodos são ativos a Low na Basys3.
 module ControloDisplays #(
     parameter METADE = 25000        // varrimento a 100 MHz / (2 x 25000) = 2 kHz
     )(
@@ -39,22 +39,22 @@ module ControloDisplays #(
     );
 
 //   Sinais internos
-     wire [3:0] Valor3, Valor2, Valor1, Valor0;   // conteudo dos registos dos simbolos
-     wire [3:0] Pontos;                           // conteudo do registo dos pontos decimais
-     wire [3:0] ValorAtivo;                       // simbolo do display ativo
+     wire [3:0] Valor3, Valor2, Valor1, Valor0;   // conteúdo dos registos dos símbolos
+     wire [3:0] Pontos;                           // conteúdo do registo dos pontos decimais
+     wire [3:0] ValorAtivo;                       // símbolo do display ativo
      wire PontoAtivo;                             // ponto decimal do display ativo (1 = aceso)
-     wire [3:0] DisplayAtivo;                     // saidas do descodificador (ativas a High)
-     wire ClockVarrimento;                        // relogio dividido
-     wire Control1, Control0;                     // variaveis de varrimento
+     wire [3:0] DisplayAtivo;                     // saídas do descodificador (ativas a High)
+     wire ClockVarrimento;                        // relógio dividido
+     wire Control1, Control0;                     // variáveis de varrimento
 
-//   Registos dos simbolos e dos pontos decimais (relogio de 100 MHz, carga com Load)
+//   Registos dos símbolos e dos pontos decimais (relógio de 100 MHz, carga com Load)
      Registo4 reg3  (.Data(Data3),     .CE(Load3),  .Clk(Clock), .CLR(Clr3),  .DataOut(Valor3));
      Registo4 reg2  (.Data(Data2),     .CE(Load2),  .Clk(Clock), .CLR(Clr2),  .DataOut(Valor2));
      Registo4 reg1  (.Data(Data1),     .CE(Load1),  .Clk(Clock), .CLR(Clr1),  .DataOut(Valor1));
      Registo4 reg0  (.Data(Data0),     .CE(Load0),  .Clk(Clock), .CLR(Clr0),  .DataOut(Valor0));
      Registo4 regDP (.Data(DotPoints), .CE(LoadDP), .Clk(Clock), .CLR(ClrDP), .DataOut(Pontos));
 
-//   Varrimento: divisor de clock e contador de modulo 4
+//   Varrimento: divisor de clock e contador de módulo 4
      DivisorClock #(.METADE(METADE)) divisor (
          .ClockIn(Clock),
          .ClockOut(ClockVarrimento)
@@ -93,7 +93,7 @@ module ControloDisplays #(
          .DataOut(PontoAtivo)
      );
 
-     assign DotPoint = ~PontoAtivo;     // o segmento DP acende com nivel Low
+     assign DotPoint = ~PontoAtivo;     // o segmento DP acende com nível Low
 
 //   Descodificador 2x4: ativa um display de cada vez, se o respetivo enable estiver a 1
      descodificador2x4 descod (
@@ -109,6 +109,6 @@ module ControloDisplays #(
          .Out3(DisplayAtivo[3])
      );
 
-     assign Anodos = ~DisplayAtivo;     // anodos comuns ligados por transistores PNP: ativos a Low
+     assign Anodos = ~DisplayAtivo;     // ânodos comuns ligados por transistores PNP: ativos a Low
 
 endmodule
