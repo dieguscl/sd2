@@ -36,13 +36,13 @@ module.exports = function aula1(N, R) {
     ...Listagem(N, 'lst_mux_v', 'multiplexer4x1/multiplexer4x1.v', 'Código Verilog do *multiplexer* 4x1 gerado pelo Digital'),
 
     H2('2.4 Projeto no Vivado e ficheiro de restrições'),
-    P('No Vivado foi criado um projeto RTL (File > Project > New) com o nome `multiplexer4x1`, para a FPGA da Basys3 (`xc7a35ticpg236-1L`), ao qual se adicionou o ficheiro exportado. O ficheiro de restrições `multiplexer4x1.xdc` (' + r('lst_mux_xdc') + ') é o indicado no enunciado: associa as variáveis de seleção a dois interruptores, as entradas de dados a quatro teclas e a saída a um LED (' + r('tab_mux_pinos') + '). As duas últimas linhas definem a tensão de configuração da placa (3,3 V).'),
+    P('No Vivado foi criado um projeto RTL (File > Project > New) com o nome `multiplexer4x1`, para a FPGA da Basys3 (`xc7a35ticpg236-1L`), ao qual se adicionou o ficheiro exportado. O ficheiro de restrições `multiplexer4x1.xdc` (' + r('lst_mux_xdc') + ') parte do indicado no enunciado, que associa as variáveis de seleção a dois interruptores, as entradas de dados a quatro teclas e a saída a um LED. No laboratório optou-se por ligar também as entradas de dados a interruptores (SW0 a SW3), com a seleção em SW5 e SW4 e a saída no LED LD0 (' + r('tab_mux_pinos') + '). Assim, o estado de todas as entradas fica visível ao mesmo tempo, sem ser preciso manter teclas premidas. As duas últimas linhas definem a tensão de configuração da placa (3,3 V).'),
     ...Tabela(N, 'tab_mux_pinos', 'Ligação dos sinais do *multiplexer* 4x1 aos pinos da FPGA.',
       ['Sinal', 'Pino da FPGA', 'Elemento da Basys3'],
-      [['Sel1 / Sel0', 'R2 / T1', 'Interruptores SW15 / SW14'],
-       ['DataIn0 / DataIn1', 'U17 / T17', 'Teclas BTND / BTNR'],
-       ['DataIn2 / DataIn3', 'U18 / W19', 'Teclas BTNC / BTNL'],
-       ['DataOut', 'V14', 'LED LD7']],
+      [['Sel1 / Sel0', 'V15 / W15', 'Interruptores SW5 / SW4'],
+       ['DataIn0 / DataIn1', 'V17 / V16', 'Interruptores SW0 / SW1'],
+       ['DataIn2 / DataIn3', 'W16 / W17', 'Interruptores SW2 / SW3'],
+       ['DataOut', 'U16', 'LED LD0']],
       [2, 2, 3], { largura: 7500 }),
     ...Listagem(N, 'lst_mux_xdc', 'multiplexer4x1/multiplexer4x1.xdc', 'Ficheiro de restrições do *multiplexer* 4x1'),
 
@@ -74,8 +74,8 @@ module.exports = function aula1(N, R) {
 
     H2('2.6 Geração do bitstream e ensaio na Basys3'),
     P('Depois de confirmar o ficheiro de restrições, executaram-se, com as opções por omissão, a síntese (Run Synthesis), a implementação (Run Implementation) e a geração do *bitstream* (Generate Bitstream), sem erros. O circuito ocupa ' + R.util.multiplexer4x1.lut + ' LUT da FPGA, o que é coerente com uma função de 6 variáveis, que cabe numa única LUT de 6 entradas da Artix-7. O ficheiro `multiplexer4x1.bit` é carregado na placa com a aplicação Adept da Digilent (botão Program); a programação termina com a mensagem *Programming Successful*.'),
-    P('No ensaio na placa, os interruptores SW15 e SW14 escolhem a tecla cujo estado aparece no LED LD7 (00: BTND, 01: BTNR, 10: BTNC, 11: BTNL): o LED só acende enquanto a tecla selecionada está premida, sendo indiferente o estado das outras teclas.'),
-    ...FiguraPorTirar(N, 'fig_placa_mux', 'Ensaio do *multiplexer* 4x1 na placa Basys3.', 'fotografia da Basys3 com, por exemplo, SW15 = 1, SW14 = 0 e a tecla BTNC premida (LD7 aceso)'),
+    P('No ensaio na placa, os interruptores SW5 e SW4 escolhem qual dos interruptores SW0 a SW3 aparece no LED LD0: o LED segue o interruptor selecionado, sendo indiferente o estado dos outros. Na ' + r('fig_placa_mux') + ', SW5 = 0 e SW4 = 1 selecionam a entrada DataIn1; como SW1 está a 1, o LED LD0 está aceso.'),
+    ...Figura(N, 'fig_placa_mux', 'placa_mux4x1.jpg', 13, 'Ensaio do *multiplexer* 4x1 na placa Basys3: seleção 01 e SW1 = 1, LD0 aceso.'),
 
     // =====================================================================================
     H1('3 Descodificador 2x4 com enables individuais'),
@@ -90,7 +90,7 @@ module.exports = function aula1(N, R) {
       [['0', '0', 'X X X 1', '0 0 0 1'], ['0', '1', 'X X 1 X', '0 0 1 0'], ['1', '0', 'X 1 X X', '0 1 0 0'], ['1', '1', '1 X X X', '1 0 0 0'],
        ['X', 'X', 'En*i* = 0 (*i* = código selecionado)', '0 0 0 0']],
       [1, 1, 2, 2], { largura: 7000, mono: [false, false, true, true] }),
-    P('O código exportado pelo Digital (' + r('lst_dec_v') + ') volta a ser comportamental, com uma atribuição contínua por saída. No ficheiro de restrições (' + r('lst_dec_xdc') + ') as entradas de seleção ficaram nos mesmos interruptores do *multiplexer* (SW15 e SW14), os *enables* em SW0 a SW3 e as saídas nos LEDs LD0 a LD3, de modo que cada *enable* fica imediatamente abaixo do LED da saída que controla.'),
+    P('O código exportado pelo Digital (' + r('lst_dec_v') + ') volta a ser comportamental, com uma atribuição contínua por saída. No ficheiro de restrições (' + r('lst_dec_xdc') + ') as entradas de seleção ficaram nos interruptores SW15 e SW14, os *enables* em SW0 a SW3 e as saídas nos LEDs LD0 a LD3, de modo que cada *enable* fica imediatamente abaixo do LED da saída que controla.'),
     ...Listagem(N, 'lst_dec_v', 'descodificador2x4/descodificador2x4.v', 'Código Verilog do descodificador 2x4 gerado pelo Digital'),
     ...Listagem(N, 'lst_dec_xdc', 'descodificador2x4/descodificador2x4.xdc', 'Ficheiro de restrições do descodificador 2x4'),
     P('O *testbench* (' + r('lst_dec_tb') + ') começa com todos os *enables* ativos e percorre os quatro códigos de entrada (acende uma saída de cada vez). Depois desativa os *enables* um a um, mostrando que a saída correspondente deixa de acender, e por fim verifica que um *enable* ativo numa saída **não selecionada** não acende nada (Bit1Bit0 = 11 só com En2 = 1, e Bit1Bit0 = 10 com todos os *enables* menos En2). A saída é comparada automaticamente com a expressão `(4\'b0001 << B) & E`, que é exatamente a definição do descodificador.'),

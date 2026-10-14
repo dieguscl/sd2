@@ -61,7 +61,7 @@ Todos os testbenches verificam as saídas automaticamente e terminam com `Simula
 
 | Bitstream | Como ensaiar |
 |---|---|
-| `multiplexer4x1.bit` | SW15/SW14 escolhem a tecla (00 BTND, 01 BTNR, 10 BTNC, 11 BTNL); LD7 acende enquanto essa tecla estiver premida |
+| `multiplexer4x1.bit` | SW5/SW4 escolhem a entrada (00 SW0, 01 SW1, 10 SW2, 11 SW3); LD0 mostra o interruptor selecionado |
 | `descodificador2x4.bit` | SW15/SW14 escolhem a saída, SW0 a SW3 são os *enables*; acende no máximo um LED (LD0 a LD3) |
 | `multiplexer16x4.bit` | LD3 a LD0 mostram SW3 a SW0 (sem teclas), SW7 a SW4 (BTNR), SW11 a SW8 (BTNL) ou SW15 a SW12 (BTNL+BTNR) |
 | `displayBCD.bit` | SW3 a SW0 = símbolo; SW15 a SW12 escolhem os *displays* acesos |
@@ -77,4 +77,4 @@ Exemplo no controlador: SW10 ligado; 0010 + SW15, 0000 + SW14, 0010 + SW13, 0110
 
 `relatorio/gerar.sh` volta a gerar o PDF (capa oficial `relatorio/capa/capa_original.odt` preenchida por `fonte/preencher_capa.py` + corpo gerado por `fonte/gerar.js` a partir das figuras, dos ficheiros do repositório e dos resultados do Vivado). Os dados da capa estão em `relatorio/fonte/preencher_capa.py`.
 
-Falta fazer no laboratório: o ensaio físico na placa, as fotografias (no relatório estão assinaladas a vermelho as figuras a inserir) e a apresentação ao docente.
+Falta fazer no laboratório: o ensaio físico na placa dos circuitos além do multiplexer 4x1, as fotografias (no relatório estão assinaladas a vermelho as figuras a inserir) e a apresentação ao docente.

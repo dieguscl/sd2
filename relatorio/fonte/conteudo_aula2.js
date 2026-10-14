@@ -39,7 +39,7 @@ module.exports = function aula2(N, R) {
       [2, 2.6, 3], { largura: 8500 }),
     ...Listagem(N, 'lst_displaybcd_xdc', 'transcod7seg/displayBCD.xdc', 'Ficheiro de restrições do circuito `displayBCD`'),
     P('O *bitstream* foi gerado sem erros e o circuito ocupa ' + R.util.displayBCD.lut + ' LUT.'),
-    ...FiguraPorTirar(N, 'fig_placa_transcod', 'Ensaio do transcodificador num *display* da placa Basys3.', 'fotografia com SW12 ligado e SW3 a SW0 = 1010 (símbolo "d" no display da direita); idealmente uma por cada símbolo de 10 a 15'),
+    ...FiguraPorTirar(N, 'fig_placa_transcod', 'Ensaio do transcodificador num *display* da placa Basys3.', 'fotografia com SW12 ligado e SW3 a SW0 = 1010 (símbolo "r" no display da direita); idealmente uma por cada símbolo de 10 a 15'),
 
     // =====================================================================================
     H1('6 Registo de 4 bits com clear e enable'),
