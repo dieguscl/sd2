@@ -58,9 +58,15 @@ foreach {nome def} $projetos {
     add_files -fileset constrs_1 -norecurse $root/$xdc
     foreach t $testes {
         add_files -fileset sim_1 -norecurse $root/$t
-        # vista das formas de onda (.wcfg) do testbench, se existir
+        # vista das formas de onda (.wcfg) do testbench; com varios testbenches o Vivado
+        # abriria todas as vistas em cada simulacao, por isso scripts/abre_wcfg.tcl abre
+        # so a do testbench que esta como top
         set wcfg $root/[file rootname $t].wcfg
-        if {[file exists $wcfg]} { add_files -fileset sim_1 -norecurse $wcfg }
+        if {[llength $testes] == 1 && [file exists $wcfg]} { add_files -fileset sim_1 -norecurse $wcfg }
+    }
+    if {[llength $testes] > 1} {
+        # caminho relativo a pasta onde corre o simulador (<p>.sim/sim_1/behav/xsim)
+        set_property xsim.simulate.tcl.post ../../../../../../scripts/abre_wcfg.tcl [get_filesets sim_1]
     }
     set_property top $topo [current_fileset]
     update_compile_order -fileset sources_1
@@ -95,8 +101,12 @@ foreach {nome def} $projetos {
         }
         close $fh
     }
-    # deixa como testbench ativo o primeiro da lista
-    set_property top [file rootname [file tail [lindex $testes 0]]] [get_filesets sim_1]
+    # deixa como testbench ativo o primeiro da lista, com a respetiva vista .wcfg
+    set tb [file rootname [file tail [lindex $testes 0]]]
+    set_property top $tb [get_filesets sim_1]
+    set wcfg [get_files -quiet -of_objects [get_filesets sim_1] *${tb}.wcfg]
+    if {[llength $wcfg]} { set_property xsim.view $wcfg [get_filesets sim_1] }
+    update_compile_order -fileset sim_1
 
     # Sintese, implementacao e bitstream
     launch_runs synth_1 -jobs 8
@@ -112,7 +122,18 @@ foreach {nome def} $projetos {
     close_project
     lappend resultados $nome
 }
-set fh [open $root/simulacao/resultados.txt [expr {[llength $escolhidos] ? "a" : "w"}]]
-foreach r $::resultados_sim { puts $fh $r }
+# numa reconstrucao parcial mantem as linhas dos outros testbenches e substitui as dos simulados
+set linhas {}
+set ficheiro $root/simulacao/resultados.txt
+if {[llength $escolhidos] && [file exists $ficheiro]} {
+    set fh [open $ficheiro]
+    set simulados [lmap r $::resultados_sim {lindex [split $r :] 0}]
+    foreach l [split [string trim [read $fh]] "\n"] {
+        if {$l ne "" && [lsearch -exact $simulados [lindex [split $l :] 0]] < 0} { lappend linhas $l }
+    }
+    close $fh
+}
+set fh [open $ficheiro w]
+foreach r [concat $linhas $::resultados_sim] { puts $fh $r }
 close $fh
 puts "Projetos gerados: $resultados"

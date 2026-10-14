@@ -29,7 +29,7 @@ digital/            Esquemas do Digital (.dig), Verilog exportado e .svg
 vivado/<p>/<p>.xpr  Projetos Vivado (multiplexer4x1, descodificador2x4, multiplexer16x4, displayBCD, controlodisplays)
 simulacao/          Formas de onda (VCD) de todas as simulações e resultados.txt (mensagem final de cada testbench)
 bitstreams/         Ficheiros .bit para a Basys3; relatorios/ com utilização, tempos e metodologia de cada projeto
-scripts/            build.tcl (recria tudo), teste_mutacoes.py, gera_wcfg.py, gen_dig.py, ExportVerilog.java, fdce_modelo.v
+scripts/            build.tcl (recria tudo), abre_wcfg.tcl, teste_mutacoes.py, gera_wcfg.py, gen_dig.py, ExportVerilog.java, fdce_modelo.v
 relatorio/          Relatório (PDF e DOCX do corpo), capa oficial preenchida (.odt), figuras e geradores
 ```
 
@@ -44,7 +44,7 @@ relatorio/          Relatório (PDF e DOCX do corpo), capa oficial preenchida (.
 | `controlodisplays` | `TesteDisplays` | `registo4_teste1`, `divisorclock_teste1`, `contador4_teste1`, `controlodisplays_teste1`, `testedisplays_teste1` |
 
 Abrir com **File > Project > Open** e escolher `vivado/<projeto>/<projeto>.xpr`. Os ficheiros fonte estão nas pastas dos módulos e são referidos por caminhos relativos.
-Para simular um testbench: em *Simulation Sources*, botão direito no testbench → **Set as Top** → **Run Behavioral Simulation**. A janela das formas de onda abre logo com os sinais mais importantes (ficheiro `.wcfg`).
+Para simular um testbench: em *Simulation Sources*, botão direito no testbench → **Set as Top** → **Run Behavioral Simulation**. A janela das formas de onda abre logo com os sinais mais importantes (ficheiro `.wcfg`). No projeto `controlodisplays`, que tem cinco testbenches, a vista certa é aberta por `scripts/abre_wcfg.tcl` de acordo com o testbench que está como top.
 
 Os `.xpr` foram criados com o Vivado 2026.1; se não abrirem noutra versão (por exemplo, a 2025.1 do laboratório), recriam-se com o comando abaixo, que só depende das pastas dos módulos.
 
