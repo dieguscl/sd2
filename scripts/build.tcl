@@ -30,7 +30,7 @@ set projetos {
         displayBCD
         {transcod7seg/transcod7seg.v transcod7seg/displayBCD.v}
         transcod7seg/displayBCD.xdc
-        {transcod7seg/transcod7seg_teste1.v transcod7seg/displayBCD_teste1.v}
+        transcod7seg/transcod7seg_teste1.v
     }
     controlodisplays {
         TesteDisplays

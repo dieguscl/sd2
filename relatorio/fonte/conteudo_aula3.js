@@ -122,7 +122,7 @@ module.exports = function aula3(N, R) {
       [['multiplexer4x1', 'multiplexer4x1', 'multiplexer4x1_teste1', `${R.util.multiplexer4x1.lut} / ${R.util.multiplexer4x1.ff}`],
        ['descodificador2x4', 'descodificador2x4', 'descodificador2x4_teste1', `${R.util.descodificador2x4.lut} / ${R.util.descodificador2x4.ff}`],
        ['multiplexer16x4', 'multiplexer16x4', 'multiplexer16x4_teste1', `${R.util.multiplexer16x4.lut} / ${R.util.multiplexer16x4.ff}`],
-       ['displayBCD', 'displayBCD', 'transcod7seg_teste1, displayBCD_teste1', `${R.util.displayBCD.lut} / ${R.util.displayBCD.ff}`],
+       ['displayBCD', 'displayBCD', 'transcod7seg_teste1', `${R.util.displayBCD.lut} / ${R.util.displayBCD.ff}`],
        ['controlodisplays', 'TesteDisplays', 'registo4_teste1, divisorclock_teste1, contador4_teste1, controlodisplays_teste1, testedisplays_teste1', `${R.util.controlodisplays.lut} / ${R.util.controlodisplays.ff}`]],
       [2, 2, 4.4, 1.2], { alinhar: { 2: AlignmentType.LEFT } }),
   ];

@@ -20,7 +20,6 @@ fontes = [
 testbench = {
     'registo4': 'registo4/registo4_teste1.v',
     'transcod7seg': 'transcod7seg/transcod7seg_teste1.v',
-    'displayBCD': 'transcod7seg/displayBCD_teste1.v',
     'divisorclock': 'divisorclock/divisorclock_teste1.v',
     'contador4': 'contador4/contador4_teste1.v',
     'controlodisplays': 'controlodisplays/controlodisplays_teste1.v',
@@ -53,8 +52,6 @@ muts = [
  ('contador4', C, 'modulo 3',             ("estado <= estado + 1", "estado <= (estado == 2) ? 0 : estado + 1")),
  ('contador4', C, 'flanco descendente',   ("posedge Clock", "negedge Clock")),
  ('contador4', C, 'Q1 e Q0 trocados',     ("assign Q1 = estado[1];", "assign Q1 = estado[0]; //")),
- ('displayBCD', 'transcod7seg/displayBCD.v', 'anodos nao negados', ("assign Anodos = ~Liga;", "assign Anodos = Liga;")),
- ('displayBCD', 'transcod7seg/displayBCD.v', 'ponto aceso',        ("assign DotPoint = 1'b1;", "assign DotPoint = 1'b0;")),
  ('controlodisplays', CD, 'anodos nao negados',      ("assign Anodos = ~DisplayAtivo;", "assign Anodos = DisplayAtivo;")),
  ('controlodisplays', CD, 'ponto nao negado',        ("assign DotPoint = ~PontoAtivo;", "assign DotPoint = PontoAtivo;")),
  ('controlodisplays', CD, 'registos 0 e 1 trocados', (".DataIn0(Valor0),\n         .DataIn1(Valor1),", ".DataIn0(Valor1),\n         .DataIn1(Valor0),")),

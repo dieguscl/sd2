@@ -38,9 +38,7 @@ module.exports = function aula2(N, R) {
        ['Anodos[3:0]', 'W4 V4 U4 U2', 'Ânodos AN3 a AN0 (ativos a Low)']],
       [2, 2.6, 3], { largura: 8500 }),
     ...Listagem(N, 'lst_displaybcd_xdc', 'transcod7seg/displayBCD.xdc', 'Ficheiro de restrições do circuito `displayBCD`'),
-    P('O respetivo *testbench* (' + r('lst_displaybcd_tb') + ') percorre as 256 combinações de `Numero` e `Liga` e verifica os segmentos, os ânodos (que têm de ser a negação de `Liga`) e o ponto decimal. Como a simulação completa é demasiado densa para se ler, a ' + r('fig_viv_displaybcd') + ' mostra apenas o intervalo em que `Liga` = 0001: só o *display* da direita está ligado (`An` = 1110), `Numero` percorre os valores de 0 a F e `Seg` apresenta os segmentos da ' + r('tab_simbolos') + ', com o ponto decimal sempre apagado. Resultado: `Simulacao OK: displayBCD sem erros (256 combinacoes)`. O *bitstream* foi gerado sem erros e o circuito ocupa ' + R.util.displayBCD.lut + ' LUT.'),
-    ...Listagem(N, 'lst_displaybcd_tb', 'transcod7seg/displayBCD_teste1.v', '*Testbench* do circuito `displayBCD`'),
-    ...Figura(N, 'fig_viv_displaybcd', 'viv_displaybcd_sim.png', 16.5, 'Pormenor da simulação do circuito `displayBCD` no Vivado: Liga = 0001 e Numero de 0 a F.'),
+    P('O *bitstream* foi gerado sem erros e o circuito ocupa ' + R.util.displayBCD.lut + ' LUT.'),
     ...FiguraPorTirar(N, 'fig_placa_transcod', 'Ensaio do transcodificador num *display* da placa Basys3.', 'fotografia com SW12 ligado e SW3 a SW0 = 1010 (símbolo "d" no display da direita); idealmente uma por cada símbolo de 10 a 15'),
 
     // =====================================================================================

@@ -71,7 +71,7 @@ const R = {
     const t = fs.readFileSync(path.join(RAIZ, 'scripts/teste_mutacoes.py'), 'utf8');
     return String((t.match(/^ \('/gm) || []).length);
   })(),
-  numTestbenches: '10',
+  numTestbenches: '9',
   arvore: arvore(),
 };
 

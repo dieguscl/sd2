@@ -29,9 +29,6 @@ VISTAS = {
     'transcod7seg_teste1': ('transcod7seg', 0, 1700, [
         ('--', 'Entrada'), ('N', 'u', 'ent', False),
         ('--', 'Saida a..g (ativa a Low)'), ('S', 'b', 'sai', True)]),
-    'displayBCD_teste1': ('transcod7seg', 0, 2800, [
-        ('--', 'Entradas'), ('N', 'h', 'ent', False), ('L', 'b', 'ent', False),
-        ('--', 'Saidas'), ('Seg', 'b', 'sai', False), ('DP', 'b', 'sai', False), ('An', 'b', 'sai', False)]),
     'registo4_teste1': ('registo4', 0, 460, [
         ('--', 'Entradas'), ('Clk', 'b', 'clk', False), ('D', 'h', 'ent', False), ('CE', 'b', 'ent', False),
         ('CLR', 'b', 'ent', False),
@@ -134,7 +131,6 @@ LARGURAS = {
     'descodificador2x4_teste1': {'B': 2, 'E': 4, 'O': 4},
     'multiplexer16x4_teste1': {'S': 2, 'D0': 4, 'D1': 4, 'D2': 4, 'D3': 4, 'Z': 4},
     'transcod7seg_teste1': {'N': 4, 'S': 7},
-    'displayBCD_teste1': {'N': 4, 'L': 4, 'Seg': 7, 'An': 4},
     'registo4_teste1': {'D': 4, 'Q': 4, 'referencia': 4},
     'divisorclock_teste1': {'UUT7/contagem': 32},
     'contador4_teste1': {'UUT/estado': 2},

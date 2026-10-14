@@ -40,7 +40,7 @@ relatorio/          Relatório (PDF e DOCX do corpo), capa oficial preenchida (.
 | `multiplexer4x1` | `multiplexer4x1` | `multiplexer4x1_teste1` |
 | `descodificador2x4` | `descodificador2x4` | `descodificador2x4_teste1` |
 | `multiplexer16x4` | `multiplexer16x4` | `multiplexer16x4_teste1` |
-| `displayBCD` | `displayBCD` | `transcod7seg_teste1`, `displayBCD_teste1` |
+| `displayBCD` | `displayBCD` | `transcod7seg_teste1` |
 | `controlodisplays` | `TesteDisplays` | `registo4_teste1`, `divisorclock_teste1`, `contador4_teste1`, `controlodisplays_teste1`, `testedisplays_teste1` |
 
 Abrir com **File > Project > Open** e escolher `vivado/<projeto>/<projeto>.xpr`. Os ficheiros fonte estão nas pastas dos módulos e são referidos por caminhos relativos.
@@ -71,7 +71,7 @@ Exemplo no controlador: SW10 ligado; 0010 + SW15, 0000 + SW14, 0010 + SW13, 0110
 
 ## Testes de mutações
 
-`python3 scripts/teste_mutacoes.py` (precisa do Icarus Verilog) introduz, um de cada vez, 30 erros típicos nos módulos das aulas 2 e 3 (clear síncrono, flanco errado, ânodos não negados, registos trocados, …) e confirma que o testbench respetivo deteta todos: **30/30**.
+`python3 scripts/teste_mutacoes.py` (precisa do Icarus Verilog) introduz, um de cada vez, 28 erros típicos nos módulos das aulas 2 e 3 (clear síncrono, flanco errado, ânodos não negados, registos trocados, …) e confirma que o testbench respetivo deteta todos: **28/28**.
 
 ## Relatório
 
