@@ -13,7 +13,7 @@ DADOS = {
     'data': '09/10/2026',
     'docente': 'José Sousa',
     'curso': 'LEEC',
-    'turma': '02',
+    'turma': 'PL1',
     'alunos': [('202300553', 'Rodrigo Silva Costa'), ('2025184378', 'Diego Alejandro Castro Laya')],
     'titulo': ['1.º Trabalho de Laboratório', 'Gestão do display da placa Basys3', '(Tutorial Digital e Vivado)'],
 }
