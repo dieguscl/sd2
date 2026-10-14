@@ -39,7 +39,8 @@ module.exports = function aula2(N, R) {
       [2, 2.6, 3], { largura: 8500 }),
     ...Listagem(N, 'lst_displaybcd_xdc', 'transcod7seg/displayBCD.xdc', 'Ficheiro de restrições do circuito `displayBCD`'),
     P('O *bitstream* foi gerado sem erros e o circuito ocupa ' + R.util.displayBCD.lut + ' LUT.'),
-    ...FiguraPorTirar(N, 'fig_placa_transcod', 'Ensaio do transcodificador num *display* da placa Basys3.', 'fotografia com SW12 ligado e SW3 a SW0 = 1010 (símbolo "r" no display da direita); idealmente uma por cada símbolo de 10 a 15'),
+    P('Na ' + r('fig_placa_transcod') + ' mostram-se dois ensaios na placa. Em (a), só SW12 está ligado e SW3 a SW0 = 1011: o *display* da direita apresenta o símbolo original "d" (valor 11). Em (b), com SW15, SW13 e SW12 ligados e SW3 a SW0 = 0101, três *displays* apresentam o algarismo 5 e o segundo a contar da esquerda fica apagado, o que confirma a negação dos ânodos.'),
+    ...Figura(N, 'fig_placa_transcod', 'placa_transcod.jpg', 16.5, 'Ensaio do transcodificador na placa Basys3: (a) símbolo "d" no *display* da direita; (b) algarismo 5 em três *displays*.'),
 
     // =====================================================================================
     H1('6 Registo de 4 bits com clear e enable'),

@@ -60,14 +60,14 @@ module.exports = function aula3(N, R) {
     ...Listagem(N, 'lst_teste_tb', 'controlodisplays/testedisplays_teste1.v', '*Testbench* do circuito de teste'),
     ...Figura(N, 'fig_viv_teste', 'viv_teste_sim.png', 16.9, 'Simulação do circuito de teste `TesteDisplays` no Vivado (METADE = 5).'),
     ...Figura(N, 'fig_viv_teste_det', 'viv_teste_detalhe.png', 16.9, 'Pormenor da simulação do circuito de teste: "rd.LE." nos quatro *displays*.'),
-    P('A síntese, a implementação e a geração do *bitstream* (`controlodisplays.bit`) decorreram sem erros. O circuito ocupa ' + R.util.controlodisplays.lut + ' LUT e ' + R.util.controlodisplays.ff + ' *flip-flops* (20 dos cinco registos, 32 do contador do divisor, o próprio `ClockOut` e os 2 do contador de módulo 4). O ensaio na placa segue este procedimento:'),
+    P('A síntese, a implementação e a geração do *bitstream* (`controlodisplays.bit`) decorreram sem erros. O circuito ocupa ' + R.util.controlodisplays.lut + ' LUT e ' + R.util.controlodisplays.ff + ' *flip-flops* (20 dos cinco registos, 32 do contador do divisor, o próprio `ClockOut` e os 2 do contador de módulo 4). O ensaio na placa seguiu este procedimento:'),
     Num('ligar SW10 (EN): os quatro *displays* mostram 0;', 'numeros3'),
-    Num('com SW3 a SW0 = 0010 ligar e desligar SW15; repetir com 0000 e SW14, 0010 e SW13, 0110 e SW12: os *displays* mostram "2026";', 'numeros3'),
-    Num('com SW3 a SW0 = 0100 ligar e desligar SW11: aparece o ponto decimal no segundo *display* a contar da esquerda ("20.26");', 'numeros3'),
-    Num('escrever os símbolos 10 a 13 da mesma forma para ver "rd.LE";', 'numeros3'),
-    Num('desligar SW10: os *displays* apagam-se; premir BTNC e voltar a ligar SW10: os quatro *displays* mostram 0, sem pontos.', 'numeros3'),
-    ...FiguraPorTirar(N, 'fig_placa_controlo', 'Ensaio do controlador na placa Basys3 com os quatro *displays* ativos.', 'fotografia com "2026" (ou "rd.LE") nos quatro displays'),
-    ...FiguraPorTirar(N, 'fig_placa_controlo_dp', 'Ensaio do controlador na placa Basys3 com o ponto decimal aceso.', 'fotografia com "20.26" (ponto decimal no segundo display)'),
+    Num('para cada *display*, colocar o valor em SW3 a SW0 e ligar e desligar o respetivo interruptor (SW15 para o da esquerda até SW12 para o da direita): com 1, 2, 3 e 4 os *displays* mostram "1234";', 'numeros3'),
+    Num('com SW3 a SW0 = 1011 ligar e desligar SW11: acendem os pontos decimais dos *displays* 3, 1 e 0 ("1.23.4.", ' + r('fig_placa_controlo') + ' (a));', 'numeros3'),
+    Num('da mesma forma, carregar os símbolos 10 ("r"), 15 ("-"), 8 e 11 ("d") e os pontos com 0010: os *displays* mostram "r-8.d", com o ponto decimal só no *display* 1 (' + r('fig_placa_controlo') + ' (b));', 'numeros3'),
+    Num('premir BTNC (Clear): os cinco registos voltam a 0 e os quatro *displays* mostram 0, sem pontos (' + r('fig_placa_controlo_clr') + ').', 'numeros3'),
+    ...Figura(N, 'fig_placa_controlo', 'placa_controlo.jpg', 16.5, 'Ensaio do controlador na placa Basys3: (a) "1.23.4."; (b) "r-8.d", com símbolos originais.'),
+    ...Figura(N, 'fig_placa_controlo_clr', 'placa_controlo_clear.jpg', 9, 'Ensaio do controlador na placa Basys3 depois do Clear (BTNC): "0000", sem pontos.'),
 
     // =====================================================================================
     H1('9 Análise crítica do código de fontes externas'),
@@ -110,7 +110,7 @@ module.exports = function aula3(N, R) {
     H1('10 Conclusão'),
     P('Neste trabalho percorreu-se o fluxo completo de projeto de um sistema digital em FPGA: desenho e simulação no Digital, exportação para Verilog, criação de projetos no Vivado, escrita de *testbenches*, simulação comportamental, síntese, implementação, geração do *bitstream* e programação da Basys3. Foram desenvolvidos e validados um *multiplexer* 4x1, um descodificador 2x4 com *enables*, um *multiplexer* 16x4 construído por hierarquia de módulos, um transcodificador para *display* de 7 segmentos com os símbolos originais "rdLEC-", um registo de 4 *bits* baseado na primitiva FDCE, um divisor de *clock* parametrizável e um contador de módulo 4, que foram integrados no controlador dos quatro *displays* da placa e no respetivo circuito de teste.'),
     P('O trabalho permitiu consolidar a distinção entre descrição comportamental e descrição estrutural em Verilog, a reutilização de módulos por hierarquia e a importância de *testbenches* que verificam automaticamente os resultados (todos os ' + R.numTestbenches + ' *testbenches* terminam com `Simulacao OK`). Ficou também evidente o cuidado necessário com a polaridade dos sinais da placa (segmentos, pontos decimais e ânodos são ativos a *Low*) e com as restrições temporais quando se usa um relógio gerado pela lógica.'),
-    P('Ficam por realizar, no laboratório, o ensaio físico dos restantes circuitos na placa Basys3 (o do *multiplexer* 4x1 já foi feito) e a sua apresentação ao docente; os respetivos registos fotográficos completarão as figuras assinaladas.', { run: { color: 'C00000' } }),
+    P('Todos os circuitos foram também ensaiados na placa Basys3, com os resultados esperados em todos os casos, como mostram as fotografias incluídas em cada secção.'),
 
     // =====================================================================================
     H1('Anexo A: Organização dos ficheiros'),

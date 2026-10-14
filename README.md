@@ -77,4 +77,4 @@ Exemplo no controlador: SW10 ligado; 0010 + SW15, 0000 + SW14, 0010 + SW13, 0110
 
 `relatorio/gerar.sh` volta a gerar o PDF (capa oficial `relatorio/capa/capa_original.odt` preenchida por `fonte/preencher_capa.py` + corpo gerado por `fonte/gerar.js` a partir das figuras, dos ficheiros do repositório e dos resultados do Vivado). Os dados da capa estão em `relatorio/fonte/preencher_capa.py`.
 
-Falta fazer no laboratório: o ensaio físico na placa dos circuitos além do multiplexer 4x1, as fotografias (no relatório estão assinaladas a vermelho as figuras a inserir) e a apresentação ao docente.
+Todos os circuitos foram ensaiados na Basys3; as fotografias estão no relatório (`relatorio/figuras/placa_*.jpg`). Falta apenas a apresentação ao docente.

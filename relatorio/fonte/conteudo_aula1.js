@@ -97,7 +97,8 @@ module.exports = function aula1(N, R) {
     ...Listagem(N, 'lst_dec_tb', 'descodificador2x4/descodificador2x4_teste1.v', '*Testbench* do descodificador 2x4'),
     P('Na ' + r('fig_viv_dec') + ' observa-se que, entre 250 e 400 ns, a saída ativa percorre O0, O1, O2 e O3 à medida que B passa de 0 a 3; a partir de 450 ns, sempre que o *enable* da saída selecionada é desligado, a saída `O` passa a 0000; entre 850 e 1000 ns, os *enables* das saídas não selecionadas não têm efeito. O simulador indicou `Simulacao OK: descodificador2x4 sem erros`. O *bitstream* foi gerado sem erros (' + R.util.descodificador2x4.lut + ' LUT).'),
     ...Figura(N, 'fig_viv_dec', 'viv_dec_sim.png', 16.5, 'Simulação comportamental do descodificador 2x4 no Vivado.'),
-    ...FiguraPorTirar(N, 'fig_placa_dec', 'Ensaio do descodificador 2x4 na placa Basys3.', 'fotografia com SW15 = 1, SW14 = 0 e SW2 = 1 (só LD2 aceso)'),
+    P('No ensaio na placa (' + r('fig_placa_dec') + '), os interruptores SW15 e SW14 escolhem a saída e SW0 a SW3 são os *enables*. Em (a), SW15 SW14 = 01 seleciona a saída 1 e, como o *enable* SW1 está ligado, só o LED LD1 acende; em (b), SW15 SW14 = 10 seleciona a saída 2, com SW2 ligado, e só o LED LD2 acende. Em ambos os casos, o *enable* ligado de uma saída não selecionada não acende o respetivo LED.'),
+    ...Figura(N, 'fig_placa_dec', 'placa_dec.jpg', 16.5, 'Ensaio do descodificador 2x4 na placa Basys3: (a) saída 1 selecionada, LD1 aceso; (b) saída 2 selecionada, LD2 aceso.'),
 
     // =====================================================================================
     H1('4 Multiplexer 16x4'),
@@ -115,6 +116,7 @@ module.exports = function aula1(N, R) {
     ...Listagem(N, 'lst_mux16_tb', 'multiplexer16x4/multiplexer16x4_teste1.v', '*Testbench* do *multiplexer* 16x4'),
     P('Na ' + r('fig_viv_mux16') + ' (barramentos em hexadecimal) a saída `Z` apresenta sucessivamente A, 5, C e 3 entre 250 e 450 ns; mantém-se em 3 quando D0 muda para F (D0 não está selecionada) e passa a 9 quando a entrada selecionada D3 muda; depois apresenta F, 1, 2, 4, 8, C, 0 e 5, sempre igual à entrada selecionada. O resultado da simulação foi `Simulacao OK: multiplexer16x4 sem erros` e o *bitstream* foi gerado sem erros (' + R.util.multiplexer16x4.lut + ' LUT: uma por *bit* da saída, cada uma com 6 entradas).'),
     ...Figura(N, 'fig_viv_mux16', 'viv_mux16x4_sim.png', 16.5, 'Simulação comportamental do *multiplexer* 16x4 no Vivado.'),
-    ...FiguraPorTirar(N, 'fig_placa_mux16', 'Ensaio do *multiplexer* 16x4 na placa Basys3.', 'fotografia com valores diferentes nos 4 grupos de interruptores e a tecla BTNL premida (LD3 a LD0 mostram SW11 a SW8)'),
+    P('No ensaio na placa (' + r('fig_placa_mux16') + '), cada grupo de quatro interruptores tem um valor diferente e as teclas BTNL e BTNR escolhem o grupo que aparece nos LEDs LD3 a LD0. Em (a), com a tecla BTNR premida, os LEDs mostram 1010, o valor de SW7 a SW4 (entrada DataIn1); em (b), com as duas teclas premidas, mostram 1001, o valor de SW15 a SW12 (entrada DataIn3).'),
+    ...Figura(N, 'fig_placa_mux16', 'placa_mux16x4.jpg', 16.5, 'Ensaio do *multiplexer* 16x4 na placa Basys3: (a) BTNR premida, entrada DataIn1; (b) BTNL e BTNR premidas, entrada DataIn3.'),
   ];
 };
