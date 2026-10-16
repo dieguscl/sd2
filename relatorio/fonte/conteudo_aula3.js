@@ -111,19 +111,5 @@ module.exports = function aula3(N, R) {
     P('Neste trabalho percorreu-se o fluxo completo de projeto de um sistema digital em FPGA: desenho e simulação no Digital, exportação para Verilog, criação de projetos no Vivado, escrita de *testbenches*, simulação comportamental, síntese, implementação, geração do *bitstream* e programação da Basys3. Foram desenvolvidos e validados um *multiplexer* 4x1, um descodificador 2x4 com *enables*, um *multiplexer* 16x4 construído por hierarquia de módulos, um transcodificador para *display* de 7 segmentos com os símbolos originais "rdLEC-", um registo de 4 *bits* baseado na primitiva FDCE, um divisor de *clock* parametrizável e um contador de módulo 4, que foram integrados no controlador dos quatro *displays* da placa e no respetivo circuito de teste.'),
     P('O trabalho permitiu consolidar a distinção entre descrição comportamental e descrição estrutural em Verilog, a reutilização de módulos por hierarquia e a importância de *testbenches* que verificam automaticamente os resultados (todos os ' + R.numTestbenches + ' *testbenches* terminam com `Simulacao OK`). Ficou também evidente o cuidado necessário com a polaridade dos sinais da placa (segmentos, pontos decimais e ânodos são ativos a *Low*) e com as restrições temporais quando se usa um relógio gerado pela lógica.'),
     P('Todos os circuitos foram também ensaiados na placa Basys3, com os resultados esperados em todos os casos, como mostram as fotografias incluídas em cada secção.'),
-
-    // =====================================================================================
-    H1('Anexo A: Organização dos ficheiros'),
-    P('Os ficheiros do trabalho estão organizados com uma pasta por módulo, que contém o código, o *testbench* (`<nome>_teste1.v`), a vista das formas de onda (`.wcfg`) e, quando o módulo é ensaiado na placa, o ficheiro de restrições (`.xdc`):'),
-    ...Listagem(N, 'lst_arvore', R.arvore, 'Estrutura das pastas do trabalho', { tamanho: 15 }),
-    P('Os projetos Vivado (`vivado/<projeto>/<projeto>.xpr`) referem os ficheiros das pastas dos módulos por caminhos relativos e podem ser abertos com File > Project > Open. Para os recriar de raiz, executar todas as simulações e gerar todos os *bitstreams*, basta correr `vivado -mode batch -source scripts/build.tcl` na pasta do trabalho. A ' + r('tab_projetos') + ' indica o conteúdo de cada projeto.'),
-    ...Tabela(N, 'tab_projetos', 'Projetos Vivado do trabalho.',
-      ['Projeto', 'Topo', '*Testbenches*', 'LUT / FF'],
-      [['multiplexer4x1', 'multiplexer4x1', 'multiplexer4x1_teste1', `${R.util.multiplexer4x1.lut} / ${R.util.multiplexer4x1.ff}`],
-       ['descodificador2x4', 'descodificador2x4', 'descodificador2x4_teste1', `${R.util.descodificador2x4.lut} / ${R.util.descodificador2x4.ff}`],
-       ['multiplexer16x4', 'multiplexer16x4', 'multiplexer16x4_teste1', `${R.util.multiplexer16x4.lut} / ${R.util.multiplexer16x4.ff}`],
-       ['displayBCD', 'displayBCD', 'transcod7seg_teste1', `${R.util.displayBCD.lut} / ${R.util.displayBCD.ff}`],
-       ['controlodisplays', 'TesteDisplays', 'registo4_teste1, divisorclock_teste1, contador4_teste1, controlodisplays_teste1, testedisplays_teste1', `${R.util.controlodisplays.lut} / ${R.util.controlodisplays.ff}`]],
-      [2, 2, 4.4, 1.2], { alinhar: { 2: AlignmentType.LEFT } }),
   ];
 };
