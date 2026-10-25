@@ -34,6 +34,52 @@ module controlodisplays_teste1();
          .Anodos(Anodos)
      );
 
+//   Apenas para ler as formas de onda (base ASCII no Vivado): traduz as saídas no que
+//   se vê na placa. Não intervém na verificação.
+//     DisplayAtivo: display aceso neste instante ("0" a "3", "-" se nenhum)
+//     Mostra:       símbolo desse display, seguido de "." se o ponto decimal estiver aceso
+//     Placa:        o que se vê nos quatro displays, da esquerda (3) para a direita (0)
+     function [7:0] simbolo(input [6:0] s);          // segmentos (ativos a Low) -> carácter
+         case (s)
+             7'b0000001: simbolo = "0";  7'b1001111: simbolo = "1";
+             7'b0010010: simbolo = "2";  7'b0000110: simbolo = "3";
+             7'b1001100: simbolo = "4";  7'b0100100: simbolo = "5";
+             7'b0100000: simbolo = "6";  7'b0001111: simbolo = "7";
+             7'b0000000: simbolo = "8";  7'b0000100: simbolo = "9";
+             7'b1111010: simbolo = "r";  7'b1000010: simbolo = "d";
+             7'b1110001: simbolo = "L";  7'b0110000: simbolo = "E";
+             7'b0110001: simbolo = "C";  7'b1111110: simbolo = "-";
+             default:    simbolo = "?";
+         endcase
+     endfunction
+     reg [7:0]  DisplayAtivo = "-";
+     reg [15:0] Mostra = "  ";
+     reg [15:0] v3 = "  ", v2 = "  ", v1 = "  ", v0 = "  ";   // último símbolo visto em cada display
+     reg [63:0] Placa = 0;
+     reg [15:0] t;
+     integer j;
+     always @(Anodos or Segmentos or DotPoint or En) begin
+         case (Anodos)
+             4'b1110: DisplayAtivo = "0";   4'b1101: DisplayAtivo = "1";
+             4'b1011: DisplayAtivo = "2";   4'b0111: DisplayAtivo = "3";
+             default: DisplayAtivo = "-";
+         endcase
+         Mostra = (DisplayAtivo == "-") ? "  " : {simbolo(Segmentos), DotPoint ? " " : "."};
+         case (DisplayAtivo)
+             "0": v0 = Mostra;  "1": v1 = Mostra;  "2": v2 = Mostra;  "3": v3 = Mostra;
+         endcase
+         if (!En[3]) v3 = "  ";      // display desligado: apagado
+         if (!En[2]) v2 = "  ";
+         if (!En[1]) v1 = "  ";
+         if (!En[0]) v0 = "  ";
+         Placa = 0;                                  // sem espaços à esquerda
+         for (j = 3; j >= 0; j = j - 1) begin
+             t = (j == 3) ? v3 : (j == 2) ? v2 : (j == 1) ? v1 : v0;
+             Placa = {Placa[55:0], t[15:8]};
+             if (t[7:0] == ".") Placa = {Placa[55:0], "."};
+         end
+     end
+
 //   Relógio de 100 MHz (período de 10ns), como o da Basys3
      always #5 Clk = ~Clk;
 
