@@ -43,7 +43,7 @@ function arvore() {
     'simulacao': 'formas de onda (VCD) de todas as simulações', 'bitstreams': 'ficheiros .bit e relatórios do Vivado',
     'vivado': 'projetos Vivado (.xpr)', 'scripts': 'automatização (Tcl e Python)', 'relatorio': 'este relatório e as figuras',
   };
-  const linhas = ['sd2lab1/'];
+  const linhas = ['lab1/'];
   const pastas = fs.readdirSync(RAIZ).filter(n => !ign.has(n) && fs.statSync(path.join(RAIZ, n)).isDirectory()).sort((a, b) => {
     const ordem = Object.keys(desc);
     return ordem.indexOf(a) - ordem.indexOf(b);
