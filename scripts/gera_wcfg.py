@@ -11,7 +11,7 @@ import os
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORES = {'ent': '#FFFF00', 'sai': '#00FF00', 'clk': '#FF8000', 'ctl': '#00FFFF', 'int': '#FF66FF'}
-RADIX = {'b': 'BINARYRADIX', 'h': 'HEXRADIX', 'u': 'UNSIGNEDDECRADIX', 'a': 'ASCIIRADIX'}
+RADIX = {'b': 'BINARYRADIX', 'h': 'HEXRADIX', 'u': 'UNSIGNEDDECRADIX'}
 
 # testbench -> (pasta, inicio_ns, fim_ns, [sinais])
 # sinal: ('caminho relativo ao testbench', radix, cor, expandir) ou ('--', 'texto do separador')
@@ -47,18 +47,19 @@ VISTAS = {
         ('--', 'Entradas'), ('D3', 'h', 'ent', False), ('D2', 'h', 'ent', False), ('D1', 'h', 'ent', False),
         ('D0', 'h', 'ent', False), ('Load', 'b', 'ent', False), ('DotPoints', 'b', 'ent', False), ('LoadDP', 'b', 'ent', False),
         ('En', 'b', 'ent', False), ('Clr', 'b', 'ent', False), ('ClrDP', 'b', 'ent', False),
-        ('--', 'Saidas'), ('Sel', 'u', 'ctl', False), ('Anodos', 'b', 'sai', False), ('Segmentos', 'b', 'sai', False),
-        ('UUT/Pontos', 'b', 'int', False), ('DotPoint', 'b', 'sai', False),
-        ('--', 'Leitura das saidas (ASCII)'), ('DisplayAtivo', 'a', 'int', False), ('Mostra', 'a', 'int', False),
-        ('Placa', 'a', 'int', False)]),
+        ('--', 'Conteudo dos registos'), ('UUT/Valor3', 'h', 'int', False), ('UUT/Valor2', 'h', 'int', False),
+        ('UUT/Valor1', 'h', 'int', False), ('UUT/Valor0', 'h', 'int', False), ('UUT/Pontos', 'b', 'int', False),
+        ('--', 'Varrimento e saidas'), ('Sel', 'u', 'ctl', False), ('Anodos', 'b', 'sai', False),
+        ('UUT/ValorAtivo', 'h', 'int', False), ('Segmentos', 'b', 'sai', False), ('DotPoint', 'b', 'sai', False)]),
     'testedisplays_teste1': ('controlodisplays', 0, 3700, [
         ('--', 'Interruptores e teclas'), ('Data', 'h', 'ent', False), ('LD3', 'b', 'ent', False),
         ('LD2', 'b', 'ent', False), ('LD1', 'b', 'ent', False), ('LD0', 'b', 'ent', False),
         ('LDDP', 'b', 'ent', False), ('EN', 'b', 'ent', False), ('Clear', 'b', 'ent', False),
-        ('--', 'Pinos dos displays'), ('An', 'b', 'sai', False), ('Seg', 'b', 'sai', False),
-        ('UUT/controlo/Pontos', 'b', 'int', False), ('DP', 'b', 'sai', False),
-        ('--', 'Leitura das saidas (ASCII)'), ('DisplayAtivo', 'a', 'int', False), ('Mostra', 'a', 'int', False),
-        ('Placa', 'a', 'int', False)]),
+        ('--', 'Conteudo dos registos'), ('UUT/controlo/Valor3', 'h', 'int', False), ('UUT/controlo/Valor2', 'h', 'int', False),
+        ('UUT/controlo/Valor1', 'h', 'int', False), ('UUT/controlo/Valor0', 'h', 'int', False),
+        ('UUT/controlo/Pontos', 'b', 'int', False),
+        ('--', 'Pinos dos displays'), ('An', 'b', 'sai', False), ('UUT/controlo/ValorAtivo', 'h', 'int', False),
+        ('Seg', 'b', 'sai', False), ('DP', 'b', 'sai', False)]),
 }
 
 
@@ -139,9 +140,11 @@ LARGURAS = {
     'divisorclock_teste1': {'UUT7/contagem': 32},
     'contador4_teste1': {'UUT/estado': 2},
     'controlodisplays_teste1': {'D3': 4, 'D2': 4, 'D1': 4, 'D0': 4, 'Load': 4, 'DotPoints': 4, 'En': 4, 'Clr': 4,
-                                'Sel': 2, 'UUT/Pontos': 4, 'Anodos': 4, 'Segmentos': 7,
-                                'DisplayAtivo': 8, 'Mostra': 16, 'Placa': 64},
-    'testedisplays_teste1': {'Data': 4, 'UUT/controlo/Pontos': 4, 'An': 4, 'Seg': 7, 'DisplayAtivo': 8, 'Mostra': 16, 'Placa': 64},
+                                'UUT/Valor3': 4, 'UUT/Valor2': 4, 'UUT/Valor1': 4, 'UUT/Valor0': 4, 'UUT/Pontos': 4,
+                                'Sel': 2, 'Anodos': 4, 'UUT/ValorAtivo': 4, 'Segmentos': 7},
+    'testedisplays_teste1': {'Data': 4, 'UUT/controlo/Valor3': 4, 'UUT/controlo/Valor2': 4, 'UUT/controlo/Valor1': 4,
+                             'UUT/controlo/Valor0': 4, 'UUT/controlo/Pontos': 4, 'An': 4,
+                             'UUT/controlo/ValorAtivo': 4, 'Seg': 7},
 }
 
 if __name__ == '__main__':

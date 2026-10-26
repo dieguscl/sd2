@@ -19,7 +19,7 @@
       <NameColumnWidth column_width="220"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="18" />
+   <WVObjectSize size="20" />
    <wvobject type="array" fp_name="/controlodisplays_teste1/D3">
       <obj_property name="ElementShortName">D3[3:0]</obj_property>
       <obj_property name="ObjectShortName">D3[3:0]</obj_property>
@@ -68,6 +68,31 @@
       <obj_property name="ElementShortName">ClrDP</obj_property>
       <obj_property name="ObjectShortName">ClrDP</obj_property>
    </wvobject>
+   <wvobject type="array" fp_name="/controlodisplays_teste1/UUT/Valor3">
+      <obj_property name="ElementShortName">Valor3[3:0]</obj_property>
+      <obj_property name="ObjectShortName">Valor3[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/controlodisplays_teste1/UUT/Valor2">
+      <obj_property name="ElementShortName">Valor2[3:0]</obj_property>
+      <obj_property name="ObjectShortName">Valor2[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/controlodisplays_teste1/UUT/Valor1">
+      <obj_property name="ElementShortName">Valor1[3:0]</obj_property>
+      <obj_property name="ObjectShortName">Valor1[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/controlodisplays_teste1/UUT/Valor0">
+      <obj_property name="ElementShortName">Valor0[3:0]</obj_property>
+      <obj_property name="ObjectShortName">Valor0[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/controlodisplays_teste1/UUT/Pontos">
+      <obj_property name="ElementShortName">Pontos[3:0]</obj_property>
+      <obj_property name="ObjectShortName">Pontos[3:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
    <wvobject type="array" fp_name="/controlodisplays_teste1/Sel">
       <obj_property name="ElementShortName">Sel[1:0]</obj_property>
       <obj_property name="ObjectShortName">Sel[1:0]</obj_property>
@@ -78,33 +103,18 @@
       <obj_property name="ObjectShortName">Anodos[3:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
+   <wvobject type="array" fp_name="/controlodisplays_teste1/UUT/ValorAtivo">
+      <obj_property name="ElementShortName">ValorAtivo[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ValorAtivo[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
    <wvobject type="array" fp_name="/controlodisplays_teste1/Segmentos">
       <obj_property name="ElementShortName">Segmentos[6:0]</obj_property>
       <obj_property name="ObjectShortName">Segmentos[6:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/controlodisplays_teste1/UUT/Pontos">
-      <obj_property name="ElementShortName">Pontos[3:0]</obj_property>
-      <obj_property name="ObjectShortName">Pontos[3:0]</obj_property>
-      <obj_property name="Radix">BINARYRADIX</obj_property>
-   </wvobject>
    <wvobject type="logic" fp_name="/controlodisplays_teste1/DotPoint">
       <obj_property name="ElementShortName">DotPoint</obj_property>
       <obj_property name="ObjectShortName">DotPoint</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/controlodisplays_teste1/DisplayAtivo">
-      <obj_property name="ElementShortName">DisplayAtivo[7:0]</obj_property>
-      <obj_property name="ObjectShortName">DisplayAtivo[7:0]</obj_property>
-      <obj_property name="Radix">ASCIIRADIX</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/controlodisplays_teste1/Mostra">
-      <obj_property name="ElementShortName">Mostra[15:0]</obj_property>
-      <obj_property name="ObjectShortName">Mostra[15:0]</obj_property>
-      <obj_property name="Radix">ASCIIRADIX</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/controlodisplays_teste1/Placa">
-      <obj_property name="ElementShortName">Placa[63:0]</obj_property>
-      <obj_property name="ObjectShortName">Placa[63:0]</obj_property>
-      <obj_property name="Radix">ASCIIRADIX</obj_property>
    </wvobject>
 </wave_config>
