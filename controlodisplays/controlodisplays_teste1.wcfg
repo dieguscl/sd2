@@ -19,7 +19,7 @@
       <NameColumnWidth column_width="220"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="17" />
+   <WVObjectSize size="18" />
    <wvobject type="array" fp_name="/controlodisplays_teste1/D3">
       <obj_property name="ElementShortName">D3[3:0]</obj_property>
       <obj_property name="ObjectShortName">D3[3:0]</obj_property>
@@ -45,9 +45,9 @@
       <obj_property name="ObjectShortName">Load[3:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/controlodisplays_teste1/DP">
-      <obj_property name="ElementShortName">DP[3:0]</obj_property>
-      <obj_property name="ObjectShortName">DP[3:0]</obj_property>
+   <wvobject type="array" fp_name="/controlodisplays_teste1/DotPoints">
+      <obj_property name="ElementShortName">DotPoints[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DotPoints[3:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/controlodisplays_teste1/LoadDP">
@@ -81,6 +81,11 @@
    <wvobject type="array" fp_name="/controlodisplays_teste1/Segmentos">
       <obj_property name="ElementShortName">Segmentos[6:0]</obj_property>
       <obj_property name="ObjectShortName">Segmentos[6:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/controlodisplays_teste1/UUT/Pontos">
+      <obj_property name="ElementShortName">Pontos[3:0]</obj_property>
+      <obj_property name="ObjectShortName">Pontos[3:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/controlodisplays_teste1/DotPoint">

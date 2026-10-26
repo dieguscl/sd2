@@ -11,7 +11,7 @@
 module controlodisplays_teste1();
 
 //   Declaração das entradas
-     reg [3:0] D3 = 0, D2 = 0, D1 = 0, D0 = 0, DP = 0;
+     reg [3:0] D3 = 0, D2 = 0, D1 = 0, D0 = 0, DotPoints = 0;
      reg [3:0] Load = 0, Clr = 0, En = 0;      // índice i = display i
      reg LoadDP = 0, ClrDP = 0;
      reg Clk = 0;
@@ -27,7 +27,7 @@ module controlodisplays_teste1();
          .Data2(D2), .Load2(Load[2]), .Clr2(Clr[2]), .Enable2(En[2]),
          .Data1(D1), .Load1(Load[1]), .Clr1(Clr[1]), .Enable1(En[1]),
          .Data0(D0), .Load0(Load[0]), .Clr0(Clr[0]), .Enable0(En[0]),
-         .DotPoints(DP), .LoadDP(LoadDP), .ClrDP(ClrDP),
+         .DotPoints(DotPoints), .LoadDP(LoadDP), .ClrDP(ClrDP),
          .Clock(Clk),
          .Segmentos(Segmentos),
          .DotPoint(DotPoint),
@@ -105,7 +105,7 @@ module controlodisplays_teste1();
      always @(posedge Clk or posedge Clr[2]) if (Clr[2]) ref2 <= 0; else if (Load[2]) ref2 <= D2;
      always @(posedge Clk or posedge Clr[1]) if (Clr[1]) ref1 <= 0; else if (Load[1]) ref1 <= D1;
      always @(posedge Clk or posedge Clr[0]) if (Clr[0]) ref0 <= 0; else if (Load[0]) ref0 <= D0;
-     always @(posedge Clk or posedge ClrDP)  if (ClrDP)  refDP <= 0; else if (LoadDP) refDP <= DP;
+     always @(posedge Clk or posedge ClrDP)  if (ClrDP)  refDP <= 0; else if (LoadDP) refDP <= DotPoints;
 
 //   Verificação contínua, a meio de cada ciclo de relógio:
 //   compara as saídas com as esperadas para a seleção atual
@@ -171,7 +171,7 @@ module controlodisplays_teste1();
          En = 4'b1111;              #400;       // 4 displays ligados: "0000"
          carrega(4'b1111, 4'd2, 4'd0, 4'd2, 4'd6);
                                     #400;       // "2026"
-         DP = 4'b0100; LoadDP = 1;  #10 LoadDP = 0;
+         DotPoints = 4'b0100; LoadDP = 1;  #10 LoadDP = 0;
                                     #400;       // "20.26" (ponto no display 2)
          carrega(4'b0001, 4'd0, 4'd0, 4'd0, 4'd7);
                                     #400;       // "20.27": só o display 0 muda
