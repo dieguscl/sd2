@@ -18,8 +18,12 @@ module.exports = function aula1(N, R) {
     ...Figura(N, 'fig_mux_esq', 'dig_mux_esquema.png', 11.5, 'Circuito final do *multiplexer* 4x1 desenhado no Digital.'),
 
     H2('2.2 Simulação no Digital'),
-    P('A ' + r('fig_mux_sim') + ' mostra um dos ensaios no simulador do Digital: com Sel1 Sel0 = 10 a saída segue DataIn2 (= 1), apesar de DataIn0 também estar a 1. O ensaio foi repetido para as quatro seleções.'),
+    P('A ' + r('fig_mux_sim') + ' mostra um dos ensaios no simulador do Digital: com Sel1 Sel0 = 10 a saída segue DataIn2 (= 1), apesar de DataIn0 também estar a 1. O ensaio foi repetido para as quatro seleções, colocando a 1 ora a entrada selecionada, ora as restantes; a ' + r('tab_mux_dig') + ' resume o resultado.'),
     ...Figura(N, 'fig_mux_sim', 'dig_mux_sim.png', 11.5, 'Simulação do *multiplexer* 4x1 no Digital (Sel1 = 1, Sel0 = 0, DataIn0 = DataIn2 = 1, DataOut = 1).'),
+    ...Tabela(N, 'tab_mux_dig', 'Entrada apresentada na saída para cada combinação das variáveis de seleção (ensaios no Digital).',
+      ['Sel1', 'Sel0', 'DataOut'],
+      [['0', '0', 'DataIn0'], ['0', '1', 'DataIn1'], ['1', '0', 'DataIn2'], ['1', '1', 'DataIn3']],
+      [1, 1, 2], { largura: 5000 }),
 
     H2('2.3 Exportação para Verilog'),
     P('O circuito foi exportado com File > Export > Export to Verilog (' + r('lst_mux_v') + ').'),

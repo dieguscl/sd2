@@ -85,7 +85,7 @@ module.exports = function aula3(N, R) {
       [3, 3.6, 2.6], { alinhar: { 0: AlignmentType.LEFT, 1: AlignmentType.LEFT, 2: AlignmentType.LEFT } }),
     P('Os símbolos 10 a 15 do Moodle (por exemplo "≡" e "°") foram substituídos pelos símbolos originais da secção 5.'),
     H2('9.3 Divisores de clock do Moodle'),
-    P('O `clk_div` do Moodle usa atribuições bloqueantes num bloco sequencial (má prática) e o comentário indica 1 kHz para 25 MHz (na Basys3 daria 4 kHz). O `Clock_Divider` tem:'),
+    P('O `clk_div` do Moodle funciona, mas usa atribuições bloqueantes (`a = a + 1`) num bloco `always` com relógio, quando a regra é usar atribuições não bloqueantes (`<=`). Além disso, foi feito para um relógio de 25 MHz (o comentário indica 1 kHz): com os 100 MHz da Basys3, a saída seria de 4 kHz. O `Clock_Divider` tem os seguintes problemas:'),
     Bullet('`HALFCYCLE` com o valor de teste 10 (saída de cerca de 4,5 MHz);'),
     Bullet('contagem de 0 a `HALFCYCLE`, ou seja, meios períodos de `HALFCYCLE + 1` ciclos;'),
     Bullet('indentação enganadora no último `else` e constantes de 25 *bits* num contador de 32.'),
@@ -95,12 +95,12 @@ module.exports = function aula3(N, R) {
     H2('9.5 Primitiva FDCE'),
     P('A FDCE segue o modelo do Vivado; confirmou-se que `CLR` (assíncrono) e `CE` são ativos a *High*.'),
     H2('9.6 IA generativa'),
-    P('Foi usada IA generativa como apoio na escrita dos *testbenches*, na verificação do código Verilog, no desenho da ' + r('fig_simbolos') + ' (os 16 símbolos do transcodificador) e na correção da redação deste relatório, bem como para confirmar que o relatório inclui todos os elementos pedidos no enunciado.'),
+    P('Foi usada IA generativa como apoio na escrita dos *testbenches*, na verificação do código Verilog, no desenho da ' + r('fig_simbolos') + ' (os 16 símbolos do transcodificador) e na correção da redação deste relatório, bem como para confirmar que o relatório inclui todos os elementos pedidos no enunciado. Os *testbenches* produzidos com apoio de IA foram revistos pelo grupo e corrigidos quando necessário: por exemplo, as entradas passaram a mudar 2 ns depois dos flancos descendentes do relógio, para não coincidirem com o instante em que o *testbench* verifica as saídas.'),
 
     // =====================================================================================
     H1('10 Conclusão'),
     P('Percorreu-se o fluxo completo de projeto em FPGA, do Digital ao Vivado e à placa Basys3. Os módulos desenvolvidos (*multiplexers* 4x1 e 16x4, descodificador 2x4, transcodificador com os símbolos "rdLEC-", registo com FDCE, divisor de *clock* e contador de módulo 4) foram integrados no controlador dos quatro *displays*.'),
-    P('O trabalho consolidou a diferença entre descrição comportamental e estrutural, a reutilização de módulos por hierarquia e a importância dos *testbenches* (os ' + R.numTestbenches + ' das secções 2 a 7 terminam com `Simulacao OK`), bem como o cuidado com a polaridade dos sinais da placa (ativos a *Low*) e com as restrições temporais de um relógio gerado pela lógica.'),
+    P('O trabalho consolidou a diferença entre descrição comportamental e estrutural, a reutilização de módulos por hierarquia e a importância dos *testbenches* (os ' + R.numTestbenches + ' das secções 2 a 7 terminam com `Simulacao OK`), bem como o cuidado com a polaridade dos sinais da placa (ativos a *Low*) e com as restrições temporais do relógio do varrimento, que é gerado pelo divisor dentro da FPGA e não pelo oscilador da placa (secção 8.1).'),
     P('Todos os circuitos funcionaram como esperado na placa.'),
 
     // =====================================================================================
