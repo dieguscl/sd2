@@ -95,7 +95,7 @@ module.exports = function aula3(N, R) {
     H2('9.5 Primitiva FDCE'),
     P('A FDCE segue o modelo do Vivado; confirmou-se que `CLR` (assíncrono) e `CE` são ativos a *High*.'),
     H2('9.6 IA generativa'),
-    P('Foi usada IA generativa como apoio na escrita dos *testbenches*, na verificação do código Verilog, no desenho da ' + r('fig_simbolos') + ' (os 16 símbolos do transcodificador) e na redação deste relatório, bem como para confirmar que o relatório inclui todos os elementos pedidos no enunciado.'),
+    P('Foi usada IA generativa como apoio na escrita dos *testbenches*, na verificação do código Verilog, no desenho da ' + r('fig_simbolos') + ' (os 16 símbolos do transcodificador) e na correção da redação deste relatório, bem como para confirmar que o relatório inclui todos os elementos pedidos no enunciado.'),
 
     // =====================================================================================
     H1('10 Conclusão'),
