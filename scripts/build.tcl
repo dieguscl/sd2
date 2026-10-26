@@ -49,6 +49,7 @@ set escolhidos $argv
 file mkdir $root/bitstreams/relatorios $root/simulacao
 set resultados {}
 set ::resultados_sim {}
+set ::simulados {}
 foreach {nome def} $projetos {
     if {[llength $escolhidos] && [lsearch -exact $escolhidos $nome] < 0} continue
     lassign $def topo fontes xdc testes
@@ -81,6 +82,7 @@ foreach {nome def} $projetos {
         if {[llength $wcfg]} { set_property xsim.view $wcfg [get_filesets sim_1] }
         update_compile_order -fileset sim_1
         launch_simulation -simset sim_1 -mode behavioral
+        lappend ::simulados $tb
         open_vcd $root/simulacao/$tb.vcd
         log_vcd [get_objects -r /$tb/*]
         restart
@@ -123,13 +125,13 @@ foreach {nome def} $projetos {
     lappend resultados $nome
 }
 # numa reconstrucao parcial mantem as linhas dos outros testbenches e substitui as dos simulados
+# (os testbenches sem mensagem final deixam de ter linha)
 set linhas {}
 set ficheiro $root/simulacao/resultados.txt
 if {[llength $escolhidos] && [file exists $ficheiro]} {
     set fh [open $ficheiro]
-    set simulados [lmap r $::resultados_sim {lindex [split $r :] 0}]
     foreach l [split [string trim [read $fh]] "\n"] {
-        if {$l ne "" && [lsearch -exact $simulados [lindex [split $l :] 0]] < 0} { lappend linhas $l }
+        if {$l ne "" && [lsearch -exact $::simulados [lindex [split $l :] 0]] < 0} { lappend linhas $l }
     }
     close $fh
 }

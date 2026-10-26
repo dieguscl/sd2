@@ -1,9 +1,9 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2026.1 (lin64) Build 6511674 Tue Jun 16 11:01:26 MDT 2026
-| Date         : Tue Oct 13 22:53:00 2026
+| Date         : Mon Oct 26 09:34:58 2026
 | Host         : diegus running 64-bit Linux Mint 22.2
-| Command      : report_timing_summary -file /home/diegus/Documents/uni/sd2lab1-wt/bitstreams/relatorios/controlodisplays_tempos.txt
+| Command      : report_timing_summary -file /home/diegus/Documents/uni/sd2lab1/bitstreams/relatorios/controlodisplays_tempos.txt
 | Design       : TesteDisplays
 | Device       : 7a35ti-cpg236
 | Speed File   : -1L  PRODUCTION 1.23 2018-06-13

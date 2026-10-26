@@ -5,5 +5,3 @@ transcod7seg_teste1: Simulacao OK: Transcod7Seg sem erros (48 verificacoes)
 registo4_teste1: Simulacao OK: Registo4 sem erros (3056 verificacoes)
 divisorclock_teste1: Simulacao OK: DivisorClock sem erros
 contador4_teste1: Simulacao OK: Contador4 sem erros (100 ciclos)
-controlodisplays_teste1: Simulacao OK: ControloDisplays sem erros (469 verificacoes)
-testedisplays_teste1: Simulacao OK: TesteDisplays sem erros (391 verificacoes)

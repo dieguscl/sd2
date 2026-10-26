@@ -12,14 +12,18 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0 ps"></ZoomStartTime>
-      <ZoomEndTime time="4,700,000 ps"></ZoomEndTime>
-      <Cursor1Time time="4,700,000 ps"></Cursor1Time>
+      <ZoomEndTime time="1,170,000 ps"></ZoomEndTime>
+      <Cursor1Time time="1,170,000 ps"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="220"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="20" />
+   <WVObjectSize size="21" />
+   <wvobject type="logic" fp_name="/controlodisplays_teste1/Clk">
+      <obj_property name="ElementShortName">Clk</obj_property>
+      <obj_property name="ObjectShortName">Clk</obj_property>
+   </wvobject>
    <wvobject type="array" fp_name="/controlodisplays_teste1/D3">
       <obj_property name="ElementShortName">D3[3:0]</obj_property>
       <obj_property name="ObjectShortName">D3[3:0]</obj_property>
@@ -93,7 +97,7 @@
       <obj_property name="ObjectShortName">Pontos[3:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/controlodisplays_teste1/Sel">
+   <wvobject type="array" fp_name="/controlodisplays_teste1/UUT/mux16x4/Sel">
       <obj_property name="ElementShortName">Sel[1:0]</obj_property>
       <obj_property name="ObjectShortName">Sel[1:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>

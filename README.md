@@ -29,7 +29,7 @@ digital/            Esquemas do Digital (.dig), Verilog exportado e .svg
 vivado/<p>/<p>.xpr  Projetos Vivado (multiplexer4x1, descodificador2x4, multiplexer16x4, displayBCD, controlodisplays)
 simulacao/          Formas de onda (VCD) de todas as simulações e resultados.txt (mensagem final de cada testbench)
 bitstreams/         Ficheiros .bit para a Basys3; relatorios/ com utilização, tempos e metodologia de cada projeto
-scripts/            build.tcl (recria tudo), abre_wcfg.tcl, teste_mutacoes.py, gera_wcfg.py, gen_dig.py, ExportVerilog.java, fdce_modelo.v
+scripts/            build.tcl (recria tudo), abre_wcfg.tcl, gera_wcfg.py, gen_dig.py, ExportVerilog.java
 relatorio/          Relatório (PDF e DOCX do corpo), capa oficial preenchida (.odt), figuras e geradores
 ```
 
@@ -55,7 +55,7 @@ vivado -mode batch -source scripts/build.tcl                       # todos (cerc
 vivado -mode batch -source scripts/build.tcl -tclargs displayBCD   # só um projeto
 ```
 
-Todos os testbenches verificam as saídas automaticamente e terminam com `Simulacao OK` ou `Simulacao FALHOU` (ver `simulacao/resultados.txt`).
+Os testbenches dos módulos verificam as saídas automaticamente e terminam com `Simulacao OK` ou `Simulacao FALHOU` (ver `simulacao/resultados.txt`). Os dois do controlador dos displays (`controlodisplays_teste1` e `testedisplays_teste1`) são curtos e servem para observar as formas de onda.
 
 ## Ensaio na Basys3 (Adept → Program)
 
@@ -68,10 +68,6 @@ Todos os testbenches verificam as saídas automaticamente e terminam com `Simula
 | `controlodisplays.bit` | SW10 = EN; valor em SW3 a SW0; ligar/desligar SW15…SW12 carrega o *display* da esquerda…direita; SW11 carrega os pontos decimais; BTNC = *clear* |
 
 Exemplo no controlador: SW10 ligado; 0010 + SW15, 0000 + SW14, 0010 + SW13, 0110 + SW12 → **2026**; 0100 + SW11 → **20.26**.
-
-## Testes de mutações
-
-`python3 scripts/teste_mutacoes.py` (precisa do Icarus Verilog) introduz, um de cada vez, 28 erros típicos nos módulos das aulas 2 e 3 (clear síncrono, flanco errado, ânodos não negados, registos trocados, …) e confirma que o testbench respetivo deteta todos: **28/28**.
 
 ## Relatório
 

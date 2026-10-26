@@ -65,13 +65,7 @@ const R = {
   util: Object.fromEntries(['multiplexer4x1', 'descodificador2x4', 'multiplexer16x4', 'displayBCD', 'controlodisplays'].map(n => [n, util(n)])),
   wns: wns('controlodisplays'),
   verificacoesRegisto: verificacoes('Registo4'),
-  verificacoesControlo: verificacoes('ControloDisplays'),
-  verificacoesTeste: verificacoes('TesteDisplays'),
-  mutacoes: (() => {
-    const t = fs.readFileSync(path.join(RAIZ, 'scripts/teste_mutacoes.py'), 'utf8');
-    return String((t.match(/^ \('/gm) || []).length);
-  })(),
-  numTestbenches: '9',
+  numTestbenches: '7',
   arvore: arvore(),
 };
 

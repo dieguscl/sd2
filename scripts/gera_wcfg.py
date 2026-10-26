@@ -43,15 +43,17 @@ VISTAS = {
         ('--', 'Relogio'), ('Clk', 'b', 'clk', False),
         ('--', 'Saidas'), ('Q1', 'b', 'sai', False), ('Q0', 'b', 'sai', False),
         ('--', 'Estado interno'), ('UUT/estado', 'u', 'int', False)]),
-    'controlodisplays_teste1': ('controlodisplays', 0, 4700, [
+    'controlodisplays_teste1': ('controlodisplays', 0, 1170, [
+        ('--', 'Relogio'), ('Clk', 'b', 'clk', False),
         ('--', 'Entradas'), ('D3', 'h', 'ent', False), ('D2', 'h', 'ent', False), ('D1', 'h', 'ent', False),
         ('D0', 'h', 'ent', False), ('Load', 'b', 'ent', False), ('DotPoints', 'b', 'ent', False), ('LoadDP', 'b', 'ent', False),
         ('En', 'b', 'ent', False), ('Clr', 'b', 'ent', False), ('ClrDP', 'b', 'ent', False),
         ('--', 'Conteudo dos registos'), ('UUT/Valor3', 'h', 'int', False), ('UUT/Valor2', 'h', 'int', False),
         ('UUT/Valor1', 'h', 'int', False), ('UUT/Valor0', 'h', 'int', False), ('UUT/Pontos', 'b', 'int', False),
-        ('--', 'Varrimento e saidas'), ('Sel', 'u', 'ctl', False), ('Anodos', 'b', 'sai', False),
+        ('--', 'Varrimento e saidas'), ('UUT/mux16x4/Sel', 'u', 'ctl', False), ('Anodos', 'b', 'sai', False),
         ('UUT/ValorAtivo', 'h', 'int', False), ('Segmentos', 'b', 'sai', False), ('DotPoint', 'b', 'sai', False)]),
-    'testedisplays_teste1': ('controlodisplays', 0, 3700, [
+    'testedisplays_teste1': ('controlodisplays', 0, 950, [
+        ('--', 'Relogio'), ('CLKBasys', 'b', 'clk', False),
         ('--', 'Interruptores e teclas'), ('Data', 'h', 'ent', False), ('LD3', 'b', 'ent', False),
         ('LD2', 'b', 'ent', False), ('LD1', 'b', 'ent', False), ('LD0', 'b', 'ent', False),
         ('LDDP', 'b', 'ent', False), ('EN', 'b', 'ent', False), ('Clear', 'b', 'ent', False),
@@ -141,7 +143,7 @@ LARGURAS = {
     'contador4_teste1': {'UUT/estado': 2},
     'controlodisplays_teste1': {'D3': 4, 'D2': 4, 'D1': 4, 'D0': 4, 'Load': 4, 'DotPoints': 4, 'En': 4, 'Clr': 4,
                                 'UUT/Valor3': 4, 'UUT/Valor2': 4, 'UUT/Valor1': 4, 'UUT/Valor0': 4, 'UUT/Pontos': 4,
-                                'Sel': 2, 'Anodos': 4, 'UUT/ValorAtivo': 4, 'Segmentos': 7},
+                                'UUT/mux16x4/Sel': 2, 'Anodos': 4, 'UUT/ValorAtivo': 4, 'Segmentos': 7},
     'testedisplays_teste1': {'Data': 4, 'UUT/controlo/Valor3': 4, 'UUT/controlo/Valor2': 4, 'UUT/controlo/Valor1': 4,
                              'UUT/controlo/Valor0': 4, 'UUT/controlo/Pontos': 4, 'An': 4,
                              'UUT/controlo/ValorAtivo': 4, 'Seg': 7},
