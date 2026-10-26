@@ -69,7 +69,7 @@ module.exports = function aula3(N, R) {
 
     // =====================================================================================
     H1('9 Análise crítica do código de fontes externas'),
-    P('Analisa-se aqui o código que não foi escrito de raiz: o gerado pelo Digital, os exemplos do Moodle (com erros intencionais), a primitiva FDCE e o código produzido com apoio de IA.'),
+    P('Analisa-se aqui o código que não foi escrito de raiz: o gerado pelo Digital, os exemplos do Moodle (com erros intencionais), a primitiva FDCE e o apoio de IA generativa.'),
     H2('9.1 Código gerado pelo Digital'),
     P('Os ficheiros gerados pelo Digital foram usados sem alterações: são corretos e legíveis, com uma atribuição contínua por saída, e os *testbenches* confirmaram que a exportação não alterou a função dos circuitos.'),
     H2('9.2 Transcodificador do Moodle'),
@@ -95,11 +95,7 @@ module.exports = function aula3(N, R) {
     H2('9.5 Primitiva FDCE'),
     P('A FDCE segue o modelo do Vivado; confirmou-se que `CLR` (assíncrono) e `CE` são ativos a *High*.'),
     H2('9.6 IA generativa'),
-    P('Foi usada IA generativa (Claude, da Anthropic) como apoio na escrita de parte do código Verilog, dos *testbenches* e dos *scripts* de automatização, no desenho da ' + r('fig_simbolos') + ' (os 16 símbolos do transcodificador) e na redação deste relatório. Todo o código foi verificado por simulação e na placa, o que revelou problemas que foram corrigidos:'),
-    Bullet('as entradas mudavam no mesmo instante em que o *testbench* verificava as saídas; passaram a mudar 2 ns depois dos flancos descendentes;'),
-    Bullet('no Vivado, a inicialização do relógio em t = 0 conta como flanco, com as saídas ainda indefinidas; as verificações passaram a começar depois de t = 0;'),
-    Bullet('ligar os ânodos diretamente ao descodificador, como na Fig. 31, daria a polaridade errada na Basys3.'),
-    P('Tal como o do Moodle, o código produzido com apoio de IA não pode ser aceite sem verificação.'),
+    P('Foi usada IA generativa como apoio na escrita dos *testbenches*, na verificação do código Verilog, no desenho da ' + r('fig_simbolos') + ' (os 16 símbolos do transcodificador) e na redação deste relatório, bem como para confirmar que o relatório inclui todos os elementos pedidos no enunciado.'),
 
     // =====================================================================================
     H1('10 Conclusão'),
