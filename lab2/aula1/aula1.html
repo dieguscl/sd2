@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<title>SD2 Lab2 Aula 1</title>
+<style>
+  @page { size: A4 landscape; margin: 9mm; }
+  :root {
+    --tinta: #222; --cinza: #666; --linha: #333;
+    --ctl: #e3f4ec; --ctl-borda: #1d6b4a;
+    --novo: #fbebe4; --novo-borda: #9c3d1c;
+    --lab1: #e6effa; --lab1-borda: #1f4f8f;
+  }
+  body { font-family: "DejaVu Sans", Arial, sans-serif; color: var(--tinta); background: #fff; margin: 0; font-size: 10.5pt; }
+  .pagina { page-break-after: always; break-after: page; }
+  .pagina:last-child { page-break-after: auto; break-after: auto; }
+  h1 { font-size: 15pt; margin: 0 0 1mm 0; }
+  h2 { font-size: 12.5pt; margin: 0 0 2mm 0; }
+  h3 { font-size: 11pt; margin: 3mm 0 1.5mm 0; }
+  .sub { color: var(--cinza); font-size: 9.5pt; margin-bottom: 2mm; }
+  svg text { font-family: "DejaVu Sans", Arial, sans-serif; }
+  .duas { display: flex; gap: 6mm; align-items: flex-start; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.2pt; }
+  th, td { border: 0.3mm solid #bbb; padding: 0.55mm 1.4mm; text-align: left; vertical-align: top; }
+  th { background: #eee; }
+  td.n { text-align: center; white-space: nowrap; }
+  tr.grupo td { background: #f6f6f6; font-weight: bold; }
+  code, .mono { font-family: "DejaVu Sans Mono", monospace; font-size: 0.95em; }
+  .eq td { font-family: "DejaVu Sans Mono", monospace; font-size: 9.5pt; }
+  ul { margin: 1mm 0 0 5mm; padding: 0; }
+  li { margin-bottom: 1mm; }
+  .nota { font-size: 9pt; color: #333; }
+</style>
+</head>
+<body>
+
+<!-- =============================================================== PÁGINA 1: ARQUITETURA -->
+<div class="pagina">
+<h1>SD2 · 2.º Trabalho · Gestão dos displays para o jogo Guitar Hero · Aula 1</h1>
+<div class="sub">1. Arquitetura a controlar + controlador (malha fechada). Saídas do controlador = comandos sobre a arquitetura;
+saídas da arquitetura (Start, Tempo) = entradas do controlador. Ligações pelo nome do sinal; <span class="mono">/n</span> = barramento de n bits.</div>
+
+<svg viewBox="0 0 1200 760" style="height: 168mm; width: auto; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="s" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#333"/>
+    </marker>
+  </defs>
+  <style>
+    .l { stroke: #333; stroke-width: 1.4; fill: none; }
+    .ls { stroke: #333; stroke-width: 1.4; fill: none; marker-end: url(#s); }
+    .t { font-size: 13px; fill: #222; }
+    .tp { font-size: 11.5px; fill: #555; font-style: italic; }
+    .ti { font-size: 17px; font-weight: bold; }
+    .td { font-size: 12px; }
+    .ctl { fill: var(--ctl); stroke: var(--ctl-borda); stroke-width: 1.6; }
+    .novo { fill: var(--novo); stroke: var(--novo-borda); stroke-width: 1.6; }
+    .lab1 { fill: var(--lab1); stroke: var(--lab1-borda); stroke-width: 1.6; }
+  </style>
+
+  <!-- entradas da placa -->
+  <text class="t" x="8" y="128" font-weight="bold">BtnReset</text>
+  <text class="tp" x="8" y="152">tecla BTNU</text>
+  <path class="ls" d="M8,135 H170"/>
+  <text class="t" x="8" y="180" font-weight="bold">BtnStart</text>
+  <text class="tp" x="8" y="266">tecla BTNC</text>
+  <path class="ls" d="M8,215 H40"/>
+  <rect class="novo" x="40" y="186" width="98" height="58" rx="5"/>
+  <text class="td" x="89" y="210" text-anchor="middle">Sincronizador</text>
+  <text class="td" x="89" y="226" text-anchor="middle">+ anti-ressalto</text>
+  <path class="ls" d="M138,215 H170"/>
+  <text class="t" x="8" y="298" font-weight="bold">Tempo</text>
+  <text class="tp" x="8" y="322">do temporizador</text>
+  <path class="ls" d="M8,305 H170"/>
+  <text class="t" x="8" y="528" font-weight="bold">CLKBasys</text>
+  <text class="tp" x="8" y="552">100 MHz (W5)</text>
+  <path class="ls" d="M8,535 H170"/>
+
+  <!-- controlador -->
+  <rect class="ctl" x="170" y="70" width="160" height="530" rx="6"/>
+  <text class="tp" x="177" y="139">Reset</text>
+  <text class="tp" x="177" y="219">Start</text>
+  <text class="tp" x="177" y="309">Tempo</text>
+  <text class="tp" x="177" y="539">Clock</text>
+  <text class="ti" x="250" y="400" text-anchor="middle" fill="#1d6b4a">Controlador</text>
+  <text class="td" x="250" y="420" text-anchor="middle" fill="#1d6b4a">máquina de estados</text>
+  <text class="td" x="250" y="436" text-anchor="middle" fill="#1d6b4a">realização direta</text>
+  <text class="td" x="250" y="452" text-anchor="middle" fill="#1d6b4a">6 FF (1 por estado)</text>
+  <text class="td" x="250" y="468" text-anchor="middle" fill="#1d6b4a">Reset assíncrono</text>
+
+  <!-- saídas do controlador para a arquitetura -->
+  <g class="t">
+    <text x="336" y="95">ClrMem</text>    <path class="ls" d="M330,100 H462"/>
+    <text x="336" y="145">InitLFSR</text>  <path class="ls" d="M330,150 H462"/>
+    <text x="336" y="195">EnLFSR</text>    <path class="ls" d="M330,200 H462"/>
+    <text x="336" y="245">ShiftMem</text>  <path class="ls" d="M330,250 H462"/>
+    <text x="336" y="295">RstTemp</text>   <path class="ls" d="M330,300 H462"/>
+    <text x="336" y="345">StartTemp</text> <path class="ls" d="M330,350 H462"/>
+    <text x="336" y="395">Faster</text>    <path class="ls" d="M330,400 H462"/>
+    <text x="336" y="445">TglBeat</text>   <path class="ls" d="M330,450 H462"/>
+  </g>
+
+  <!-- saídas do controlador para LEDs -->
+  <path class="ls" d="M190,600 V648"/>
+  <path class="ls" d="M250,600 V648"/>
+  <path class="ls" d="M310,600 V648"/>
+  <text class="t" x="186" y="666" text-anchor="middle">Ready</text>
+  <text class="tp" x="186" y="681" text-anchor="middle">LD0</text>
+  <text class="t" x="250" y="666" text-anchor="middle">Waiting</text>
+  <text class="tp" x="250" y="681" text-anchor="middle">LD2</text>
+  <text class="t" x="322" y="666" text-anchor="middle">Estado/6</text>
+  <text class="tp" x="322" y="681" text-anchor="middle">LD10–15</text>
+
+  <!-- arquitetura a controlar -->
+  <rect x="470" y="30" width="590" height="700" rx="10" fill="none" stroke="#777" stroke-width="1.4"/>
+  <text x="480" y="22" font-size="16" font-weight="bold" fill="#444">Arquitetura a controlar</text>
+
+  <!-- LFSR32 -->
+  <text class="t" x="480" y="95">EnLFSR</text>   <path class="ls" d="M478,100 H560"/>
+  <text class="t" x="480" y="145">InitLFSR</text> <path class="ls" d="M478,150 H560"/>
+  <rect class="novo" x="560" y="70" width="160" height="100" rx="5"/>
+  <text class="tp" x="565" y="104">Enable</text>
+  <text class="tp" x="565" y="154">Init</text>
+  <text class="ti" x="660" y="100" text-anchor="middle" fill="#9c3d1c">LFSR32</text>
+  <text class="td" x="660" y="120" text-anchor="middle" fill="#9c3d1c">XNOR 32·22·2·1</text>
+  <text class="td" x="660" y="136" text-anchor="middle" fill="#9c3d1c">semente</text>
+  <text class="td" x="660" y="152" text-anchor="middle" fill="#9c3d1c">03E3180A</text>
+  <path class="ls" d="M720,125 H800"/>
+  <text class="t" x="724" y="118">OutLFSR/2</text>
+
+  <!-- Memória -->
+  <path class="ls" d="M850,36 V70"/>  <text class="t" x="855" y="52">ShiftMem</text>
+  <path class="ls" d="M950,36 V70"/>  <text class="t" x="955" y="52">ClrMem</text>
+  <rect class="lab1" x="800" y="70" width="200" height="140" rx="5"/>
+  <text class="tp" x="826" y="86">CE</text>
+  <text class="tp" x="926" y="86">CLR</text>
+  <text class="tp" x="805" y="129">Data</text>
+  <text class="ti" x="900" y="122" text-anchor="middle" fill="#1f4f8f">Memória 4x2</text>
+  <text class="td" x="900" y="142" text-anchor="middle" fill="#1f4f8f">4 × Registo4 (2 bits) em fila</text>
+  <text class="td" x="900" y="160" text-anchor="middle" fill="#1f4f8f">Pos0 ← OutLFSR</text>
+  <text class="td" x="900" y="176" text-anchor="middle" fill="#1f4f8f">Pos i ← Pos i−1</text>
+  <text class="td" x="900" y="192" text-anchor="middle" fill="#1f4f8f">(Pos3 perde-se)</text>
+  <path class="ls" d="M900,210 V280"/>
+  <text class="t" x="906" y="250">Pos0…Pos3 /4×2</text>
+
+  <!-- Gestão dos displays -->
+  <rect class="lab1" x="800" y="280" width="200" height="140" rx="5"/>
+  <text class="ti" x="900" y="304" text-anchor="middle" fill="#1f4f8f">Gestão dos displays</text>
+  <text class="td" x="900" y="324" text-anchor="middle" fill="#1f4f8f">DivisorClock + Contador4</text>
+  <text class="td" x="900" y="340" text-anchor="middle" fill="#1f4f8f">multiplexer16x4</text>
+  <text class="td" x="900" y="356" text-anchor="middle" fill="#9c3d1c">TranscodCordas (alterado)</text>
+  <text class="td" x="900" y="372" text-anchor="middle" fill="#1f4f8f">descodificador2x4</text>
+  <text class="td" x="900" y="392" text-anchor="middle" fill="#1f4f8f">Pos0 à esquerda (AN3)</text>
+  <text class="td" x="900" y="408" text-anchor="middle" fill="#1f4f8f">Pos3 à direita (AN0)</text>
+  <path class="ls" d="M1000,310 H1140"/> <text class="t" x="1066" y="303">Seg/7</text>  <text class="tp" x="1144" y="314">CA–CG</text>
+  <path class="ls" d="M1000,350 H1140"/> <text class="t" x="1066" y="343">DP</text>     <text class="tp" x="1144" y="354">DP</text>
+  <path class="ls" d="M1000,390 H1140"/> <text class="t" x="1066" y="383">An/4</text>   <text class="tp" x="1144" y="394">AN0–3</text>
+
+  <!-- Beat -->
+  <text class="t" x="480" y="295">TglBeat</text> <path class="ls" d="M478,300 H560"/>
+  <text class="t" x="480" y="345">ClrMem</text>  <path class="ls" d="M478,350 H560"/>
+  <rect class="novo" x="560" y="270" width="160" height="100" rx="5"/>
+  <text class="tp" x="565" y="304">CE</text>
+  <text class="tp" x="565" y="354">CLR</text>
+  <text class="ti" x="652" y="300" text-anchor="middle" fill="#9c3d1c">FF T (Beat)</text>
+  <text class="td" x="652" y="320" text-anchor="middle" fill="#9c3d1c">FDCE, D = /Q</text>
+  <text class="td" x="652" y="336" text-anchor="middle" fill="#9c3d1c">troca em cada passo</text>
+  <path class="l" d="M720,320 H750 V450"/> <path class="ls" d="M750,450 H1140"/>
+  <text class="t" x="1066" y="443">LedBeat</text> <text class="tp" x="1144" y="454">LD1</text>
+
+  <!-- Temporizador variável -->
+  <text class="t" x="480" y="515">RstTemp</text>   <path class="ls" d="M478,520 H560"/>
+  <text class="t" x="480" y="575">StartTemp</text> <path class="ls" d="M478,580 H560"/>
+  <text class="t" x="480" y="635">Faster</text>    <path class="ls" d="M478,640 H560"/>
+  <rect class="novo" x="560" y="480" width="350" height="220" rx="6"/>
+  <text class="ti" x="735" y="503" text-anchor="middle" fill="#9c3d1c">Temporizador variável</text>
+  <rect x="590" y="520" width="120" height="150" rx="4" fill="#fff" stroke="#9c3d1c" stroke-width="1.2"/>
+  <text class="td" x="650" y="540" text-anchor="middle" font-weight="bold">Velocidade</text>
+  <text class="td" x="650" y="558" text-anchor="middle">registo do</text>
+  <text class="td" x="650" y="574" text-anchor="middle">período</text>
+  <text class="td" x="650" y="598" text-anchor="middle">RstTemp: 0,5 s</text>
+  <text class="td" x="650" y="614" text-anchor="middle">Faster: −5 ms</text>
+  <text class="td" x="650" y="630" text-anchor="middle">mínimo 0,2 s</text>
+  <rect x="780" y="520" width="115" height="150" rx="4" fill="#fff" stroke="#9c3d1c" stroke-width="1.2"/>
+  <text class="td" x="837" y="540" text-anchor="middle" font-weight="bold">Temporizador</text>
+  <text class="td" x="837" y="562" text-anchor="middle">StartTemp:</text>
+  <text class="td" x="837" y="578" text-anchor="middle">carrega Periodo</text>
+  <text class="td" x="837" y="600" text-anchor="middle">Tempo = 1</text>
+  <text class="td" x="837" y="616" text-anchor="middle">durante Periodo</text>
+  <text class="td" x="837" y="638" text-anchor="middle">RstTemp: para</text>
+  <path class="ls" d="M710,595 H780"/>
+  <text class="t" x="713" y="588" font-size="11">Periodo/28</text>
+  <text class="tp" x="735" y="690" text-anchor="middle">RstTemp atua nos dois; Faster na Velocidade; StartTemp no Temporizador</text>
+  <path class="ls" d="M895,595 H1040"/>
+  <text class="t" x="918" y="588">Tempo</text>
+  <text class="tp" x="918" y="612">→ Controlador</text>
+
+  <!-- legenda -->
+  <rect class="ctl" x="8" y="704" width="22" height="14"/><text class="td" x="36" y="716">controlador</text>
+  <rect class="novo" x="122" y="704" width="22" height="14"/><text class="td" x="150" y="716">novo</text>
+  <rect class="lab1" x="200" y="704" width="22" height="14"/><text class="td" x="228" y="716">reutilizado do lab 1</text>
+  <text class="tp" x="8" y="742">Todos os blocos usam o relógio de 100 MHz (CLKBasys). Só a tecla Reset atua diretamente no controlador (PRE/CLR dos FF);
+    os restantes elementos são inicializados pelas saídas do estado S0.</text>
+</svg>
+</div>
+
+<!-- =============================================================== PÁGINA 2: FLUXOGRAMA -->
+<div class="pagina">
+<h1>2. Fluxograma do controlo e realização direta</h1>
+<div class="duas">
+<div style="flex: 0 0 auto;">
+<svg viewBox="0 0 470 820" style="height: 178mm; width: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="f" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#333"/>
+    </marker>
+  </defs>
+  <style>
+    .fl { stroke: #333; stroke-width: 1.4; fill: none; }
+    .fs { stroke: #333; stroke-width: 1.4; fill: none; marker-end: url(#f); }
+    .est { fill: #e3f4ec; stroke: #1d6b4a; stroke-width: 1.6; }
+    .dec { fill: #eeeefc; stroke: #4b46a8; stroke-width: 1.6; }
+    .nome { font-size: 14px; font-weight: bold; fill: #1d6b4a; }
+    .sai { font-size: 12.5px; fill: #222; }
+    .cod { font-size: 12px; fill: #555; font-family: "DejaVu Sans Mono", monospace; }
+    .ram { font-size: 12.5px; font-weight: bold; fill: #4b46a8; }
+  </style>
+  <text class="cod" x="318" y="14">Q5…Q0</text>
+
+  <!-- início -->
+  <ellipse cx="200" cy="22" rx="78" ry="15" fill="#fff" stroke="#333" stroke-width="1.3"/>
+  <text x="200" y="27" text-anchor="middle" font-size="12.5">Reset (assíncrono)</text>
+  <path class="fs" d="M200,37 V52"/>
+
+  <!-- S0 -->
+  <rect class="est" x="90" y="52" width="220" height="62" rx="4"/>
+  <text class="nome" x="200" y="71" text-anchor="middle">S0 · INICIA</text>
+  <text class="sai" x="200" y="89" text-anchor="middle">ClrMem, InitLFSR,</text>
+  <text class="sai" x="200" y="105" text-anchor="middle">EnLFSR, RstTemp</text>
+  <text class="cod" x="318" y="66">000001</text>
+  <path class="fs" d="M200,114 V140"/>
+
+  <!-- S1 -->
+  <rect class="est" x="90" y="140" width="220" height="54" rx="4"/>
+  <text class="nome" x="200" y="160" text-anchor="middle">S1 · ESPERA_START</text>
+  <text class="sai" x="200" y="181" text-anchor="middle">Ready, EnLFSR</text>
+  <text class="cod" x="318" y="154">000010</text>
+  <path class="fl" d="M200,194 V212"/>
+  <polygon class="dec" points="200,212 262,242 200,272 138,242"/>
+  <text x="200" y="247" text-anchor="middle" font-size="13">Start</text>
+  <path class="fl" d="M138,242 H56 V167"/><path class="fs" d="M56,167 H90"/>
+  <text class="ram" x="110" y="236">0</text>
+  <path class="fs" d="M200,272 V300"/>
+  <text class="ram" x="207" y="290">1</text>
+
+  <!-- S2 -->
+  <rect class="est" x="90" y="300" width="220" height="54" rx="4"/>
+  <text class="nome" x="200" y="320" text-anchor="middle">S2 · LIBERTA_START</text>
+  <text class="sai" x="200" y="341" text-anchor="middle">Ready, EnLFSR</text>
+  <text class="cod" x="318" y="314">000100</text>
+  <path class="fl" d="M200,354 V372"/>
+  <polygon class="dec" points="200,372 262,402 200,432 138,402"/>
+  <text x="200" y="407" text-anchor="middle" font-size="13">Start</text>
+  <path class="fl" d="M138,402 H56 V327"/><path class="fs" d="M56,327 H90"/>
+  <text class="ram" x="110" y="396">1</text>
+  <path class="fs" d="M200,432 V462"/>
+  <text class="ram" x="207" y="451">0</text>
+
+  <!-- S3 -->
+  <rect class="est" x="90" y="462" width="220" height="62" rx="4"/>
+  <text class="nome" x="200" y="481" text-anchor="middle">S3 · DESLOCA</text>
+  <text class="sai" x="200" y="499" text-anchor="middle">ShiftMem, TglBeat,</text>
+  <text class="sai" x="200" y="515" text-anchor="middle">StartTemp, EnLFSR</text>
+  <text class="cod" x="318" y="476">001000</text>
+  <path class="fs" d="M200,524 V550"/>
+
+  <!-- S4 -->
+  <rect class="est" x="90" y="550" width="220" height="54" rx="4"/>
+  <text class="nome" x="200" y="570" text-anchor="middle">S4 · ESPERA_TEMPO</text>
+  <text class="sai" x="200" y="591" text-anchor="middle">Waiting, EnLFSR</text>
+  <text class="cod" x="318" y="564">010000</text>
+  <path class="fl" d="M200,604 V622"/>
+  <polygon class="dec" points="200,622 262,652 200,682 138,652"/>
+  <text x="200" y="657" text-anchor="middle" font-size="13">Tempo</text>
+  <path class="fl" d="M138,652 H56 V577"/><path class="fs" d="M56,577 H90"/>
+  <text class="ram" x="110" y="646">1</text>
+  <path class="fs" d="M200,682 V712"/>
+  <text class="ram" x="207" y="701">0</text>
+
+  <!-- S5 -->
+  <rect class="est" x="90" y="712" width="220" height="54" rx="4" stroke-dasharray="6 4"/>
+  <text class="nome" x="200" y="732" text-anchor="middle">S5 · ACELERA (opcional)</text>
+  <text class="sai" x="200" y="753" text-anchor="middle">Faster, EnLFSR</text>
+  <text class="cod" x="318" y="726">100000</text>
+  <path class="fl" d="M310,752 H390 V493"/><path class="fs" d="M390,493 H310"/>
+  <text x="322" y="626" font-size="11.5" fill="#555">próximo</text><text x="322" y="641" font-size="11.5" fill="#555">passo</text>
+
+  <text x="0" y="796" font-size="11" fill="#555">Retângulo = estado e saídas ativas (Moore) · Losango = decisão (entrada testada)</text>
+  <text x="0" y="812" font-size="11" fill="#555">Sem a parte opcional: retira-se S5 e o ramo Tempo = 0 vai diretamente para S3.</text>
+</svg>
+</div>
+
+<div style="flex: 1;">
+<h3>Algoritmo (secção 2.1 do enunciado)</h3>
+<ul class="nota">
+  <li><b>S0</b> (só com Reset): limpa a memória e o LED Beat, carrega a semente no LFSR, inicializa o temporizador variável.</li>
+  <li><b>S1</b>: Ready aceso; o LFSR avança livremente; espera que se carregue Start.</li>
+  <li><b>S2</b>: Ready continua aceso; espera que se largue Start.</li>
+  <li><b>S3</b> (um ciclo): Ready apaga-se; desloca a memória carregando 2 bits do LFSR em Pos0; troca o LED Beat; começa a contagem.</li>
+  <li><b>S4</b>: Waiting aceso enquanto o temporizador conta (Tempo = 1).</li>
+  <li><b>S5</b> (opcional, um ciclo): acelera ligeiramente o temporizador e repete a partir de S3.</li>
+</ul>
+<p class="nota">Ready e Waiting não precisam de latch SR: estão ativas em todos os estados entre acender e apagar (secção 2.4).
+EnLFSR está ativa em todos os estados (o LFSR avança sempre). Cada passo do jogo dura Periodo + 3 ciclos de relógio.</p>
+
+<h3>Realização direta: um flip-flop por estado</h3>
+<p class="nota">FF_S0 = FDPE (PRE = Reset, INIT = 1); FF_S1…FF_S5 = FDCE (CLR = Reset, INIT = 0). Relógio de 100 MHz em todos.
+Decisão = produto do estado com a condição (desmultiplexer); entradas no mesmo estado = soma lógica.</p>
+<table class="eq">
+  <tr><th>Estado seguinte</th><th>Saídas (Moore)</th></tr>
+  <tr><td>D<sub>S0</sub> = 0 &nbsp;(só PRE)</td><td>ClrMem = InitLFSR = RstTemp = S0</td></tr>
+  <tr><td>D<sub>S1</sub> = S0 + S1·/Start</td><td>EnLFSR = S0+S1+S2+S3+S4+S5</td></tr>
+  <tr><td>D<sub>S2</sub> = S1·Start + S2·Start</td><td>Ready = S1 + S2</td></tr>
+  <tr><td>D<sub>S3</sub> = S2·/Start + S5</td><td>ShiftMem = TglBeat = StartTemp = S3</td></tr>
+  <tr><td>D<sub>S4</sub> = S3 + S4·Tempo</td><td>Waiting = S4</td></tr>
+  <tr><td>D<sub>S5</sub> = S4·/Tempo</td><td>Faster = S5</td></tr>
+</table>
+<p class="nota">Sem S5: D<sub>S3</sub> = S2·/Start + S4·/Tempo e a saída Faster desaparece.</p>
+
+<h3>Tabela de transições</h3>
+<table>
+  <tr><th>Estado</th><th>Código Q5…Q0</th><th>Condição</th><th>Estado seguinte</th><th>Saídas ativas</th></tr>
+  <tr><td>S0</td><td class="mono">000001</td><td>—</td><td>S1</td><td>ClrMem, InitLFSR, EnLFSR, RstTemp</td></tr>
+  <tr><td>S1</td><td class="mono">000010</td><td>Start = 0 / 1</td><td>S1 / S2</td><td>Ready, EnLFSR</td></tr>
+  <tr><td>S2</td><td class="mono">000100</td><td>Start = 1 / 0</td><td>S2 / S3</td><td>Ready, EnLFSR</td></tr>
+  <tr><td>S3</td><td class="mono">001000</td><td>—</td><td>S4</td><td>ShiftMem, TglBeat, StartTemp, EnLFSR</td></tr>
+  <tr><td>S4</td><td class="mono">010000</td><td>Tempo = 1 / 0</td><td>S4 / S5</td><td>Waiting, EnLFSR</td></tr>
+  <tr><td>S5</td><td class="mono">100000</td><td>—</td><td>S3</td><td>Faster, EnLFSR</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- =============================================================== PÁGINA 3: SINAIS -->
+<div class="pagina">
+<h1>3. Sinais de entrada e saída e a sua natureza</h1>
+<table>
+  <tr><th>Sinal</th><th>Bits</th><th>Origem → destino</th><th>Natureza</th><th>Ativo</th><th>Sincronismo</th><th>Função</th></tr>
+  <tr class="grupo"><td colspan="7">Entradas externas (placa Basys3)</td></tr>
+  <tr><td>CLKBasys</td><td class="n">1</td><td>oscilador (W5) → todos os blocos</td><td>relógio</td><td>↑</td><td>100 MHz</td><td>relógio único de todo o sistema</td></tr>
+  <tr><td>BtnReset</td><td class="n">1</td><td>tecla BTNU → Controlador (PRE/CLR dos FF)</td><td>controlo externo</td><td>High</td><td>assíncrono</td><td>põe a máquina de estados em S0 (só isso)</td></tr>
+  <tr><td>BtnStart</td><td class="n">1</td><td>tecla BTNC → Sincronizador</td><td>controlo externo</td><td>High</td><td>assíncrono</td><td>começa o jogo (carregar e largar)</td></tr>
+
+  <tr class="grupo"><td colspan="7">Entradas do controlador (estado da arquitetura → decisões do fluxograma)</td></tr>
+  <tr><td>Start</td><td class="n">1</td><td>Sincronizador → Controlador</td><td>condição</td><td>High</td><td>síncrono</td><td>sincronizada (2 FF) e sem ressaltos (10 ms)</td></tr>
+  <tr><td>Tempo</td><td class="n">1</td><td>Temporizador variável → Controlador</td><td>condição</td><td>High</td><td>síncrono</td><td>1 enquanto o temporizador conta; volta a 0 sozinho</td></tr>
+
+  <tr class="grupo"><td colspan="7">Saídas do controlador (comandos sobre a arquitetura; todas de Moore)</td></tr>
+  <tr><td>ClrMem</td><td class="n">1</td><td>Controlador → Memória (CLR), FF Beat (CLR)</td><td>comando</td><td>High</td><td>assíncrono (CLR)</td><td>limpa as 4 posições (pausa) e apaga o LED Beat</td></tr>
+  <tr><td>InitLFSR</td><td class="n">1</td><td>Controlador → LFSR32 (Init)</td><td>comando</td><td>High</td><td>síncrono</td><td>carrega a semente (com EnLFSR = 1)</td></tr>
+  <tr><td>EnLFSR</td><td class="n">1</td><td>Controlador → LFSR32 (Enable)</td><td>comando</td><td>High</td><td>síncrono</td><td>LFSR avança um passo por ciclo</td></tr>
+  <tr><td>ShiftMem</td><td class="n">1</td><td>Controlador → Memória (CE)</td><td>comando</td><td>High</td><td>síncrono</td><td>desloca a fila e carrega OutLFSR em Pos0</td></tr>
+  <tr><td>RstTemp</td><td class="n">1</td><td>Controlador → Temporizador variável</td><td>comando</td><td>High</td><td>síncrono</td><td>para a contagem e repõe o período inicial (0,5 s)</td></tr>
+  <tr><td>StartTemp</td><td class="n">1</td><td>Controlador → Temporizador</td><td>comando</td><td>High</td><td>síncrono</td><td>começa nova contagem com o período atual</td></tr>
+  <tr><td>Faster</td><td class="n">1</td><td>Controlador → Velocidade</td><td>comando</td><td>High</td><td>síncrono</td><td>(opcional) período −5 ms, mínimo 0,2 s</td></tr>
+  <tr><td>TglBeat</td><td class="n">1</td><td>Controlador → FF Beat (CE)</td><td>comando</td><td>High</td><td>síncrono</td><td>troca o estado do LED Beat (uma vez por passo)</td></tr>
+  <tr><td>Ready</td><td class="n">1</td><td>Controlador → LED LD0</td><td>sinalização</td><td>High</td><td>—</td><td>jogo pronto a começar (S1, S2)</td></tr>
+  <tr><td>Waiting</td><td class="n">1</td><td>Controlador → LED LD2</td><td>sinalização</td><td>High</td><td>—</td><td>à espera do fim do tempo de um passo (S4)</td></tr>
+  <tr><td>Estado[5:0]</td><td class="n">6</td><td>Controlador → LEDs LD10…LD15</td><td>depuração</td><td>High</td><td>—</td><td>Q dos 6 flip-flops: mostra o estado ativo</td></tr>
+
+  <tr class="grupo"><td colspan="7">Sinais internos da arquitetura (dados)</td></tr>
+  <tr><td>OutLFSR[1:0]</td><td class="n">2</td><td>LFSR32 → Memória (Data)</td><td>dados</td><td>—</td><td>síncrono</td><td>corda nova: 00 pausa, 01 cima, 10 meio, 11 baixo</td></tr>
+  <tr><td>Pos0…Pos3</td><td class="n">4×2</td><td>Memória → Gestão dos displays</td><td>dados</td><td>—</td><td>síncrono</td><td>corda de cada display (Pos0 = esquerda)</td></tr>
+  <tr><td>Periodo[27:0]</td><td class="n">28</td><td>Velocidade → Temporizador</td><td>dados</td><td>—</td><td>síncrono</td><td>tempo de um passo em ciclos de 10 ns</td></tr>
+
+  <tr class="grupo"><td colspan="7">Saídas externas (placa Basys3)</td></tr>
+  <tr><td>Seg[6:0]</td><td class="n">7</td><td>Gestão dos displays → cátodos CA…CG</td><td>dados (display)</td><td>Low</td><td>varrimento 2 kHz</td><td>a, g ou d conforme a corda; pausa apagado</td></tr>
+  <tr><td>DP</td><td class="n">1</td><td>Gestão dos displays → cátodo DP</td><td>dados (display)</td><td>Low</td><td>—</td><td>sempre apagado (1)</td></tr>
+  <tr><td>An[3:0]</td><td class="n">4</td><td>Gestão dos displays → ânodos AN0…AN3</td><td>controlo</td><td>Low</td><td>varrimento 2 kHz</td><td>ativa um display de cada vez</td></tr>
+  <tr><td>LedBeat</td><td class="n">1</td><td>FF Beat → LED LD1</td><td>sinalização</td><td>High</td><td>síncrono</td><td>pisca ao ritmo do temporizador variável</td></tr>
+</table>
+
+<h3>Transcodificador das cordas (TranscodCordas, segmentos abcdefg ativos a Low)</h3>
+<table style="width: 75%;">
+  <tr><th>OutLFSR / Pos</th><td class="mono">00</td><td class="mono">01</td><td class="mono">10</td><td class="mono">11</td></tr>
+  <tr><th>Corda (segmento)</th><td>pausa (nenhum)</td><td>cima (a)</td><td>meio (g)</td><td>baixo (d)</td></tr>
+  <tr><th>Seg[6:0] = abcdefg</th><td class="mono">1111111</td><td class="mono">0111111</td><td class="mono">1111110</td><td class="mono">1110111</td></tr>
+</table>
+</div>
+
+</body>
+</html>
