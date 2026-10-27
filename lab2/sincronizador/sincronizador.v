@@ -2,7 +2,8 @@
 
 // Sincronizador e anti-ressalto da tecla Start.
 // 1) Dois flip-flops em série sincronizam a tecla com o relógio de 100 MHz
-//    (evitam a metaestabilidade, já que a tecla muda em qualquer instante).
+//    (evitam a metaestabilidade, já que a tecla muda em qualquer instante;
+//    ASYNC_REG pede ao Vivado para os colocar lado a lado).
 // 2) A saída só muda depois de a entrada sincronizada se manter diferente dela durante
 //    ESTAVEL ciclos seguidos; os ressaltos da tecla (mais curtos) são ignorados.
 module Sincronizador #(
@@ -13,7 +14,7 @@ module Sincronizador #(
     output reg Saida = 1'b0
     );
 
-     reg meta = 1'b0, sinc = 1'b0;  // cadeia de sincronização
+     (* ASYNC_REG = "TRUE" *) reg meta = 1'b0, sinc = 1'b0;  // cadeia de sincronização
      reg [31:0] contagem = 0;       // ciclos seguidos com sinc diferente de Saida
 
      always @(posedge Clock) begin

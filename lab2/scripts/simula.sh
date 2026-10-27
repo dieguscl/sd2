@@ -16,10 +16,11 @@ LAB1=(../lab1/registo4/registo4.v ../lab1/divisorclock/divisorclock.v ../lab1/co
       ../lab1/descodificador2x4/descodificador2x4.v)
 FONTES=("${LAB1[@]}" lfsr32/lfsr32.v memoria4x2/memoria4x2.v temporizador/temporizador.v
         temporizador/velocidade.v temporizador/temporizadorvariavel.v sincronizador/sincronizador.v
-        beat/beat.v gestaodisplays/transcodcordas.v gestaodisplays/gestaodisplays.v
+        sincronizador/sincronizadorreset.v beat/beat.v gestaodisplays/transcodcordas.v gestaodisplays/gestaodisplays.v
         controlador/controlador.v guitarhero/guitarhero.v)
 TESTES=(lfsr32/lfsr32_teste1 memoria4x2/memoria4x2_teste1 temporizador/temporizador_teste1
-        temporizador/temporizadorvariavel_teste1 sincronizador/sincronizador_teste1 beat/beat_teste1
+        temporizador/temporizadorvariavel_teste1 sincronizador/sincronizador_teste1
+        sincronizador/sincronizadorreset_teste1 beat/beat_teste1
         gestaodisplays/gestaodisplays_teste1 controlador/controlador_teste1 guitarhero/guitarhero_teste1)
 
 mkdir -p simulacao/xsim

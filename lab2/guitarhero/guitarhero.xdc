@@ -8,10 +8,12 @@ set_property PACKAGE_PIN W5 [get_ports CLKBasys]
 create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports CLKBasys]
 
 ## Relógio do varrimento dos displays (100 MHz / 50000 = 2 kHz), gerado pelo DivisorClock
+## (-divide_by = 2 x METADE: atualizar se METADE mudar). Os dois relógios estão relacionados
+## e o Vivado analisa os caminhos entre eles, por isso não há false path entre relógios.
 create_generated_clock -name clk_varrimento -source [get_ports CLKBasys] -divide_by 50000 [get_pins displays/divisor/ClockOut_reg/Q]
-set_false_path -from [get_clocks clk_varrimento] -to [get_clocks sys_clk_pin]
 
-## Teclas (assíncronas: o Reset atua no PRE/CLR dos flip-flops e o Start é sincronizado)
+## Teclas (assíncronas: as duas passam por sincronizadores; o Reset atua de imediato no PRE
+## dos flip-flops do SincronizadorReset e a libertação para o controlador já é síncrona)
 set_false_path -from [get_ports {BtnReset BtnStart}]
 ## LEDs e displays: sem requisitos de tempo
 set_false_path -to [get_ports {Seg[*] DP An[*] LedReady LedBeat LedWaiting LedEstado[*]}]

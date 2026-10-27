@@ -14,14 +14,15 @@ set fontes {
     ../lab1/multiplexer4x1/multiplexer4x1.v ../lab1/multiplexer16x4/multiplexer16x4.v
     ../lab1/descodificador2x4/descodificador2x4.v
     lfsr32/lfsr32.v memoria4x2/memoria4x2.v temporizador/temporizador.v temporizador/velocidade.v
-    temporizador/temporizadorvariavel.v sincronizador/sincronizador.v beat/beat.v
+    temporizador/temporizadorvariavel.v sincronizador/sincronizador.v sincronizador/sincronizadorreset.v
+    beat/beat.v
     gestaodisplays/transcodcordas.v gestaodisplays/gestaodisplays.v controlador/controlador.v
     guitarhero/guitarhero.v
 }
 set testes {
     guitarhero/guitarhero_teste1.v controlador/controlador_teste1.v lfsr32/lfsr32_teste1.v
     memoria4x2/memoria4x2_teste1.v temporizador/temporizador_teste1.v
-    temporizador/temporizadorvariavel_teste1.v sincronizador/sincronizador_teste1.v
+    temporizador/temporizadorvariavel_teste1.v sincronizador/sincronizador_teste1.v sincronizador/sincronizadorreset_teste1.v
     beat/beat_teste1.v gestaodisplays/gestaodisplays_teste1.v
 }
 

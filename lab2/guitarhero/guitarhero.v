@@ -2,6 +2,7 @@
 
 // Gestão dos displays para o jogo Guitar Hero (2.º trabalho): circuito de topo.
 // Liga o controlador (máquina de estados) à arquitetura a controlar:
+//   - SincronizadorReset: Reset ativado de imediato e libertado em sincronismo com o relógio;
 //   - Sincronizador: tecla Start sincronizada e sem ressaltos;
 //   - LFSR32: sequência pseudo-aleatória das cordas;
 //   - Memoria4x2: cordas dos 4 displays (fila);
@@ -30,7 +31,7 @@ module GuitarHero #(
     );
 
 //   Sinais entre o controlador e a arquitetura a controlar
-     wire Start, Tempo;                                         // entradas do controlador
+     wire Reset, Start, Tempo;                                  // entradas do controlador
      wire ClrMem, InitLFSR, EnLFSR, ShiftMem;                   // saídas do controlador
      wire RstTemp, StartTemp, Faster, TglBeat;
 
@@ -39,9 +40,15 @@ module GuitarHero #(
      wire [1:0] Pos0, Pos1, Pos2, Pos3;
 
 //   ---------------------------------------------------------------- controlador
+     SincronizadorReset sincronizadorReset (
+         .Clock(CLKBasys),
+         .Entrada(BtnReset),
+         .Saida(Reset)
+     );
+
      Controlador controlador (
          .Clock(CLKBasys),
-         .Reset(BtnReset),
+         .Reset(Reset),
          .Start(Start),
          .Tempo(Tempo),
          .ClrMem(ClrMem),

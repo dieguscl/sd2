@@ -5,13 +5,14 @@
 // INICIAL = 40, PASSO = 4, MINIMO = 20 ciclos.
 // Em cada ciclo verifica-se:
 //   - há um e um só estado ativo e os LEDs Ready e Waiting correspondem ao estado;
-//   - a memória é igual a uma fila de referência alimentada pelo LFSR em cada deslocamento;
+//   - a memória é igual a uma fila de referência, alimentada por um modelo do LFSR do próprio
+//     testbench e comandada só pelos LEDs dos estados (S0 limpa, S3 desloca);
 //   - o display ativo mostra a corda da posição certa da memória;
 //   - o LED Beat troca de estado uma vez por passo;
 //   - o intervalo entre passos é o período do temporizador (40, 36, 32, ... até 20) + 3 ciclos
 //     (estados S4 com Tempo = 0, S5 e S3).
-// O percurso: Reset, espera em S1, Start com ressaltos, 12 passos do jogo, Reset a meio do
-// jogo (inicialização assíncrona) e novo jogo.
+// O percurso: Reset (ativação imediata, libertação síncrona), espera em S1, Start com ressaltos,
+// 12 passos do jogo, Reset a meio do jogo e novo jogo.
 module guitarhero_teste1();
 
 //   Declaração das entradas
@@ -62,14 +63,22 @@ module guitarhero_teste1();
          endcase
      endfunction
 
-//   Fila de referência {Pos3, Pos2, Pos1, Pos0}: recebe a saída do LFSR em cada ShiftMem
+//   Modelo do LFSR (independente da UUT): carrega a semente em S0 e avança em todos os estados
+     localparam [31:0] SEMENTE = 32'h03E3180A;
+     reg [31:0] lfsr_ref = 32'h0;
+     wire [1:0] corda_ref = {lfsr_ref[31], lfsr_ref[0]};
+     always @(posedge CLKBasys)
+         if (LedEstado[0]) lfsr_ref <= SEMENTE;
+         else              lfsr_ref <= {lfsr_ref[30:0], ~(lfsr_ref[31] ^ lfsr_ref[21] ^ lfsr_ref[1] ^ lfsr_ref[0])};
+
+//   Fila de referência {Pos3, Pos2, Pos1, Pos0}: limpa em S0, recebe a corda do modelo em S3
      reg [7:0] fila_ref = 8'h00;
      reg [3:0] cordas_vistas = 4'b0000;
-     always @(posedge CLKBasys or posedge UUT.ClrMem)
-         if (UUT.ClrMem) fila_ref <= 8'h00;
-         else if (UUT.ShiftMem) begin
-             fila_ref <= {fila_ref[5:0], UUT.OutLFSR};
-             cordas_vistas[UUT.OutLFSR] <= 1'b1;
+     always @(posedge CLKBasys or posedge LedEstado[0])
+         if (LedEstado[0]) fila_ref <= 8'h00;
+         else if (LedEstado[3]) begin
+             fila_ref <= {fila_ref[5:0], corda_ref};
+             cordas_vistas[corda_ref] <= 1'b1;
          end
 
      wire [7:0] fila = {UUT.Pos3, UUT.Pos2, UUT.Pos1, UUT.Pos0};
@@ -159,6 +168,9 @@ module guitarhero_teste1();
          #33 BtnReset = 1;                                // t = 133
          verifica_reset;
          #98 BtnReset = 0;                                // t = 232
+         // a libertação passa pelo sincronizador (2 flancos): S0 até ao 3.º flanco
+         @(negedge CLKBasys); @(negedge CLKBasys);
+         verifica_estado(6'b000001, "S0 durante a libertacao sincrona");
          @(negedge CLKBasys);
          verifica_estado(6'b000010, "S1 depois do Reset");
          verificacoes = verificacoes + 1;
