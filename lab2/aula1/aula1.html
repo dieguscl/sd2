@@ -29,7 +29,13 @@
   .eq td { font-family: "DejaVu Sans Mono", monospace; font-size: 9.5pt; }
   ul { margin: 1mm 0 0 5mm; padding: 0; }
   li { margin-bottom: 1mm; }
-  .nota { font-size: 9pt; color: #333; }
+  .nota { font-size: 9pt; color: #333; margin: 1mm 0; }
+  ul.nota { margin-left: 5mm; }
+  .est { display: inline-block; border: 0.35mm solid #333; border-radius: 50%; padding: 0 1.6mm; }
+  table.prim td, table.prim th { text-align: center; }
+  table.prim td:first-child { font-weight: bold; }
+  table.trans td { text-align: center; }
+  table.part td:first-child { white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -209,7 +215,7 @@ saídas da arquitetura (Start, Tempo) = entradas do controlador. Ligações pelo
 
 <!-- =============================================================== PÁGINA 2: FLUXOGRAMA -->
 <div class="pagina">
-<h1>2. Fluxograma do controlo e realização direta</h1>
+<h1>2. Fluxograma do controlo</h1>
 <div class="duas">
 <div style="flex: 0 0 auto;">
 <svg viewBox="0 0 470 820" style="height: 178mm; width: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
@@ -316,37 +322,249 @@ saídas da arquitetura (Start, Tempo) = entradas do controlador. Ligações pelo
 <p class="nota">Ready e Waiting não precisam de latch SR: estão ativas em todos os estados entre acender e apagar (secção 2.4).
 EnLFSR está ativa em todos os estados (o LFSR avança sempre). Cada passo do jogo dura Periodo + 3 ciclos de relógio.</p>
 
-<h3>Realização direta: um flip-flop por estado</h3>
-<p class="nota">FF_S0 = FDPE (PRE = Reset, INIT = 1); FF_S1…FF_S5 = FDCE (CLR = Reset, INIT = 0). Relógio de 100 MHz em todos.
-Decisão = produto do estado com a condição (desmultiplexer); entradas no mesmo estado = soma lógica.</p>
-<table class="eq">
-  <tr><th>Estado seguinte</th><th>Saídas (Moore)</th></tr>
-  <tr><td>D<sub>S0</sub> = 0 &nbsp;(só PRE)</td><td>ClrMem = InitLFSR = RstTemp = S0</td></tr>
-  <tr><td>D<sub>S1</sub> = S0 + S1·/Start</td><td>EnLFSR = S0+S1+S2+S3+S4+S5</td></tr>
-  <tr><td>D<sub>S2</sub> = S1·Start + S2·Start</td><td>Ready = S1 + S2</td></tr>
-  <tr><td>D<sub>S3</sub> = S2·/Start + S5</td><td>ShiftMem = TglBeat = StartTemp = S3</td></tr>
-  <tr><td>D<sub>S4</sub> = S3 + S4·Tempo</td><td>Waiting = S4</td></tr>
-  <tr><td>D<sub>S5</sub> = S4·/Tempo</td><td>Faster = S5</td></tr>
-</table>
-<p class="nota">Sem S5: D<sub>S3</sub> = S2·/Start + S4·/Tempo e a saída Faster desaparece.</p>
+<h3>Variáveis e estados lidos no fluxograma</h3>
+<ul class="nota">
+  <li><b>Entradas</b> (variáveis testadas nas decisões): <b>Start</b> (tecla já sincronizada) e <b>Tempo</b> (temporizador).
+      O Reset não é uma decisão: atua de forma assíncrona e põe a máquina em S0.</li>
+  <li><b>Saídas</b> (variáveis ativas nos estados, todas de Moore): ClrMem, InitLFSR, EnLFSR, ShiftMem, RstTemp,
+      StartTemp, Faster, TglBeat, Ready, Waiting.</li>
+  <li><b>Estados / blocos</b>: 6 (S0…S5). Cada bloco tem um só estado, no máximo uma decisão, não tem ciclos no seu
+      interior e tem um único estado seguinte para cada combinação das entradas: o fluxograma é válido.</li>
+</ul>
 
-<h3>Tabela de transições</h3>
+<h3>Projeto do controlador: os 11 passos da metodologia</h3>
 <table>
-  <tr><th>Estado</th><th>Código Q5…Q0</th><th>Condição</th><th>Estado seguinte</th><th>Saídas ativas</th></tr>
-  <tr><td>S0</td><td class="mono">000001</td><td>—</td><td>S1</td><td>ClrMem, InitLFSR, EnLFSR, RstTemp</td></tr>
-  <tr><td>S1</td><td class="mono">000010</td><td>Start = 0 / 1</td><td>S1 / S2</td><td>Ready, EnLFSR</td></tr>
-  <tr><td>S2</td><td class="mono">000100</td><td>Start = 1 / 0</td><td>S2 / S3</td><td>Ready, EnLFSR</td></tr>
-  <tr><td>S3</td><td class="mono">001000</td><td>—</td><td>S4</td><td>ShiftMem, TglBeat, StartTemp, EnLFSR</td></tr>
-  <tr><td>S4</td><td class="mono">010000</td><td>Tempo = 1 / 0</td><td>S4 / S5</td><td>Waiting, EnLFSR</td></tr>
-  <tr><td>S5</td><td class="mono">100000</td><td>—</td><td>S3</td><td>Faster, EnLFSR</td></tr>
+  <tr><th>Passo</th><th>O que se faz</th><th>Pág.</th></tr>
+  <tr><td>1</td><td>Tabela de estados primitiva (e diagrama de estados)</td><td>3</td></tr>
+  <tr><td>2</td><td>Eliminar estados redundantes: inspeção visual e partições</td><td>3</td></tr>
+  <tr><td>3</td><td>Agregar estados compatíveis: método de fusão</td><td>3</td></tr>
+  <tr><td>4</td><td>Tabela de estados reduzida</td><td>3</td></tr>
+  <tr><td>5</td><td>Codificação dos estados livre de corridas críticas (um FF por estado)</td><td>4</td></tr>
+  <tr><td>6</td><td>Tabela de transições (excitação dos FF D)</td><td>4</td></tr>
+  <tr><td>7</td><td>Valor das saídas nas transições (sem picos)</td><td>4</td></tr>
+  <tr><td>8</td><td>Equações de excitação (sem acidentes)</td><td>4</td></tr>
+  <tr><td>9</td><td>Equações de saída (sem acidentes)</td><td>4</td></tr>
+  <tr><td>10</td><td>Diagrama lógico, com as realimentações</td><td>5</td></tr>
+  <tr><td>11</td><td>Verificar e testar o circuito</td><td>5</td></tr>
+</table>
+<p class="nota">A metodologia foi feita para máquinas assíncronas; em cada passo indica-se o que muda numa máquina
+síncrona por realização direta (todos os FF mudam no mesmo flanco do relógio de 100 MHz).</p>
+</div>
+</div>
+</div>
+
+<!-- =============================================================== PÁGINA 3: PASSOS 1 A 4 -->
+<div class="pagina">
+<h1>3. Projeto do controlador · passos 1 a 4: tabela primitiva e redução</h1>
+
+<h3>Passo 1 · Tabela de estados primitiva</h3>
+<table class="prim">
+  <tr><th rowspan="2">Estado<br>presente</th><th colspan="4">Estado seguinte &nbsp;(Start Tempo)</th>
+      <th colspan="10">Saídas (Moore: só dependem do estado presente)</th></tr>
+  <tr><th>00</th><th>01</th><th>11</th><th>10</th>
+      <th>ClrMem</th><th>InitLFSR</th><th>EnLFSR</th><th>ShiftMem</th><th>RstTemp</th><th>StartTemp</th><th>Faster</th><th>TglBeat</th><th>Ready</th><th>Waiting</th></tr>
+  <tr><td>S0</td><td>S1</td><td>S1</td><td>S1</td><td>S1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>S1</td><td><span class="est">S1</span></td><td><span class="est">S1</span></td><td>S2</td><td>S2</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+  <tr><td>S2</td><td>S3</td><td>S3</td><td><span class="est">S2</span></td><td><span class="est">S2</span></td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+  <tr><td>S3</td><td>S4</td><td>S4</td><td>S4</td><td>S4</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+  <tr><td>S4</td><td>S5</td><td><span class="est">S4</span></td><td><span class="est">S4</span></td><td>S5</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+  <tr><td>S5</td><td>S3</td><td>S3</td><td>S3</td><td>S3</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+</table>
+<p class="nota">Lida diretamente do fluxograma: uma linha por estado; uma coluna por combinação das entradas testadas
+(código de Gray). <span class="est">Sx</span> = o estado mantém-se (estável para essa combinação). Start só interessa
+em S1 e S2 e Tempo só em S4: nas outras linhas o estado seguinte é igual nas 4 colunas.</p>
+
+<div class="duas">
+<div style="flex: 0 0 40%;">
+<h3>Diagrama de estados (equivalente à tabela)</h3>
+<svg viewBox="0 0 560 400" style="width: 100%; display: block;" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="d" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#333"/>
+    </marker>
+  </defs>
+  <style>
+    .de { fill: #e3f4ec; stroke: #1d6b4a; stroke-width: 1.6; }
+    .dl { stroke: #333; stroke-width: 1.4; fill: none; marker-end: url(#d); }
+    .dn { font-size: 16px; font-weight: bold; fill: #1d6b4a; }
+    .dc { font-size: 12px; fill: #555; font-family: "DejaVu Sans Mono", monospace; }
+    .dt { font-size: 13.5px; fill: #4b46a8; font-weight: bold; }
+  </style>
+  <path class="dl" d="M80,22 V53"/><text x="88" y="36" font-size="13">Reset</text>
+  <ellipse class="de" cx="80" cy="85" rx="62" ry="31"/><text class="dn" x="80" y="82" text-anchor="middle">S0</text><text class="dc" x="80" y="100" text-anchor="middle">000001</text>
+  <ellipse class="de" cx="280" cy="85" rx="62" ry="31"/><text class="dn" x="280" y="82" text-anchor="middle">S1</text><text class="dc" x="280" y="100" text-anchor="middle">000010</text>
+  <ellipse class="de" cx="480" cy="85" rx="62" ry="31"/><text class="dn" x="480" y="82" text-anchor="middle">S2</text><text class="dc" x="480" y="100" text-anchor="middle">000100</text>
+  <ellipse class="de" cx="480" cy="245" rx="62" ry="31"/><text class="dn" x="480" y="242" text-anchor="middle">S3</text><text class="dc" x="480" y="260" text-anchor="middle">001000</text>
+  <ellipse class="de" cx="280" cy="245" rx="62" ry="31"/><text class="dn" x="280" y="242" text-anchor="middle">S4</text><text class="dc" x="280" y="260" text-anchor="middle">010000</text>
+  <ellipse class="de" cx="380" cy="355" rx="62" ry="31" stroke-dasharray="6 4"/><text class="dn" x="380" y="352" text-anchor="middle">S5</text><text class="dc" x="380" y="370" text-anchor="middle">100000</text>
+  <path class="dl" d="M142,85 H216"/>
+  <path class="dl" d="M342,85 H416"/><text class="dt" x="379" y="77" text-anchor="middle">Start</text>
+  <path class="dl" d="M262,55 C240,8 320,8 299,55"/><text class="dt" x="318" y="22">/Start</text>
+  <path class="dl" d="M462,55 C440,8 520,8 499,55"/><text class="dt" x="518" y="22">Start</text>
+  <path class="dl" d="M480,116 V212"/><text class="dt" x="488" y="170">/Start</text>
+  <path class="dl" d="M418,245 H344"/>
+  <path class="dl" d="M219,234 C168,214 168,276 219,256"/><text class="dt" x="160" y="250" text-anchor="end">Tempo</text>
+  <path class="dl" d="M302,274 L346,327"/><text class="dt" x="314" y="314" text-anchor="end">/Tempo</text>
+  <path class="dl" d="M414,329 L458,274"/>
+  <text x="0" y="396" font-size="11.5" fill="#555">Seta sem condição = transição incondicional (no flanco seguinte).</text>
+</svg>
+</div>
+
+<div style="flex: 1;">
+<h3>Passo 2 · Eliminar estados redundantes</h3>
+<p class="nota"><b>Inspeção visual:</b> duas linhas com as mesmas saídas e o mesmo estado seguinte em todas as colunas
+seriam redundantes. Não há nenhuma: S1 e S2 têm as mesmas saídas mas estados seguintes diferentes.</p>
+<p class="nota"><b>Partições</b> (separar estados com saídas diferentes e depois os que vão para blocos diferentes):</p>
+<table class="eq part">
+  <tr><td>P<sub>0</sub> = (S0 S1 S2 S3 S4 S5)</td><td>todos juntos</td></tr>
+  <tr><td>P<sub>1</sub> = (S0)(S1 S2)(S3)(S4)(S5)</td><td>separados pelas saídas</td></tr>
+  <tr><td>P<sub>2</sub> = (S0)(S1)(S2)(S3)(S4)(S5)</td><td>Start Tempo = 00: S1 → S1 ∈ (S1 S2), S2 → S3 ∈ (S3)</td></tr>
+  <tr><td>P<sub>3</sub> = P<sub>2</sub></td><td>fim: 6 classes = 6 estados</td></tr>
+</table>
+<p class="nota">Conclusão: nenhum estado é redundante.</p>
+
+<h3>Passo 3 · Agregar estados compatíveis (fusão)</h3>
+<div class="duas" style="gap: 3mm; align-items: center;">
+<p class="nota" style="flex: 1; margin: 0;">A tabela está completamente especificada (não há estados seguintes nem saídas
+indiferentes "–"), por isso dois estados só são compatíveis se forem equivalentes. O único par com saídas iguais,
+(S1, S2), já foi separado no passo 2: o grafo de fusão não tem arestas e não há estados a agregar.</p>
+<svg viewBox="0 0 230 92" style="flex: 0 0 33%;" xmlns="http://www.w3.org/2000/svg">
+  <g font-size="12" text-anchor="middle" font-weight="bold" fill="#1d6b4a">
+    <circle cx="20" cy="40" r="15" fill="#e3f4ec" stroke="#1d6b4a"/><text x="20" y="44">S0</text>
+    <circle cx="58" cy="40" r="15" fill="#e3f4ec" stroke="#1d6b4a"/><text x="58" y="44">S1</text>
+    <circle cx="96" cy="40" r="15" fill="#e3f4ec" stroke="#1d6b4a"/><text x="96" y="44">S2</text>
+    <circle cx="134" cy="40" r="15" fill="#e3f4ec" stroke="#1d6b4a"/><text x="134" y="44">S3</text>
+    <circle cx="172" cy="40" r="15" fill="#e3f4ec" stroke="#1d6b4a"/><text x="172" y="44">S4</text>
+    <circle cx="210" cy="40" r="15" fill="#e3f4ec" stroke="#1d6b4a"/><text x="210" y="44">S5</text>
+  </g>
+  <path d="M62,25 Q77,2 92,25" stroke="#999" stroke-dasharray="4 3" fill="none"/>
+  <text x="77" y="16" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="bold">✗</text>
+  <text x="115" y="80" font-size="11" fill="#555" text-anchor="middle">grafo de fusão: nenhuma aresta</text>
+</svg>
+</div>
+
+<h3>Passo 4 · Tabela de estados reduzida</h3>
+<p class="nota">É a própria tabela primitiva: 6 estados (S0…S5), nenhum eliminado nem agregado. Todos são precisos:
+S1 e S2 esperam que se carregue e depois que se largue Start; S3 (deslocar) e S5 (acelerar) duram um só ciclo de relógio;
+S4 espera pelo fim do tempo; S0 inicializa a arquitetura.</p>
+</div>
+</div>
+</div>
+
+<!-- =============================================================== PÁGINA 4: PASSOS 5 A 9 -->
+<div class="pagina">
+<h1>4. Projeto do controlador · passos 5 a 9: codificação, transições e equações</h1>
+<div class="duas">
+<div style="flex: 0 0 49%;">
+<h3>Passo 5 · Codificação dos estados livre de corridas críticas</h3>
+<p class="nota">O enunciado impõe a <b>realização direta: um flip-flop por estado</b> (codificação one-hot), 6 FF
+em vez dos 3 de uma codificação mínima. Cada FF corresponde a um estado do fluxograma.</p>
+<table>
+  <tr><th>Estado</th><th>Q5 Q4 Q3 Q2 Q1 Q0</th><th>Flip-flop</th><th>Primitiva / inicialização</th></tr>
+  <tr><td>S0</td><td class="mono">0&nbsp; 0&nbsp; 0&nbsp; 0&nbsp; 0&nbsp; 1</td><td>FF_S0</td><td>FDPE: PRE = Reset, INIT = 1</td></tr>
+  <tr><td>S1</td><td class="mono">0&nbsp; 0&nbsp; 0&nbsp; 0&nbsp; 1&nbsp; 0</td><td>FF_S1</td><td>FDCE: CLR = Reset, INIT = 0</td></tr>
+  <tr><td>S2</td><td class="mono">0&nbsp; 0&nbsp; 0&nbsp; 1&nbsp; 0&nbsp; 0</td><td>FF_S2</td><td>FDCE: CLR = Reset, INIT = 0</td></tr>
+  <tr><td>S3</td><td class="mono">0&nbsp; 0&nbsp; 1&nbsp; 0&nbsp; 0&nbsp; 0</td><td>FF_S3</td><td>FDCE: CLR = Reset, INIT = 0</td></tr>
+  <tr><td>S4</td><td class="mono">0&nbsp; 1&nbsp; 0&nbsp; 0&nbsp; 0&nbsp; 0</td><td>FF_S4</td><td>FDCE: CLR = Reset, INIT = 0</td></tr>
+  <tr><td>S5</td><td class="mono">1&nbsp; 0&nbsp; 0&nbsp; 0&nbsp; 0&nbsp; 0</td><td>FF_S5</td><td>FDCE: CLR = Reset, INIT = 0</td></tr>
+</table>
+<p class="nota"><b>Corridas:</b> em cada transição mudam 2 FF (o do estado que sai vai a 0 e o do que entra vai a 1).
+Numa máquina assíncrona isso seria uma corrida; aqui todos os FF mudam no mesmo flanco do relógio e as entradas D só
+voltam a ser lidas no flanco seguinte, já estáveis (folga de 5,1 ns medida pelo Vivado): <b>não há corridas
+críticas</b>. O único acontecimento assíncrono é a libertação do Reset: se FF_S0 saísse do PRE antes de FF_S1 sair
+do CLR, a máquina ficava em 000000 sem sair de lá (corrida crítica). Fica resolvido com o <b>SincronizadorReset</b>,
+que ativa o Reset de imediato mas só o liberta num flanco do relógio.</p>
+
+<h3>Passo 6 · Tabela de transições (excitação)</h3>
+<p class="nota">Flip-flops D: a excitação é o próprio estado seguinte, D = Q<sup>+</sup>.</p>
+<table class="trans">
+  <tr><th>EP</th><th>Q5…Q0</th><th>Start Tempo</th><th>ES</th><th>D5 D4 D3 D2 D1 D0</th><th>Termo</th></tr>
+  <tr><td>S0</td><td class="mono">000001</td><td class="mono">– –</td><td>S1</td><td class="mono">000010</td><td>S0</td></tr>
+  <tr><td>S1</td><td class="mono">000010</td><td class="mono">0 –</td><td>S1</td><td class="mono">000010</td><td>S1·/Start</td></tr>
+  <tr><td>S1</td><td class="mono">000010</td><td class="mono">1 –</td><td>S2</td><td class="mono">000100</td><td>S1·Start</td></tr>
+  <tr><td>S2</td><td class="mono">000100</td><td class="mono">1 –</td><td>S2</td><td class="mono">000100</td><td>S2·Start</td></tr>
+  <tr><td>S2</td><td class="mono">000100</td><td class="mono">0 –</td><td>S3</td><td class="mono">001000</td><td>S2·/Start</td></tr>
+  <tr><td>S3</td><td class="mono">001000</td><td class="mono">– –</td><td>S4</td><td class="mono">010000</td><td>S3</td></tr>
+  <tr><td>S4</td><td class="mono">010000</td><td class="mono">– 1</td><td>S4</td><td class="mono">010000</td><td>S4·Tempo</td></tr>
+  <tr><td>S4</td><td class="mono">010000</td><td class="mono">– 0</td><td>S5</td><td class="mono">100000</td><td>S4·/Tempo</td></tr>
+  <tr><td>S5</td><td class="mono">100000</td><td class="mono">– –</td><td>S3</td><td class="mono">001000</td><td>S5</td></tr>
+</table>
+<p class="nota">"–" = indiferente. As outras 58 combinações de Q5…Q0 nunca ocorrem (só um FF a 1).</p>
+</div>
+
+<div style="flex: 1;">
+<h3>Passo 7 · Valor das saídas nas transições (sem picos)</h3>
+<table>
+  <tr><th>Saída</th><th>Atua em</th><th>Pico numa transição?</th></tr>
+  <tr><td>ClrMem = S0</td><td>CLR <b>assíncrono</b> da memória e do Beat</td><td>Não: vem diretamente do Q de FF_S0</td></tr>
+  <tr><td>InitLFSR, RstTemp = S0</td><td>Init / Reset síncronos</td><td>Não (Q de FF_S0)</td></tr>
+  <tr><td>EnLFSR = S0+…+S5</td><td>Enable síncrono</td><td>Possível 0 muito curto entre flancos; o LFSR só o lê no flanco</td></tr>
+  <tr><td>Ready = S1 + S2</td><td>LED LD0</td><td>Possível 0 de ns em S1 → S2: invisível</td></tr>
+  <tr><td>ShiftMem, TglBeat, StartTemp = S3</td><td>CE / Start síncronos</td><td>Não (Q de FF_S3)</td></tr>
+  <tr><td>Waiting = S4, Faster = S5</td><td>LED / registo síncrono</td><td>Não (Q de um só FF)</td></tr>
+</table>
+<p class="nota">Saídas de Moore: só mudam logo a seguir ao flanco do relógio. A única saída que atua de forma assíncrona
+(ClrMem, no CLR dos registos) é tirada diretamente de um flip-flop, por isso nunca tem picos; as que passam por uma OR
+só vão para entradas síncronas ou LEDs.</p>
+
+<h3>Passo 8 · Equações de excitação</h3>
+<p class="nota">Cada D<sub>Sk</sub> é a soma dos termos das linhas da tabela de transições com D<sub>k</sub> = 1.
+Em one-hot Q<sub>j</sub> = 1 identifica sozinho o estado, por isso cada termo é só S<sub>j</sub>·condição
+(não há mapas de Karnaugh a minimizar).</p>
+<table class="eq">
+  <tr><td>D<sub>S0</sub> = 0</td><td>nenhum percurso entra em S0 (só a tecla Reset, pelo PRE)</td></tr>
+  <tr><td>D<sub>S1</sub> = S0 + S1·/Start</td><td>vem de S0, ou fica em S1</td></tr>
+  <tr><td>D<sub>S2</sub> = S1·Start + S2·Start</td><td>vem de S1, ou fica em S2</td></tr>
+  <tr><td>D<sub>S3</sub> = S2·/Start + S5</td><td>vem de S2 ou de S5</td></tr>
+  <tr><td>D<sub>S4</sub> = S3 + S4·Tempo</td><td>vem de S3, ou fica em S4</td></tr>
+  <tr><td>D<sub>S5</sub> = S4·/Tempo</td><td>vem de S4 (sem S5: D<sub>S3</sub> = S2·/Start + S4·/Tempo)</td></tr>
+</table>
+<p class="nota"><b>Sem acidentes:</b> um pico na lógica do D não tem efeito, porque o FF só lê D no flanco, depois de
+estabilizar. Start chega já sincronizada e Tempo é síncrono, por isso nenhuma entrada assíncrona chega a estas portas.</p>
+
+<h3>Passo 9 · Equações de saída</h3>
+<p class="nota">Lidas nas colunas das saídas da tabela primitiva (soma dos estados com 1):</p>
+<table class="eq">
+  <tr><td>ClrMem = InitLFSR = RstTemp = S0</td><td>Ready = S1 + S2</td></tr>
+  <tr><td>EnLFSR = S0 + S1 + S2 + S3 + S4 + S5</td><td>Waiting = S4</td></tr>
+  <tr><td>ShiftMem = TglBeat = StartTemp = S3</td><td>Faster = S5</td></tr>
 </table>
 </div>
 </div>
 </div>
 
-<!-- =============================================================== PÁGINA 3: SINAIS -->
+<!-- =============================================================== PÁGINA 5: PASSOS 10 E 11 -->
 <div class="pagina">
-<h1>3. Sinais de entrada e saída e a sua natureza</h1>
+<h1>5. Projeto do controlador · passos 10 e 11: diagrama lógico e verificação</h1>
+<h3>Passo 10 · Diagrama lógico (realização direta, com as realimentações)</h3>
+<img src="logigrama.svg" style="height: 123mm; display: block; margin: 0 auto;" alt="Diagrama lógico do controlador">
+<div class="duas" style="margin-top: 1mm;">
+<div style="flex: 1;">
+<h3>Passo 11 · Verificar e testar o circuito</h3>
+<ul class="nota">
+  <li><b>Verilog estrutural</b> (controlador/controlador.v): uma primitiva por FF (FF_S0…FF_S5) e uma porta por termo,
+      com os nomes do diagrama; correspondência direta com o fluxograma.</li>
+  <li><b>controlador_teste1</b>: compara os 6 FF e as 10 saídas, ciclo a ciclo, com o fluxograma descrito com <code>case</code>
+      (5089 verificações, Start e Tempo aleatórios, Resets fora do flanco, um só FF a 1 em todos os ciclos): OK.</li>
+  <li><b>guitarhero_teste1</b>: sistema completo (Reset, Start com ressaltos, 12 passos com aceleração, Reset a meio): OK.</li>
+  <li><b>Mutações</b>: trocar uma transição, uma saída ou tirar o sincronizador do Reset faz sempre falhar um testbench.</li>
+</ul>
+</div>
+<div style="flex: 1;">
+<h3>Ensaio na Basys3</h3>
+<ul class="nota">
+  <li>Implementação: 6 FF do controlador (1 FDPE + 5 FDCE), restrições de tempo cumpridas (folga 5,1 ns).</li>
+  <li>LD10…LD15 mostram o FF ativo: depois de BTNU (Reset) acende LD11 (S1) e LD0 (Ready).</li>
+  <li>Carregar BTNC: LD12 (S2). Largar: Ready apaga, LD14 (S4) quase sempre aceso, LD1 (Beat) troca a cada passo.</li>
+  <li>As cordas entram pelo display da esquerda e avançam; a sequência acelera de 0,5 s até 0,2 s por passo.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- =============================================================== PÁGINA 6: SINAIS -->
+<div class="pagina">
+<h1>6. Sinais de entrada e saída e a sua natureza</h1>
 <table>
   <tr><th>Sinal</th><th>Bits</th><th>Origem → destino</th><th>Natureza</th><th>Ativo</th><th>Sincronismo</th><th>Função</th></tr>
   <tr class="grupo"><td colspan="7">Entradas externas (placa Basys3)</td></tr>

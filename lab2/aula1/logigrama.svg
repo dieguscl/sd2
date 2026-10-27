@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="a" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#333"/></marker></defs>
+<style>.w{stroke:#333;stroke-width:1.3;fill:none}.g{fill:#eeeefc;stroke:#4b46a8;stroke-width:1.5}.ff{fill:#e3f4ec;stroke:#1d6b4a;stroke-width:1.6}.n{font-size:13px;fill:#222}.i{font-size:10.5px;fill:#888;font-family:DejaVu Sans Mono,monospace}.b{font-size:13px;font-weight:bold;fill:#1d6b4a}.p{font-size:10.5px;fill:#555}.t{font-size:14px;font-weight:bold;fill:#444}.r{stroke:#1d6b4a;stroke-width:3.2;fill:none;opacity:.55}.rl{font-size:12px;fill:#1d6b4a;font-style:italic}</style>
+<text x="20" y="22" class="t" text-anchor="start">Condições negadas</text>
+<text x="20" y="55" class="n" text-anchor="start">Start</text>
+<path d="M70,50 L110,50" class="w"/>
+<path d="M110,38 L132,50 L110,62 Z" class="g"/>
+<circle cx="136" cy="50" r="4" class="g"/>
+<path d="M140,50 L180,50" class="w"/>
+<text x="186" y="55" class="n" text-anchor="start">/Start</text>
+<text x="110" y="34" class="i" text-anchor="start">inv_start</text>
+<text x="20" y="99" class="n" text-anchor="start">Tempo</text>
+<path d="M70,94 L110,94" class="w"/>
+<path d="M110,82 L132,94 L110,106 Z" class="g"/>
+<circle cx="136" cy="94" r="4" class="g"/>
+<path d="M140,94 L180,94" class="w"/>
+<text x="186" y="99" class="n" text-anchor="start">/Tempo</text>
+<text x="110" y="78" class="i" text-anchor="start">inv_tempo</text>
+<text x="20" y="160" class="p" text-anchor="start">Realimentações (verde): as saídas</text>
+<text x="20" y="175" class="p" text-anchor="start">Q dos FF (S0…S5) voltam às portas</text>
+<text x="20" y="190" class="p" text-anchor="start">do estado seguinte.</text>
+<text x="20" y="210" class="p" text-anchor="start">/Start, /Tempo: saídas dos inversores.</text>
+<text x="20" y="230" class="p" text-anchor="start">Relógio: CLKBasys (100 MHz) em todos os FF.</text>
+<text x="20" y="245" class="p" text-anchor="start">Reset: saída do SincronizadorReset</text>
+<text x="20" y="260" class="p" text-anchor="start">(PRE do FF_S0, CLR dos outros).</text>
+<text x="20" y="285" class="p" text-anchor="start">AND = decisão (estado · condição),</text>
+<text x="20" y="300" class="p" text-anchor="start">OR = reunião dos percursos que</text>
+<text x="20" y="315" class="p" text-anchor="start">entram no mesmo estado.</text>
+<text x="20" y="340" class="p" text-anchor="start">Cinzento: nome da instância em</text>
+<text x="20" y="355" class="p" text-anchor="start">controlador/controlador.v.</text>
+<text x="330" y="22" class="t" text-anchor="start">Estado seguinte (D) e flip-flops</text>
+<path d="M790,91 V42 H300 V591" class="r"/>
+<text x="460" y="37" class="rl" text-anchor="start">realimentação S0…S5 (saídas Q dos flip-flops)</text>
+<rect x="610" y="75" width="74" height="60" rx="3" class="ff"/>
+<text x="616" y="95" class="p" text-anchor="start">D</text>
+<path d="M610,113 L619,119 L610,125" class="w"/>
+<text x="676" y="95" class="p" text-anchor="end">Q</text>
+<text x="647" y="131" class="p" text-anchor="middle">PRE</text>
+<path d="M588,119 L610,119" class="w"/>
+<text x="585" y="123" class="p" text-anchor="end">Clock</text>
+<path d="M647,135 L647,145" class="w"/>
+<text x="652" y="147" class="p" text-anchor="start">Reset</text>
+<text x="647" y="71" class="b" text-anchor="middle">FF_S0 (FDPE)</text>
+<path d="M684,91 H790" class="w"/>
+<circle cx="790" cy="91" r="2.6" fill="#333"/>
+<text x="710" y="86" class="b" text-anchor="start">S0</text>
+<path d="M570,91 L610,91" class="w"/>
+<text x="564" y="96" class="n" text-anchor="end">0</text>
+<text x="564" y="81" class="i" text-anchor="end">ns0: D = 0 (só PRE)</text>
+<rect x="610" y="167" width="74" height="60" rx="3" class="ff"/>
+<text x="616" y="187" class="p" text-anchor="start">D</text>
+<path d="M610,205 L619,211 L610,217" class="w"/>
+<text x="676" y="187" class="p" text-anchor="end">Q</text>
+<text x="647" y="223" class="p" text-anchor="middle">CLR</text>
+<path d="M588,211 L610,211" class="w"/>
+<text x="585" y="215" class="p" text-anchor="end">Clock</text>
+<path d="M647,227 L647,237" class="w"/>
+<text x="652" y="239" class="p" text-anchor="start">Reset</text>
+<text x="647" y="163" class="b" text-anchor="middle">FF_S1 (FDCE)</text>
+<path d="M684,183 H790" class="w"/>
+<path d="M790,183 V91" class="r"/>
+<circle cx="790" cy="183" r="2.6" fill="#333"/>
+<text x="710" y="178" class="b" text-anchor="start">S1</text>
+<path d="M300,172 L443,172" class="w"/>
+<circle cx="300" cy="172" r="2.6" fill="#333"/>
+<text x="308" y="168" class="b" text-anchor="start">S0</text>
+<path d="M300,205 L410,205" class="w"/>
+<circle cx="300" cy="205" r="2.6" fill="#333"/>
+<text x="308" y="201" class="b" text-anchor="start">S1</text>
+<path d="M384,219 L410,219" class="w"/>
+<text x="380" y="223" class="n" text-anchor="end">/Start</text>
+<path d="M410,197 H428 A15.0,15.0 0 0 1 428,227 H410 Z" class="g"/>
+<text x="446" y="208" class="i" text-anchor="start">dec_s1_0</text>
+<path d="M443,172 L495,172 L495,176 L530,176" class="w"/>
+<path d="M443.0,212.0 L507,212.0 L507,190 L530,190" class="w"/>
+<path d="M525,168 Q537,183.0 525,198 Q555,198 567,183.0 Q555,168 525,168 Z" class="g"/>
+<text x="531" y="164" class="i" text-anchor="start">ns1</text>
+<path d="M567,183.0 L610,183" class="w"/>
+<rect x="610" y="259" width="74" height="60" rx="3" class="ff"/>
+<text x="616" y="279" class="p" text-anchor="start">D</text>
+<path d="M610,297 L619,303 L610,309" class="w"/>
+<text x="676" y="279" class="p" text-anchor="end">Q</text>
+<text x="647" y="315" class="p" text-anchor="middle">CLR</text>
+<path d="M588,303 L610,303" class="w"/>
+<text x="585" y="307" class="p" text-anchor="end">Clock</text>
+<path d="M647,319 L647,329" class="w"/>
+<text x="652" y="331" class="p" text-anchor="start">Reset</text>
+<text x="647" y="255" class="b" text-anchor="middle">FF_S2 (FDCE)</text>
+<path d="M684,275 H790" class="w"/>
+<path d="M790,275 V183" class="r"/>
+<circle cx="790" cy="275" r="2.6" fill="#333"/>
+<text x="710" y="270" class="b" text-anchor="start">S2</text>
+<path d="M300,257 L410,257" class="w"/>
+<circle cx="300" cy="257" r="2.6" fill="#333"/>
+<text x="308" y="253" class="b" text-anchor="start">S1</text>
+<path d="M384,271 L410,271" class="w"/>
+<text x="380" y="275" class="n" text-anchor="end">Start</text>
+<path d="M410,249 H428 A15.0,15.0 0 0 1 428,279 H410 Z" class="g"/>
+<text x="446" y="260" class="i" text-anchor="start">dec_s1_1</text>
+<path d="M300,297 L410,297" class="w"/>
+<circle cx="300" cy="297" r="2.6" fill="#333"/>
+<text x="308" y="293" class="b" text-anchor="start">S2</text>
+<path d="M384,311 L410,311" class="w"/>
+<text x="380" y="315" class="n" text-anchor="end">Start</text>
+<path d="M410,289 H428 A15.0,15.0 0 0 1 428,319 H410 Z" class="g"/>
+<text x="446" y="300" class="i" text-anchor="start">dec_s2_1</text>
+<path d="M443.0,264.0 L495,264.0 L495,268 L530,268" class="w"/>
+<path d="M443.0,304.0 L507,304.0 L507,282 L530,282" class="w"/>
+<path d="M525,260 Q537,275.0 525,290 Q555,290 567,275.0 Q555,260 525,260 Z" class="g"/>
+<text x="531" y="256" class="i" text-anchor="start">ns2</text>
+<path d="M567,275.0 L610,275" class="w"/>
+<rect x="610" y="351" width="74" height="60" rx="3" class="ff"/>
+<text x="616" y="371" class="p" text-anchor="start">D</text>
+<path d="M610,389 L619,395 L610,401" class="w"/>
+<text x="676" y="371" class="p" text-anchor="end">Q</text>
+<text x="647" y="407" class="p" text-anchor="middle">CLR</text>
+<path d="M588,395 L610,395" class="w"/>
+<text x="585" y="399" class="p" text-anchor="end">Clock</text>
+<path d="M647,411 L647,421" class="w"/>
+<text x="652" y="423" class="p" text-anchor="start">Reset</text>
+<text x="647" y="347" class="b" text-anchor="middle">FF_S3 (FDCE)</text>
+<path d="M684,367 H790" class="w"/>
+<path d="M790,367 V275" class="r"/>
+<circle cx="790" cy="367" r="2.6" fill="#333"/>
+<text x="710" y="362" class="b" text-anchor="start">S3</text>
+<path d="M300,349 L410,349" class="w"/>
+<circle cx="300" cy="349" r="2.6" fill="#333"/>
+<text x="308" y="345" class="b" text-anchor="start">S2</text>
+<path d="M384,363 L410,363" class="w"/>
+<text x="380" y="367" class="n" text-anchor="end">/Start</text>
+<path d="M410,341 H428 A15.0,15.0 0 0 1 428,371 H410 Z" class="g"/>
+<text x="446" y="352" class="i" text-anchor="start">dec_s2_0</text>
+<path d="M300,396 L443,396" class="w"/>
+<circle cx="300" cy="396" r="2.6" fill="#333"/>
+<text x="308" y="392" class="b" text-anchor="start">S5</text>
+<path d="M443.0,356.0 L495,356.0 L495,360 L530,360" class="w"/>
+<path d="M443,396 L507,396 L507,374 L530,374" class="w"/>
+<path d="M525,352 Q537,367.0 525,382 Q555,382 567,367.0 Q555,352 525,352 Z" class="g"/>
+<text x="531" y="348" class="i" text-anchor="start">ns3</text>
+<path d="M567,367.0 L610,367" class="w"/>
+<rect x="610" y="443" width="74" height="60" rx="3" class="ff"/>
+<text x="616" y="463" class="p" text-anchor="start">D</text>
+<path d="M610,481 L619,487 L610,493" class="w"/>
+<text x="676" y="463" class="p" text-anchor="end">Q</text>
+<text x="647" y="499" class="p" text-anchor="middle">CLR</text>
+<path d="M588,487 L610,487" class="w"/>
+<text x="585" y="491" class="p" text-anchor="end">Clock</text>
+<path d="M647,503 L647,513" class="w"/>
+<text x="652" y="515" class="p" text-anchor="start">Reset</text>
+<text x="647" y="439" class="b" text-anchor="middle">FF_S4 (FDCE)</text>
+<path d="M684,459 H790" class="w"/>
+<path d="M790,459 V367" class="r"/>
+<circle cx="790" cy="459" r="2.6" fill="#333"/>
+<text x="710" y="454" class="b" text-anchor="start">S4</text>
+<path d="M300,448 L443,448" class="w"/>
+<circle cx="300" cy="448" r="2.6" fill="#333"/>
+<text x="308" y="444" class="b" text-anchor="start">S3</text>
+<path d="M300,481 L410,481" class="w"/>
+<circle cx="300" cy="481" r="2.6" fill="#333"/>
+<text x="308" y="477" class="b" text-anchor="start">S4</text>
+<path d="M384,495 L410,495" class="w"/>
+<text x="380" y="499" class="n" text-anchor="end">Tempo</text>
+<path d="M410,473 H428 A15.0,15.0 0 0 1 428,503 H410 Z" class="g"/>
+<text x="446" y="484" class="i" text-anchor="start">dec_s4_1</text>
+<path d="M443,448 L495,448 L495,452 L530,452" class="w"/>
+<path d="M443.0,488.0 L507,488.0 L507,466 L530,466" class="w"/>
+<path d="M525,444 Q537,459.0 525,474 Q555,474 567,459.0 Q555,444 525,444 Z" class="g"/>
+<text x="531" y="440" class="i" text-anchor="start">ns4</text>
+<path d="M567,459.0 L610,459" class="w"/>
+<rect x="610" y="535" width="74" height="60" rx="3" class="ff"/>
+<text x="616" y="555" class="p" text-anchor="start">D</text>
+<path d="M610,573 L619,579 L610,585" class="w"/>
+<text x="676" y="555" class="p" text-anchor="end">Q</text>
+<text x="647" y="591" class="p" text-anchor="middle">CLR</text>
+<path d="M588,579 L610,579" class="w"/>
+<text x="585" y="583" class="p" text-anchor="end">Clock</text>
+<path d="M647,595 L647,605" class="w"/>
+<text x="652" y="607" class="p" text-anchor="start">Reset</text>
+<text x="647" y="531" class="b" text-anchor="middle">FF_S5 (FDCE)</text>
+<path d="M684,551 H790" class="w"/>
+<path d="M790,551 V459" class="r"/>
+<circle cx="790" cy="551" r="2.6" fill="#333"/>
+<text x="710" y="546" class="b" text-anchor="start">S5</text>
+<path d="M300,544 L410,544" class="w"/>
+<circle cx="300" cy="544" r="2.6" fill="#333"/>
+<text x="308" y="540" class="b" text-anchor="start">S4</text>
+<path d="M384,558 L410,558" class="w"/>
+<text x="380" y="562" class="n" text-anchor="end">/Tempo</text>
+<path d="M410,536 H428 A15.0,15.0 0 0 1 428,566 H410 Z" class="g"/>
+<text x="446" y="547" class="i" text-anchor="start">dec_s4_0</text>
+<path d="M443.0,551.0 L610,551" class="w"/>
+<text x="525" y="545" class="i" text-anchor="start">ns5 (buf)</text>
+<text x="850" y="22" class="t" text-anchor="start">Saídas (Moore)</text>
+<text x="876" y="56" class="n" text-anchor="end">S0</text>
+<path d="M880,52 L1010,52" class="w" marker-end="url(#a)"/>
+<text x="1016" y="57" class="n" text-anchor="start">ClrMem</text>
+<text x="910" y="47" class="i" text-anchor="start">o_clrmem</text>
+<text x="876" y="86" class="n" text-anchor="end">S0</text>
+<path d="M880,82 L1010,82" class="w" marker-end="url(#a)"/>
+<text x="1016" y="87" class="n" text-anchor="start">InitLFSR</text>
+<text x="910" y="77" class="i" text-anchor="start">o_initlfsr</text>
+<text x="876" y="116" class="n" text-anchor="end">S0</text>
+<path d="M880,112 L1010,112" class="w" marker-end="url(#a)"/>
+<text x="1016" y="117" class="n" text-anchor="start">RstTemp</text>
+<text x="910" y="107" class="i" text-anchor="start">o_rsttemp</text>
+<text x="876" y="155" class="n" text-anchor="end">S0</text>
+<path d="M880,151 L918,151" class="w"/>
+<text x="876" y="169" class="n" text-anchor="end">S1</text>
+<path d="M880,165 L918,165" class="w"/>
+<text x="876" y="183" class="n" text-anchor="end">S2</text>
+<path d="M880,179 L918,179" class="w"/>
+<text x="876" y="197" class="n" text-anchor="end">S3</text>
+<path d="M880,193 L918,193" class="w"/>
+<text x="876" y="211" class="n" text-anchor="end">S4</text>
+<path d="M880,207 L918,207" class="w"/>
+<text x="876" y="225" class="n" text-anchor="end">S5</text>
+<path d="M880,221 L918,221" class="w"/>
+<path d="M912,142 Q924,186.0 912,230 Q942,230 954,186.0 Q942,142 912,142 Z" class="g"/>
+<path d="M954,186.0 L1010,186.0" class="w" marker-end="url(#a)"/>
+<text x="1016" y="191.0" class="n" text-anchor="start">EnLFSR</text>
+<text x="958" y="181.0" class="i" text-anchor="start">o_enlfsr</text>
+<text x="876" y="259" class="n" text-anchor="end">S1</text>
+<path d="M880,255 L918,255" class="w"/>
+<text x="876" y="273" class="n" text-anchor="end">S2</text>
+<path d="M880,269 L918,269" class="w"/>
+<path d="M912,246 Q924,262.0 912,278 Q942,278 954,262.0 Q942,246 912,246 Z" class="g"/>
+<path d="M954,262.0 L1010,262.0" class="w" marker-end="url(#a)"/>
+<text x="1016" y="267.0" class="n" text-anchor="start">Ready</text>
+<text x="958" y="257.0" class="i" text-anchor="start">o_ready</text>
+<text x="876" y="298" class="n" text-anchor="end">S3</text>
+<path d="M880,294 L1010,294" class="w" marker-end="url(#a)"/>
+<text x="1016" y="299" class="n" text-anchor="start">ShiftMem</text>
+<text x="910" y="289" class="i" text-anchor="start">o_shiftmem</text>
+<text x="876" y="328" class="n" text-anchor="end">S3</text>
+<path d="M880,324 L1010,324" class="w" marker-end="url(#a)"/>
+<text x="1016" y="329" class="n" text-anchor="start">TglBeat</text>
+<text x="910" y="319" class="i" text-anchor="start">o_tglbeat</text>
+<text x="876" y="358" class="n" text-anchor="end">S3</text>
+<path d="M880,354 L1010,354" class="w" marker-end="url(#a)"/>
+<text x="1016" y="359" class="n" text-anchor="start">StartTemp</text>
+<text x="910" y="349" class="i" text-anchor="start">o_starttemp</text>
+<text x="876" y="388" class="n" text-anchor="end">S4</text>
+<path d="M880,384 L1010,384" class="w" marker-end="url(#a)"/>
+<text x="1016" y="389" class="n" text-anchor="start">Waiting</text>
+<text x="910" y="379" class="i" text-anchor="start">o_waiting</text>
+<text x="876" y="418" class="n" text-anchor="end">S5</text>
+<path d="M880,414 L1010,414" class="w" marker-end="url(#a)"/>
+<text x="1016" y="419" class="n" text-anchor="start">Faster</text>
+<text x="910" y="409" class="i" text-anchor="start">o_faster</text>
+</svg>
