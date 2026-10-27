@@ -1,0 +1,18 @@
+# Pastas geradas pelos projetos Vivado (ficam os .xpr e as fontes em <nome>.srcs)
+vivado/*/*
+!vivado/*/*.xpr
+!vivado/*/*.srcs/
+vivado/*/*.srcs/**/ip/
+vivado/*/*.srcs/utils_1/
+logs/
+.Xil/
+*.jou
+*.log
+*.str
+webtalk*
+.omc/
+*.pb
+__pycache__/
+relatorio/fonte/corpo.docx
+simulacao/xsim/
+simulacao/*.wdb
