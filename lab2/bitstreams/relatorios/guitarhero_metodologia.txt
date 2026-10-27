@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2026.1 (lin64) Build 6511674 Tue Jun 16 11:01:26 MDT 2026
-| Date         : Tue Oct 27 21:15:20 2026
+| Date         : Tue Oct 27 21:36:20 2026
 | Host         : diegus running 64-bit Linux Mint 22.2
 | Command      : report_methodology -file /home/diegus/Documents/uni/sd2/lab2/bitstreams/relatorios/guitarhero_metodologia.txt
 | Design       : GuitarHero

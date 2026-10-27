@@ -20,8 +20,8 @@
   .sub { color: var(--cinza); font-size: 9.5pt; margin-bottom: 2mm; }
   svg text { font-family: "DejaVu Sans", Arial, sans-serif; }
   .duas { display: flex; gap: 6mm; align-items: flex-start; }
-  table { border-collapse: collapse; width: 100%; font-size: 8.2pt; }
-  th, td { border: 0.3mm solid #bbb; padding: 0.55mm 1.4mm; text-align: left; vertical-align: top; }
+  table { border-collapse: collapse; width: 100%; font-size: 8pt; }
+  th, td { border: 0.3mm solid #bbb; padding: 0.4mm 1.4mm; text-align: left; vertical-align: top; }
   th { background: #eee; }
   td.n { text-align: center; white-space: nowrap; }
   tr.grupo td { background: #f6f6f6; font-weight: bold; }
@@ -40,7 +40,7 @@
 <div class="sub">1. Arquitetura a controlar + controlador (malha fechada). Saídas do controlador = comandos sobre a arquitetura;
 saídas da arquitetura (Start, Tempo) = entradas do controlador. Ligações pelo nome do sinal; <span class="mono">/n</span> = barramento de n bits.</div>
 
-<svg viewBox="0 0 1200 760" style="height: 168mm; width: auto; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 1200 766" style="height: 168mm; width: auto; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <marker id="s" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L8,4 L0,8 z" fill="#333"/>
@@ -59,11 +59,13 @@ saídas da arquitetura (Start, Tempo) = entradas do controlador. Ligações pelo
   </style>
 
   <!-- entradas da placa -->
-  <text class="t" x="8" y="128" font-weight="bold">BtnReset</text>
-  <text class="tp" x="8" y="152">tecla BTNU</text>
-  <path class="ls" d="M8,135 H170"/>
-  <text class="t" x="8" y="180" font-weight="bold">BtnStart</text>
-  <text class="tp" x="8" y="266">tecla BTNC</text>
+  <text class="t" x="8" y="104" font-weight="bold">BtnReset <tspan class="tp" font-weight="normal">(BTNU)</tspan></text>
+  <path class="ls" d="M8,135 H40"/>
+  <rect class="novo" x="40" y="112" width="98" height="46" rx="5"/>
+  <text class="td" x="89" y="132" text-anchor="middle">Sincronizador</text>
+  <text class="td" x="89" y="148" text-anchor="middle">do Reset</text>
+  <path class="ls" d="M138,135 H170"/>
+  <text class="t" x="8" y="180" font-weight="bold">BtnStart <tspan class="tp" font-weight="normal">(BTNC)</tspan></text>
   <path class="ls" d="M8,215 H40"/>
   <rect class="novo" x="40" y="186" width="98" height="58" rx="5"/>
   <text class="td" x="89" y="210" text-anchor="middle">Sincronizador</text>
@@ -199,8 +201,9 @@ saídas da arquitetura (Start, Tempo) = entradas do controlador. Ligações pelo
   <rect class="ctl" x="8" y="704" width="22" height="14"/><text class="td" x="36" y="716">controlador</text>
   <rect class="novo" x="122" y="704" width="22" height="14"/><text class="td" x="150" y="716">novo</text>
   <rect class="lab1" x="200" y="704" width="22" height="14"/><text class="td" x="228" y="716">reutilizado do lab 1</text>
-  <text class="tp" x="8" y="742">Todos os blocos usam o relógio de 100 MHz (CLKBasys). Só a tecla Reset atua diretamente no controlador (PRE/CLR dos FF);
+  <text class="tp" x="8" y="742">Todos os blocos usam o relógio de 100 MHz (CLKBasys). Só a tecla Reset (pelo sincronizador) atua no controlador (PRE/CLR dos FF);
     os restantes elementos são inicializados pelas saídas do estado S0.</text>
+  <text class="tp" x="8" y="758">Sincronizador do Reset: ativa o Reset de imediato (assíncrono) e só o liberta num flanco do relógio, para os 6 FF saírem de S0 juntos.</text>
 </svg>
 </div>
 
@@ -348,10 +351,11 @@ Decisão = produto do estado com a condição (desmultiplexer); entradas no mesm
   <tr><th>Sinal</th><th>Bits</th><th>Origem → destino</th><th>Natureza</th><th>Ativo</th><th>Sincronismo</th><th>Função</th></tr>
   <tr class="grupo"><td colspan="7">Entradas externas (placa Basys3)</td></tr>
   <tr><td>CLKBasys</td><td class="n">1</td><td>oscilador (W5) → todos os blocos</td><td>relógio</td><td>↑</td><td>100 MHz</td><td>relógio único de todo o sistema</td></tr>
-  <tr><td>BtnReset</td><td class="n">1</td><td>tecla BTNU → Controlador (PRE/CLR dos FF)</td><td>controlo externo</td><td>High</td><td>assíncrono</td><td>põe a máquina de estados em S0 (só isso)</td></tr>
+  <tr><td>BtnReset</td><td class="n">1</td><td>tecla BTNU → Sincronizador do Reset</td><td>controlo externo</td><td>High</td><td>assíncrono</td><td>põe a máquina de estados em S0 (só isso)</td></tr>
   <tr><td>BtnStart</td><td class="n">1</td><td>tecla BTNC → Sincronizador</td><td>controlo externo</td><td>High</td><td>assíncrono</td><td>começa o jogo (carregar e largar)</td></tr>
 
   <tr class="grupo"><td colspan="7">Entradas do controlador (estado da arquitetura → decisões do fluxograma)</td></tr>
+  <tr><td>Reset</td><td class="n">1</td><td>Sincronizador do Reset → Controlador (PRE do FF_S0, CLR dos outros)</td><td>controlo</td><td>High</td><td>ativa assínc., liberta síncr.</td><td>S0 de imediato; os 6 FF saem de S0 no mesmo flanco</td></tr>
   <tr><td>Start</td><td class="n">1</td><td>Sincronizador → Controlador</td><td>condição</td><td>High</td><td>síncrono</td><td>sincronizada (2 FF) e sem ressaltos (10 ms)</td></tr>
   <tr><td>Tempo</td><td class="n">1</td><td>Temporizador variável → Controlador</td><td>condição</td><td>High</td><td>síncrono</td><td>1 enquanto o temporizador conta; volta a 0 sozinho</td></tr>
 

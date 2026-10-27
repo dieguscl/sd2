@@ -7,7 +7,7 @@
 <Project Product="Vivado" Version="7" Minor="72" Path="/home/diegus/Documents/uni/sd2/lab2/vivado/guitarhero/guitarhero.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="d392edf39f674b928f84f57a6535d5fe"/>
+    <Option Name="Id" Val="3c70df8a95364401b288e1afeb279297"/>
     <Option Name="Part" Val="xc7a35ticpg236-1L"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -159,6 +159,13 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PPRDIR/../../sincronizador/sincronizadorreset.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PPRDIR/../../temporizador/temporizador.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -260,6 +267,14 @@
         </FileInfo>
       </File>
       <File Path="$PPRDIR/../../sincronizador/sincronizador_teste1.v">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../../sincronizador/sincronizadorreset_teste1.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>

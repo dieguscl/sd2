@@ -8,9 +8,12 @@ set_property PACKAGE_PIN W5 [get_ports CLKBasys]
 create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports CLKBasys]
 
 ## Relógio do varrimento dos displays (100 MHz / 50000 = 2 kHz), gerado pelo DivisorClock
-## (-divide_by = 2 x METADE: atualizar se METADE mudar). Os dois relógios estão relacionados
-## e o Vivado analisa os caminhos entre eles, por isso não há false path entre relógios.
+## (-divide_by = 2 x METADE: atualizar se METADE mudar).
 create_generated_clock -name clk_varrimento -source [get_ports CLKBasys] -divide_by 50000 [get_pins displays/divisor/ClockOut_reg/Q]
+## O único caminho clk_varrimento -> sys_clk_pin é a realimentação do próprio divisor (ClockOut -> /ClockOut,
+## um LUT, ~1,5 ns). Sem este false path o Vivado tenta analisá-lo e, como 50000 períodos não têm período comum
+## dentro do limite que expande, dá TIMING-8 (Critical Warning); com ele fica só TIMING-9, como no 1.º trabalho.
+set_false_path -from [get_clocks clk_varrimento] -to [get_clocks sys_clk_pin]
 
 ## Teclas (assíncronas: as duas passam por sincronizadores; o Reset atua de imediato no PRE
 ## dos flip-flops do SincronizadorReset e a libertação para o controlador já é síncrona)

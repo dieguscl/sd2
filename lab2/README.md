@@ -18,6 +18,7 @@ Realizações diretas: gestão dos displays para o jogo Guitar Hero (Basys3).
 | `Memoria4x2` | `memoria4x2/` | Fila de 4 posições de 2 bits feita com 4 `Registo4` do 1.º trabalho |
 | `TemporizadorVariavel` | `temporizador/` | `Velocidade` (registo do período, 0,5 s → 0,2 s, −5 ms por passo) + `Temporizador` (Tempo = 1 durante Periodo ciclos) |
 | `Sincronizador` | `sincronizador/` | Sincronização da tecla Start (2 FF) e anti-ressalto de 10 ms |
+| `SincronizadorReset` | `sincronizador/` | Reset ativado de imediato e libertado num flanco do relógio (2 FDPE) |
 | `Beat` | `beat/` | Flip-flop T (FDCE com D = /Q) do LED Beat |
 | `GestaoDisplays` | `gestaodisplays/` | Sistema do 1.º trabalho (divisor, contador, mux 16x4, descodificador) com o transcodificador alterado `TranscodCordas` |
 | `GuitarHero` | `guitarhero/` | Circuito de topo e restrições da Basys3 (`guitarhero.xdc`) |
@@ -40,7 +41,7 @@ D_S0 = 0 · D_S1 = S0 + S1·/Start · D_S2 = S1·Start + S2·Start · D_S3 = S2�
 ## Simulação
 
 ```bash
-scripts/simula.sh                       # os 9 testbenches (cerca de 45 s), com o xsim do Vivado
+scripts/simula.sh                       # os 10 testbenches (cerca de 45 s), com o xsim do Vivado
 scripts/simula.sh controlador_teste1    # só um
 ```
 
@@ -48,9 +49,11 @@ Cada testbench compara a UUT com um modelo de referência e termina com `Simulac
 (resumo em `simulacao/resultados.txt`; formas de onda em `simulacao/<testbench>.wdb`).
 O `controlador_teste1` compara os 6 flip-flops e as 10 saídas com o fluxograma descrito com `case`, com Start e Tempo
 aleatórios e Resets assíncronos fora do flanco. O `guitarhero_teste1` testa o sistema completo com tempos curtos
-(Reset, Start com ressaltos, 12 passos do jogo com aceleração, Reset a meio do jogo).
-Os testbenches foram validados com mutações (alterar uma transição, uma saída, o mapeamento dos displays, o período,
-a fila ou o limite da aceleração faz sempre falhar pelo menos dois testbenches).
+(Reset, Start com ressaltos, 12 passos do jogo com aceleração, Reset a meio do jogo), com um modelo próprio do LFSR e
+uma fila de referência comandada só pelos LEDs dos estados.
+Os testbenches foram validados com mutações: alterar uma transição, uma saída, o mapeamento dos displays, o período,
+a fila, o limite da aceleração, a realimentação do LFSR, a ligação LFSR → memória ou retirar o sincronizador do Reset
+faz sempre falhar pelo menos um testbench.
 
 ## Projeto Vivado e bitstream
 
@@ -60,7 +63,8 @@ vivado -mode batch -source scripts/build.tcl     # recria vivado/guitarhero e ge
 
 Abrir com **File > Project > Open** → `vivado/guitarhero/guitarhero.xpr`. Os testbenches estão em *Simulation Sources*
 (o ativo é `guitarhero_teste1`; para outro: botão direito → **Set as Top** → **Run Behavioral Simulation**).
-Resultado da implementação: 98 LUTs, 156 flip-flops, todas as restrições de tempo cumpridas (WNS = +5,5 ns).
+Resultado da implementação: 97 LUTs, 158 flip-flops, todas as restrições de tempo cumpridas (WNS = +5,1 ns),
+nenhum aviso crítico de CDC (o Reset dos 6 FF do controlador já não vem diretamente da tecla).
 O Vivado duplica alguns flip-flops do controlador na implementação (`FF_S0_lopt_replica`, ...) por terem várias cargas;
 as réplicas são logicamente iguais e no esquema da síntese aparecem só os 6 flip-flops dos estados.
 
@@ -85,3 +89,16 @@ até um passo a cada 0,2 s. BTNU em qualquer momento volta ao início.
   tempo total a temporizar (`Periodo`), como pede a secção 2.3.
 - Estados codificados one-hot (código Q5…Q0 no fluxograma) e equações da realização direta acrescentadas.
 - LEDs LD10…LD15 mostram o estado ativo (permitido pela secção 2.4), útil para a demonstração ao docente.
+- `SincronizadorReset` entre a tecla e o controlador: o Reset continua a pôr a máquina em S0 de imediato (secção 2.7),
+  mas a libertação passa a ser síncrona. Com a tecla ligada diretamente ao PRE/CLR, se fosse largada junto a um flanco,
+  FF_S0 podia sair do PRE (e carregar D = 0) antes de FF_S1 sair do CLR e a máquina ficava sem estado ativo (000000),
+  sem recuperação. O mesmo podia acontecer ao configurar a FPGA.
+
+## Pontos a justificar no relatório
+
+- O `Sincronizador` da tecla Start, o `DivisorClock` e o `Contador4` não são inicializados pela máquina de estados:
+  o primeiro só condiciona uma entrada e os outros dois fazem o varrimento dos displays, que funciona sempre
+  (arrancam com os valores INIT da configuração).
+- Se Start estiver carregada no momento em que se larga Reset, S1 passa logo a S2 e o jogo começa quando Start for largada
+  (o fluxograma só exige ver a tecla carregada e depois largada).
+- ClrMem limpa a memória e também o LED Beat (as duas ações pertencem ao estado S0).
