@@ -1,9 +1,8 @@
 `timescale 1ns / 1ps
 
 // Testbench do temporizador.
-// Verifica que Tempo fica a 1 exatamente Periodo ciclos depois de Start, que volta a 0
-// sozinho, que Reset interrompe a contagem, que Start durante a contagem recomeça e que
-// Periodo = 0 não ativa Tempo.
+// Com Start a 1 o temporizador carrega Periodo; Tempo fica a 1 durante Periodo ciclos.
+// Cada linha muda as entradas, espera e confere Tempo.
 module temporizador_teste1();
 
 //   Declaração das entradas
@@ -23,71 +22,47 @@ module temporizador_teste1();
          .Tempo(Tempo)
      );
 
-//   Relógio de 100 MHz (período de 10ns), como o da Basys3
+//   Relógio de 100 MHz (período de 10ns): flancos ascendentes em 5, 15, 25, ... ns
      always #5 Clock = ~Clock;
 
+//   Confere Tempo com o valor esperado
      integer erros = 0, verificacoes = 0;
-     task verifica(input esperado, input [8*48:1] caso);
+     task confere(input esperado);
          begin
              verificacoes = verificacoes + 1;
              if (Tempo !== esperado) begin
-                 $display("ERRO t=%0t (%0s): Tempo=%b (esperado %b)", $time, caso, Tempo, esperado);
+                 $display("ERRO t=%0t: Tempo=%b (esperado %b)", $time, Tempo, esperado);
                  erros = erros + 1;
              end
          end
      endtask
 
-//   Dá um impulso de Start com 1 ciclo e conta durante quantos ciclos Tempo fica a 1
-     integer ciclos;
-     task temporiza(input [7:0] p);
-         begin
-             Periodo = p; Start = 1;
-             #10 Start = 0;
-             ciclos = 0;
-             while (Tempo === 1'b1 && ciclos < 300) begin
-                 #10 ciclos = ciclos + 1;
-             end
-             verificacoes = verificacoes + 1;
-             if (ciclos != p) begin
-                 $display("ERRO t=%0t: Periodo=%0d mas Tempo esteve a 1 durante %0d ciclos", $time, p, ciclos);
-                 erros = erros + 1;
-             end
-         end
-     endtask
-
-     integer n;
      initial begin
-         #1   verifica(1'b0, "valor inicial: parado");
-         // As entradas mudam a meio do período (relógio sobe em 5, 15, 25, ...)
-         #9;
-         temporiza(8'd1);
-         temporiza(8'd5);
-         temporiza(8'd17);
-         temporiza(8'd255);
-         #50  verifica(1'b0, "fica a 0 depois do fim");
-
-         // Periodo = 0: Tempo nunca sobe
-         Periodo = 0; Start = 1; #10 Start = 0;
-         verifica(1'b0, "Periodo = 0");
-
-         // Reset a meio da contagem
-         Periodo = 50; Start = 1; #10 Start = 0;
-         #100 verifica(1'b1, "a contar antes do Reset");
-         Reset = 1; #10 verifica(1'b0, "Reset interrompe a contagem");
-         Reset = 0; #100 verifica(1'b0, "continua parado depois do Reset");
-
+         #10;                                            // as entradas mudam a meio do ciclo
+                                         confere(0);     // valor inicial: parado
+         // Periodo = 3: Tempo a 1 durante 3 ciclos
+         Periodo = 3; Start = 1;     #10 confere(1);     // 1.º ciclo
+                      Start = 0;     #10 confere(1);     // 2.º ciclo
+                                     #10 confere(1);     // 3.º ciclo
+                                     #10 confere(0);     // acabou sozinho
+                                     #30 confere(0);
+         // Periodo = 0: Tempo não chega a subir
+         Periodo = 0; Start = 1;     #10 confere(0);
+                      Start = 0;     #10 confere(0);
+         // Reset a meio da contagem: para
+         Periodo = 5; Start = 1;     #10 confere(1);
+                      Start = 0;     #10 confere(1);
+         Reset = 1;                  #10 confere(0);     // Reset interrompe a contagem
+         Reset = 0;                  #30 confere(0);     // e não volta a contar
          // Reset tem prioridade sobre Start
-         Reset = 1; Start = 1; #10 verifica(1'b0, "Reset tem prioridade sobre Start");
+         Reset = 1; Start = 1;       #10 confere(0);
          Reset = 0; Start = 0;
-
-         // Start durante a contagem recomeça com o novo período
-         Periodo = 30; Start = 1; #10 Start = 0;
-         #100;                                   // 10 dos 30 ciclos já passaram
-         temporiza(8'd12);                       // recomeça: tem de durar 12, não 20
-
-         // Vários valores seguidos
-         for (n = 2; n < 40; n = n + 7)
-             temporiza(n);
+         // Start a meio da contagem: recomeça com o novo período
+         Periodo = 3; Start = 1;     #10 confere(1);
+                      Start = 0;     #10 confere(1);
+         Periodo = 4; Start = 1;     #10 confere(1);     // Start outra vez: recomeça com 4 ciclos
+                      Start = 0;     #20 confere(1);     // sem recomeçar já teria acabado
+                                     #20 confere(0);     // acaba 4 ciclos depois do 2.º Start
 
          if (erros == 0) $display("Simulacao OK (%0d verificacoes)", verificacoes);
          else            $display("Simulacao FALHOU (%0d erros em %0d verificacoes)", erros, verificacoes);

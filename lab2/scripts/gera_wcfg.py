@@ -16,42 +16,41 @@ RADIX = {'b': 'BINARYRADIX', 'h': 'HEXRADIX', 'u': 'UNSIGNEDDECRADIX'}
 # testbench -> (pasta, inicio_ns, fim_ns, [sinais])
 # sinal: ('caminho relativo ao testbench', radix, cor, expandir)
 VISTAS = {
-    'sincronizador_teste1': ('sincronizador', 0, 3700, [
-        ('Entrada', 'b', 'ent', False), ('UUT/sinc', 'b', 'int', False),
-        ('UUT/contagem', 'u', 'int', False), ('Saida', 'b', 'sai', False)]),
-    'sincronizadorreset_teste1': ('sincronizador', 0, 300, [
+    'sincronizador_teste1': ('sincronizador', 0, 560, [
+        ('Clock', 'b', 'clk', False), ('Entrada', 'b', 'ent', False), ('UUT/meta', 'b', 'int', False),
+        ('UUT/sinc', 'b', 'int', False), ('UUT/contagem', 'u', 'int', False), ('Saida', 'b', 'sai', False)]),
+    'sincronizadorreset_teste1': ('sincronizador', 0, 200, [
         ('Clock', 'b', 'clk', False), ('Entrada', 'b', 'ent', False), ('UUT/q1', 'b', 'int', False),
         ('Saida', 'b', 'sai', False)]),
-    'lfsr32_teste1': ('lfsr32', 0, 200, [
+    'lfsr32_teste1': ('lfsr32', 0, 110, [
         ('Clock', 'b', 'clk', False), ('Enable', 'b', 'ent', False), ('Init', 'b', 'ent', False),
-        ('UUT/regLFSR', 'h', 'int', False), ('UUT/regXNOR', 'b', 'int', False), ('OutLFSR', 'b', 'sai', False),
-        ('referencia', 'h', 'int', False)]),
-    'memoria4x2_teste1': ('memoria4x2', 90, 240, [
+        ('UUT/regLFSR', 'h', 'int', False), ('UUT/regXNOR', 'b', 'int', False), ('OutLFSR', 'b', 'sai', False)]),
+    'memoria4x2_teste1': ('memoria4x2', 100, 220, [
         ('Clk', 'b', 'clk', False), ('Data', 'b', 'ent', False), ('Shift', 'b', 'ent', False), ('CLR', 'b', 'ent', False),
-        ('Pos0', 'b', 'sai', False), ('Pos1', 'b', 'sai', False), ('Pos2', 'b', 'sai', False), ('Pos3', 'b', 'sai', False),
-        ('referencia', 'b', 'int', False)]),
-    'temporizador_teste1': ('temporizador', 0, 330, [
+        ('Pos0', 'b', 'sai', False), ('Pos1', 'b', 'sai', False), ('Pos2', 'b', 'sai', False), ('Pos3', 'b', 'sai', False)]),
+    'temporizador_teste1': ('temporizador', 0, 240, [
         ('Clock', 'b', 'clk', False), ('Reset', 'b', 'ent', False), ('Start', 'b', 'ent', False),
         ('Periodo', 'u', 'ent', False), ('UUT/contagem', 'u', 'int', False), ('Tempo', 'b', 'sai', False)]),
-    'temporizadorvariavel_teste1': ('temporizador', 0, 2700, [
-        ('RstTemp', 'b', 'ent', False), ('StartTemp', 'b', 'ent', False), ('Faster', 'b', 'ent', False),
-        ('UUT/Periodo', 'u', 'int', False), ('UUT/temporizador/contagem', 'u', 'int', False), ('Tempo', 'b', 'sai', False)]),
-    'beat_teste1': ('beat', 100, 270, [
+    'temporizadorvariavel_teste1': ('temporizador', 0, 190, [
+        ('Clock', 'b', 'clk', False), ('RstTemp', 'b', 'ent', False), ('StartTemp', 'b', 'ent', False),
+        ('Faster', 'b', 'ent', False), ('UUT/Periodo', 'u', 'int', False),
+        ('UUT/temporizador/contagem', 'u', 'int', False), ('Tempo', 'b', 'sai', False)]),
+    'beat_teste1': ('beat', 100, 200, [
         ('Clk', 'b', 'clk', False), ('Tgl', 'b', 'ent', False), ('CLR', 'b', 'ent', False), ('Q', 'b', 'sai', False)]),
-    'gestaodisplays_teste1': ('gestaodisplays', 9820, 10180, [
+    'gestaodisplays_teste1': ('gestaodisplays', 100, 475, [
         ('Clock', 'b', 'clk', False), ('Pos0', 'b', 'ent', False), ('Pos1', 'b', 'ent', False),
         ('Pos2', 'b', 'ent', False), ('Pos3', 'b', 'ent', False), ('UUT/ClockVarrimento', 'b', 'int', False),
         ('UUT/mux16x4/Sel', 'u', 'ctl', False), ('Anodos', 'b', 'sai', False), ('UUT/ValorAtivo', 'u', 'int', False),
         ('Segmentos', 'b', 'sai', False), ('DotPoint', 'b', 'sai', False)]),
-    'controlador_teste1': ('controlador', 100, 340, [
+    'controlador_teste1': ('controlador', 0, 230, [
         ('Clock', 'b', 'clk', False), ('Reset', 'b', 'ent', False), ('Start', 'b', 'ent', False), ('Tempo', 'b', 'ent', False),
         ('UUT/S0', 'b', 'int', False), ('UUT/S1', 'b', 'int', False), ('UUT/S2', 'b', 'int', False),
         ('UUT/S3', 'b', 'int', False), ('UUT/S4', 'b', 'int', False), ('UUT/S5', 'b', 'int', False),
         ('ClrMem', 'b', 'sai', False), ('InitLFSR', 'b', 'sai', False), ('RstTemp', 'b', 'sai', False),
         ('EnLFSR', 'b', 'sai', False), ('Ready', 'b', 'sai', False), ('ShiftMem', 'b', 'sai', False),
         ('StartTemp', 'b', 'sai', False), ('TglBeat', 'b', 'sai', False), ('Waiting', 'b', 'sai', False),
-        ('Faster', 'b', 'sai', False), ('ref_estado', 'u', 'ctl', False)]),
-    'guitarhero_teste1': ('guitarhero', 0, 6490, [
+        ('Faster', 'b', 'sai', False)]),
+    'guitarhero_teste1': ('guitarhero', 0, 2830, [
         ('BtnReset', 'b', 'ent', False), ('BtnStart', 'b', 'ent', False), ('UUT/Reset', 'b', 'int', False),
         ('UUT/Start', 'b', 'int', False), ('LedEstado', 'b', 'sai', False), ('LedReady', 'b', 'sai', False),
         ('LedWaiting', 'b', 'sai', False), ('LedBeat', 'b', 'sai', False), ('UUT/Tempo', 'b', 'int', False),
@@ -132,14 +131,14 @@ def gera(tb, larguras, saida=None):
 LARGURAS = {
     'sincronizador_teste1': {'UUT/contagem': 32},
     'sincronizadorreset_teste1': {},
-    'lfsr32_teste1': {'UUT/regLFSR': 32, 'OutLFSR': 2, 'referencia': 32},
-    'memoria4x2_teste1': {'Data': 2, 'Pos0': 2, 'Pos1': 2, 'Pos2': 2, 'Pos3': 2, 'referencia': 8},
+    'lfsr32_teste1': {'UUT/regLFSR': 32, 'OutLFSR': 2},
+    'memoria4x2_teste1': {'Data': 2, 'Pos0': 2, 'Pos1': 2, 'Pos2': 2, 'Pos3': 2},
     'temporizador_teste1': {'Periodo': 8, 'UUT/contagem': 8},
     'temporizadorvariavel_teste1': {'UUT/Periodo': 8, 'UUT/temporizador/contagem': 8},
     'beat_teste1': {},
     'gestaodisplays_teste1': {'Pos0': 2, 'Pos1': 2, 'Pos2': 2, 'Pos3': 2, 'UUT/mux16x4/Sel': 2, 'Anodos': 4,
                               'UUT/ValorAtivo': 4, 'Segmentos': 7},
-    'controlador_teste1': {'ref_estado': 32},
+    'controlador_teste1': {},
     'guitarhero_teste1': {'LedEstado': 6, 'UUT/temporizador/Periodo': 28, 'UUT/OutLFSR': 2,
                           'UUT/Pos0': 2, 'UUT/Pos1': 2, 'UUT/Pos2': 2, 'UUT/Pos3': 2},
 }

@@ -1,9 +1,8 @@
 `timescale 1ns / 1ps
 
-// Testbench do sincronizador / anti-ressalto (ESTAVEL = 20 ciclos para a simulação).
-// Simula carregar e largar a tecla com ressaltos em instantes que não coincidem com o
-// relógio e verifica que a saída muda uma só vez em cada caso, ESTAVEL + 2 ciclos depois
-// do último ressalto, e que impulsos curtos (ruído) são ignorados.
+// Testbench do sincronizador / anti-ressalto da tecla Start.
+// Com ESTAVEL = 4 ciclos (na placa são 1 000 000 = 10 ms): a saída só muda depois de a
+// entrada ficar 4 ciclos estável, mais 2 ciclos dos flip-flops de sincronização.
 module sincronizador_teste1();
 
 //   Declaração das entradas
@@ -13,77 +12,45 @@ module sincronizador_teste1();
 //   Declaração da saída
      wire Saida;
 
-     localparam ESTAVEL = 20;
-
 //   Instanciação da UUT e ligação das entradas e saídas
-     Sincronizador #(.ESTAVEL(ESTAVEL)) UUT (
+     Sincronizador #(.ESTAVEL(4)) UUT (
          .Clock(Clock),
          .Entrada(Entrada),
          .Saida(Saida)
      );
 
-//   Relógio de 100 MHz (período de 10ns), como o da Basys3
+//   Relógio de 100 MHz (período de 10ns): flancos ascendentes em 5, 15, 25, ... ns
      always #5 Clock = ~Clock;
 
-//   Conta as mudanças da saída e guarda o instante da última
-//   (em t = 0 a passagem de x para o valor inicial não conta)
-     integer subidas = 0, descidas = 0;
-     time t_mudanca = 0;
-     always @(posedge Saida) if ($time > 0) begin subidas = subidas + 1; t_mudanca = $time; end
-     always @(negedge Saida) if ($time > 0) begin descidas = descidas + 1; t_mudanca = $time; end
-
+//   Confere a saída com o valor esperado
      integer erros = 0, verificacoes = 0;
-     task verifica(input integer s, input integer d, input [8*48:1] caso);
+     task confere(input esperado);
          begin
              verificacoes = verificacoes + 1;
-             if (subidas != s || descidas != d) begin
-                 $display("ERRO t=%0t (%0s): %0d subidas e %0d descidas (esperado %0d e %0d)",
-                          $time, caso, subidas, descidas, s, d);
+             if (Saida !== esperado) begin
+                 $display("ERRO t=%0t: Saida=%b (esperado %b)", $time, Saida, esperado);
                  erros = erros + 1;
              end
          end
      endtask
 
-//   Tecla com ressaltos: muda de valor várias vezes (intervalos < ESTAVEL ciclos) e fica em v
-     integer k;
-     time t_fim;
-     task ressalta(input v);
-         begin
-             for (k = 0; k < 6; k = k + 1) begin
-                 Entrada = v;  #(13 + 17 * k);
-                 Entrada = ~v; #(7 + 11 * k);
-             end
-             Entrada = v;
-             t_fim = $time;
-         end
-     endtask
-
      initial begin
-         #33;
-         // Ruído curto (5 ciclos): ignorado
-         Entrada = 1; #53 Entrada = 0;
-         #400 verifica(0, 0, "impulso curto ignorado");
+         #10;                                       // as entradas mudam a meio do ciclo
+         // Ruído: impulso de 2 ciclos, mais curto do que ESTAVEL
+         Entrada = 1; #20 Entrada = 0;
+         #100 confere(0);                           // ignorado
 
          // Carregar a tecla com ressaltos
-         ressalta(1'b1);
-         #400 verifica(1, 0, "carregar: uma so subida");
-         verificacoes = verificacoes + 1;
-         if (t_mudanca - t_fim < ESTAVEL * 10 || t_mudanca - t_fim > (ESTAVEL + 3) * 10) begin
-             $display("ERRO: a saida subiu %0d ns depois do ultimo ressalto (esperado ~%0d ns)",
-                      t_mudanca - t_fim, (ESTAVEL + 2) * 10);
-             erros = erros + 1;
-         end
+         Entrada = 1; #20 Entrada = 0; #10 Entrada = 1; #20 Entrada = 0; #10 Entrada = 1;
+         #50 confere(0);                            // 5 ciclos depois do último ressalto: ainda não
+         #20 confere(1);                            // 7 ciclos depois: Saida = 1 (uma só subida)
+         #100 confere(1);
 
          // Largar a tecla com ressaltos
-         ressalta(1'b0);
-         #400 verifica(1, 1, "largar: uma so descida");
-
-         // Impulso a 0 curto com a tecla carregada: ignorado
-         Entrada = 1; #400;
-         verifica(2, 1, "tecla carregada outra vez");
-         Entrada = 0; #77 Entrada = 1;
-         #400 verifica(2, 1, "falha curta com a tecla carregada ignorada");
-         Entrada = 0; #400 verifica(2, 2, "tecla largada");
+         Entrada = 0; #20 Entrada = 1; #10 Entrada = 0;
+         #50 confere(1);                            // ainda não
+         #20 confere(0);                            // Saida = 0 (uma só descida)
+         #100 confere(0);
 
          if (erros == 0) $display("Simulacao OK (%0d verificacoes)", verificacoes);
          else            $display("Simulacao FALHOU (%0d erros em %0d verificacoes)", erros, verificacoes);

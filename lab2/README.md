@@ -6,7 +6,7 @@ Realizações diretas: gestão dos displays para o jogo Guitar Hero (Basys3).
 | Aula | O que pede o enunciado | Onde está |
 |---|---|---|
 | 1 | Módulos da arquitetura a controlar com os sinais de entrada e saída e a sua natureza; fluxograma do controlo | **`aula1/aula1.pdf`** (arquitetura, fluxograma, equações da realização direta, tabela dos sinais) |
-| 2 | Módulos Verilog (incluindo a máquina de estados) para teste e integração | pastas dos módulos, abaixo; testbenches com verificação automática |
+| 2 | Módulos Verilog (incluindo a máquina de estados) para teste e integração | pastas dos módulos, abaixo; testbenches curtos com verificação automática |
 | 3 | Testes e correções finais com o sistema integrado | `guitarhero/` + `bitstreams/guitarhero.bit` |
 | — | Relatório | **`relatorio/SD2_Lab2_Relatorio.pdf`** (capa oficial + corpo; `.docx` do corpo ao lado) |
 
@@ -42,19 +42,20 @@ D_S0 = 0 · D_S1 = S0 + S1·/Start · D_S2 = S1·Start + S2·Start · D_S3 = S2�
 ## Simulação
 
 ```bash
-scripts/simula.sh                       # os 10 testbenches (cerca de 45 s), com o xsim do Vivado
+scripts/simula.sh                       # os 10 testbenches (cerca de 45 s, quase tudo compilação), com o xsim do Vivado
 scripts/simula.sh controlador_teste1    # só um
 ```
 
-Cada testbench compara a UUT com um modelo de referência e termina com `Simulacao OK` ou `Simulacao FALHOU`
-(resumo em `simulacao/resultados.txt`; formas de onda em `simulacao/<testbench>.wdb`).
-O `controlador_teste1` compara os 6 flip-flops e as 10 saídas com o fluxograma descrito com `case`, com Start e Tempo
-aleatórios e Resets assíncronos fora do flanco. O `guitarhero_teste1` testa o sistema completo com tempos curtos
-(Reset, Start com ressaltos, 12 passos do jogo com aceleração, Reset a meio do jogo), com um modelo próprio do LFSR e
-uma fila de referência comandada só pelos LEDs dos estados.
-Os testbenches foram validados com mutações: alterar uma transição, uma saída, o mapeamento dos displays, o período,
-a fila, o limite da aceleração, a realimentação do LFSR, a ligação LFSR → memória ou retirar o sincronizador do Reset
-faz sempre falhar pelo menos um testbench.
+Os testbenches são curtos e lêem-se de cima para baixo: cada linha do bloco `initial` muda as entradas, espera e
+confere as saídas com os valores esperados, escritos à mão no próprio testbench (sem modelos de referência nem
+entradas aleatórias). Terminam com `Simulacao OK` ou `Simulacao FALHOU` (resumo em `simulacao/resultados.txt`;
+formas de onda em `simulacao/<testbench>.wdb`). O `controlador_teste1` percorre todas as transições do fluxograma e
+confere o estado e as 10 saídas em cada ciclo. O `guitarhero_teste1` testa o sistema completo com tempos curtos
+(Start com um ressalto, 7 passos do jogo com aceleração, Reset a meio do jogo).
+Os testbenches foram validados com mutações: alterar uma transição, uma saída ou a equação de S5 do controlador, o
+mapeamento dos displays, o transcodificador, a realimentação do LFSR, o CLR da memória, o CE do Beat, o
+anti-ressalto, a carga ou a prioridade do Reset do temporizador, o limite da aceleração ou o 2.º flip-flop do
+sincronizador do Reset faz sempre falhar o testbench do módulo (e, na maioria dos casos, também o do sistema).
 
 ## Projeto Vivado e bitstream
 

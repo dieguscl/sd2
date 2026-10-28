@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="90,000 ps"></ZoomStartTime>
-      <ZoomEndTime time="240,000 ps"></ZoomEndTime>
-      <Cursor1Time time="240,000 ps"></Cursor1Time>
+      <ZoomStartTime time="100,000 ps"></ZoomStartTime>
+      <ZoomEndTime time="220,000 ps"></ZoomEndTime>
+      <Cursor1Time time="220,000 ps"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="220"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="9" />
+   <WVObjectSize size="8" />
    <wvobject type="logic" fp_name="/memoria4x2_teste1/Clk">
       <obj_property name="ElementShortName">Clk</obj_property>
       <obj_property name="ObjectShortName">Clk</obj_property>
@@ -55,11 +55,6 @@
    <wvobject type="array" fp_name="/memoria4x2_teste1/Pos3">
       <obj_property name="ElementShortName">Pos3[1:0]</obj_property>
       <obj_property name="ObjectShortName">Pos3[1:0]</obj_property>
-      <obj_property name="Radix">BINARYRADIX</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/memoria4x2_teste1/referencia">
-      <obj_property name="ElementShortName">referencia[7:0]</obj_property>
-      <obj_property name="ObjectShortName">referencia[7:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
 </wave_config>

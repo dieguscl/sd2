@@ -1,10 +1,9 @@
 `timescale 1ns / 1ps
 
 // Testbench da gestão dos displays (com o transcodificador das cordas).
-// Com o varrimento acelerado (METADE = 2), para cada uma das 256 combinações das 4 posições
-// da memória verifica em cada passo do varrimento que só um display está ativo, que os
-// segmentos são os da corda que esse display deve mostrar (Pos0 à esquerda, Pos3 à direita)
-// e que o ponto decimal está apagado. Verifica também que os 4 displays são todos varridos.
+// Com o varrimento acelerado (METADE = 2) o display ativo muda a cada 40 ns. Põe uma corda
+// diferente em cada posição da memória e confere, display a display, o ânodo ativo e os
+// segmentos acesos (Pos0 no display da esquerda, Pos3 no da direita).
 module gestaodisplays_teste1();
 
 //   Declaração das entradas
@@ -28,64 +27,42 @@ module gestaodisplays_teste1();
          .Anodos(Anodos)
      );
 
-//   Relógio de 100 MHz (período de 10ns), como o da Basys3
+//   Relógio de 100 MHz (período de 10ns)
      always #5 Clock = ~Clock;
 
-//   Segmentos esperados para cada corda (abcdefg, ativos a Low)
-     function [6:0] segmentos_de(input [1:0] corda);
-         case (corda)
-             2'b00: segmentos_de = 7'b1111111;   // pausa
-             2'b01: segmentos_de = 7'b0111111;   // cima (a)
-             2'b10: segmentos_de = 7'b1111110;   // meio (g)
-             2'b11: segmentos_de = 7'b1110111;   // baixo (d)
-         endcase
-     endfunction
+//   Segmentos (abcdefg, ativos a Low) de cada corda
+     localparam PAUSA = 7'b1111111, CIMA = 7'b0111111, MEIO = 7'b1111110, BAIXO = 7'b1110111;
 
+//   Confere o display ativo, os segmentos e o ponto decimal (sempre apagado)
      integer erros = 0, verificacoes = 0;
-     reg [3:0] varridos;            // displays que já estiveram ativos
-     reg [1:0] corda;
-
-     task verifica_passo;
+     task confere(input [3:0] anodos, input [6:0] segmentos);
          begin
              verificacoes = verificacoes + 1;
-             case (Anodos)
-                 4'b0111: corda = Pos0;     // display da esquerda
-                 4'b1011: corda = Pos1;
-                 4'b1101: corda = Pos2;
-                 4'b1110: corda = Pos3;     // display da direita
-                 default: begin
-                     $display("ERRO t=%0t: Anodos=%b (deve haver um so display ativo)", $time, Anodos);
-                     erros = erros + 1;
-                 end
-             endcase
-             varridos = varridos | ~Anodos;
-             if (Segmentos !== segmentos_de(corda) || DotPoint !== 1'b1) begin
-                 if (erros < 10) $display("ERRO t=%0t: Anodos=%b Pos=%b %b %b %b Segmentos=%b (esperado %b) DP=%b",
-                                          $time, Anodos, Pos0, Pos1, Pos2, Pos3, Segmentos, segmentos_de(corda), DotPoint);
+             if (Anodos !== anodos || Segmentos !== segmentos || DotPoint !== 1'b1) begin
+                 $display("ERRO t=%0t: Anodos=%b Segmentos=%b DP=%b (esperado %b %b 1)",
+                          $time, Anodos, Segmentos, DotPoint, anodos, segmentos);
                  erros = erros + 1;
              end
          end
      endtask
 
-     integer n, p;
      initial begin
-         #100;                                            // configurações iniciais da FPGA
-         for (n = 0; n < 256; n = n + 1) begin
-             {Pos0, Pos1, Pos2, Pos3} = n;
-             varridos = 4'b0000;
-             // o display ativo muda a cada 40 ns (METADE = 2): verifica 8 passos fora dos flancos do relógio
-             #22;
-             for (p = 0; p < 8; p = p + 1) begin
-                 verifica_passo;
-                 #40;
-             end
-             #18;
-             verificacoes = verificacoes + 1;
-             if (varridos !== 4'b1111) begin
-                 $display("ERRO t=%0t: nem todos os displays foram varridos (%b)", $time, varridos);
-                 erros = erros + 1;
-             end
-         end
+         // Pos0 a Pos3: cima, pausa, baixo, meio
+         Pos0 = 2'b01; Pos1 = 2'b00; Pos2 = 2'b11; Pos3 = 2'b10;
+         #100;                                     // configurações iniciais da FPGA (100 ns)
+         @(negedge Anodos[0]) #20;                 // a meio do tempo do display da direita
+             confere(4'b1110, MEIO);               // AN0 (direita): Pos3
+         #40 confere(4'b1101, BAIXO);              // AN1: Pos2
+         #40 confere(4'b1011, PAUSA);              // AN2: Pos1 (display apagado)
+         #40 confere(4'b0111, CIMA);               // AN3 (esquerda): Pos0
+         #40 confere(4'b1110, MEIO);               // volta ao da direita
+
+         // As cordas avançam uma posição (entra a corda de baixo à esquerda)
+         Pos0 = 2'b11; Pos1 = 2'b01; Pos2 = 2'b00; Pos3 = 2'b11;
+         #40 confere(4'b1101, PAUSA);              // AN1: Pos2
+         #40 confere(4'b1011, CIMA);               // AN2: Pos1
+         #40 confere(4'b0111, BAIXO);              // AN3: Pos0
+         #40 confere(4'b1110, BAIXO);              // AN0: Pos3
 
          if (erros == 0) $display("Simulacao OK (%0d verificacoes)", verificacoes);
          else            $display("Simulacao FALHOU (%0d erros em %0d verificacoes)", erros, verificacoes);

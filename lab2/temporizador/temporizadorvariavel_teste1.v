@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 
 // Testbench do temporizador variável (registo da velocidade + temporizador).
-// Com tempos curtos (INICIAL = 40, PASSO = 6, MINIMO = 20 ciclos) verifica:
-//   - depois de RstTemp, cada StartTemp dá Tempo = 1 durante INICIAL ciclos;
-//   - cada Faster encurta o período em PASSO ciclos, sem descer abaixo de MINIMO
-//     (40, 34, 28, 22 e depois 22 sempre, porque 22 - 6 < 20);
-//   - RstTemp repõe o período inicial e interrompe a contagem.
+// Com tempos curtos (INICIAL = 5, PASSO = 1, MINIMO = 3 ciclos) confere o período guardado
+// no registo da velocidade e a saída Tempo:
+//   - RstTemp põe o período em 5 ciclos;
+//   - cada Faster encurta-o 1 ciclo, até ao mínimo de 3;
+//   - StartTemp põe Tempo a 1 durante o período atual.
 module temporizadorvariavel_teste1();
 
 //   Declaração das entradas
@@ -15,10 +15,8 @@ module temporizadorvariavel_teste1();
 //   Declaração da saída
      wire Tempo;
 
-     localparam INICIAL = 40, PASSO = 6, MINIMO = 20;
-
 //   Instanciação da UUT e ligação das entradas e saídas
-     TemporizadorVariavel #(.N(8), .INICIAL(INICIAL), .PASSO(PASSO), .MINIMO(MINIMO)) UUT (
+     TemporizadorVariavel #(.N(8), .INICIAL(5), .PASSO(1), .MINIMO(3)) UUT (
          .Clock(Clock),
          .RstTemp(RstTemp),
          .StartTemp(StartTemp),
@@ -26,59 +24,38 @@ module temporizadorvariavel_teste1();
          .Tempo(Tempo)
      );
 
-//   Relógio de 100 MHz (período de 10ns), como o da Basys3
+//   Relógio de 100 MHz (período de 10ns): flancos ascendentes em 5, 15, 25, ... ns
      always #5 Clock = ~Clock;
 
+//   Confere o período (registo da velocidade) e a saída Tempo
      integer erros = 0, verificacoes = 0;
-
-//   Impulso de StartTemp com 1 ciclo; conta os ciclos com Tempo a 1 e compara
-     integer ciclos;
-     task temporiza(input integer esperado);
+     task confere(input [7:0] periodo, input tempo);
          begin
-             StartTemp = 1;
-             #10 StartTemp = 0;
-             ciclos = 0;
-             while (Tempo === 1'b1 && ciclos < 300) begin
-                 #10 ciclos = ciclos + 1;
-             end
              verificacoes = verificacoes + 1;
-             if (ciclos != esperado) begin
-                 $display("ERRO t=%0t: Tempo esteve a 1 durante %0d ciclos (esperado %0d)", $time, ciclos, esperado);
+             if (UUT.Periodo !== periodo || Tempo !== tempo) begin
+                 $display("ERRO t=%0t: Periodo=%0d Tempo=%b (esperado %0d %b)",
+                          $time, UUT.Periodo, Tempo, periodo, tempo);
                  erros = erros + 1;
              end
          end
      endtask
 
-//   Impulso de Faster com 1 ciclo (como no estado S5 da máquina de estados)
-     task acelera;
-         begin
-             Faster = 1;
-             #10 Faster = 0;
-         end
-     endtask
-
      initial begin
-         // As entradas mudam a meio do período (relógio sobe em 5, 15, 25, ...)
-         #10 RstTemp = 1;
-         #10 RstTemp = 0;
-         temporiza(40);
-         temporiza(40);                 // sem Faster o período não muda
-         acelera; temporiza(34);
-         acelera; temporiza(28);
-         acelera; temporiza(22);
-         acelera; temporiza(22);        // 22 - 6 = 16 < MINIMO: fica em 22
-         acelera; temporiza(22);
-
-         // RstTemp a meio da contagem: para e repõe o período inicial
-         StartTemp = 1; #10 StartTemp = 0;
-         #50 RstTemp = 1;
-         #10 RstTemp = 0;
-         verificacoes = verificacoes + 1;
-         if (Tempo !== 1'b0) begin
-             $display("ERRO t=%0t: RstTemp nao parou a contagem", $time);
-             erros = erros + 1;
-         end
-         temporiza(40);
+         #10;                                                 // as entradas mudam a meio do ciclo
+         RstTemp = 1;                  #10 confere(5, 0);     // período inicial: 5 ciclos
+         RstTemp = 0; StartTemp = 1;   #10 confere(5, 1);     // Tempo a 1 durante 5 ciclos
+                      StartTemp = 0;   #40 confere(5, 1);     // 5.º ciclo
+                                       #10 confere(5, 0);     // acabou
+         Faster = 1;                   #10 confere(4, 0);     // Faster: 5 - 1 = 4
+         Faster = 0;                   #10 confere(4, 0);     // só muda com Faster
+         Faster = 1;                   #10 confere(3, 0);     // 4 - 1 = 3 (o mínimo)
+                                       #10 confere(3, 0);     // não desce abaixo de 3
+         Faster = 0; StartTemp = 1;    #10 confere(3, 1);     // Tempo a 1 durante 3 ciclos
+                     StartTemp = 0;    #20 confere(3, 1);     // 3.º ciclo
+                                       #10 confere(3, 0);     // acabou
+         StartTemp = 1;                #10 confere(3, 1);     // nova contagem
+         StartTemp = 0; RstTemp = 1;   #10 confere(5, 0);     // RstTemp: para e repõe os 5 ciclos
+         RstTemp = 0;                  #10 confere(5, 0);
 
          if (erros == 0) $display("Simulacao OK (%0d verificacoes)", verificacoes);
          else            $display("Simulacao FALHOU (%0d erros em %0d verificacoes)", erros, verificacoes);

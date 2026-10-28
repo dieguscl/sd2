@@ -34,7 +34,7 @@ for t in "${TESTES[@]}"; do
     xelab --nolog -debug typical -L unisims_ver "$tb" glbl -s "$tb" > "$tb.elab.out" || { cat "$tb.elab.out"; exit 1; }
     xsim --nolog "$tb" -R -wdb "../$tb.wdb" > "$tb.sim.out" || true
     linha=$(grep -h "^Simulacao" "$tb.sim.out" | tail -1)
-    grep -h "^ERRO\|^Cordas\|^Ciclos" "$tb.sim.out" || true
+    grep -h "^ERRO" "$tb.sim.out" || true
     echo "$tb: ${linha:-sem mensagem final}"
     grep -v "^$tb:" ../resultados.txt > ../resultados.tmp || true
     echo "$tb: ${linha:-sem mensagem final}" >> ../resultados.tmp

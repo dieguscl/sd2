@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0 ps"></ZoomStartTime>
-      <ZoomEndTime time="200,000 ps"></ZoomEndTime>
-      <Cursor1Time time="200,000 ps"></Cursor1Time>
+      <ZoomEndTime time="110,000 ps"></ZoomEndTime>
+      <Cursor1Time time="110,000 ps"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="220"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="7" />
+   <WVObjectSize size="6" />
    <wvobject type="logic" fp_name="/lfsr32_teste1/Clock">
       <obj_property name="ElementShortName">Clock</obj_property>
       <obj_property name="ObjectShortName">Clock</obj_property>
@@ -45,10 +45,5 @@
       <obj_property name="ElementShortName">OutLFSR[1:0]</obj_property>
       <obj_property name="ObjectShortName">OutLFSR[1:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/lfsr32_teste1/referencia">
-      <obj_property name="ElementShortName">referencia[31:0]</obj_property>
-      <obj_property name="ObjectShortName">referencia[31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
 </wave_config>
