@@ -14,9 +14,12 @@
 module GuitarHero #(
     parameter METADE  = 25000,      // varrimento dos displays a 2 kHz
     parameter ESTAVEL = 1000000,    // anti-ressalto da tecla Start: 10 ms
+    
+    // Temporizador
     parameter INICIAL = 50000000,   // período inicial do temporizador: 0,5 s
     parameter PASSO   = 500000,     // aceleração por passo: 5 ms
     parameter MINIMO  = 20000000    // período mínimo: 0,2 s
+    
     )(
     input CLKBasys,
     input BtnReset,
