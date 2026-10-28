@@ -97,10 +97,10 @@ até um passo a cada 0,2 s. BTNU em qualquer momento volta ao início.
 
 ## Placa virtual (fpga.dieguscl.com)
 
-Link partilhado: **https://fpga.dieguscl.com/s/UGvQD9BPwA** (separador *Board* → *Run*, aceleração desligada).
+Link partilhado: **https://fpga.dieguscl.com/s/3f0EKh3F0V** (separador *Board* → *Run*, aceleração desligada).
 O projeto partilhado tem os mesmos ficheiros do Vivado e o topo `placavirtual/guitarhero_virtual.v`
 (`GuitarHeroVirtual`), que instancia o `GuitarHero` com tempos reduzidos para o simulador do browser
-(~300 mil ciclos/s): passo de 100 000 ciclos (≈0,3–0,5 s), anti-ressalto de 2000 ciclos, varrimento com
+(~300 mil ciclos/s): passo de 150 000 ciclos (≈0,5 s, como na placa real, acelerando até ≈0,2 s), anti-ressalto de 2000 ciclos, varrimento com
 `METADE = 250`, e um reset de arranque porque o simulador ignora os valores INIT dos flip-flops.
 A aceleração (*Speed-up*) do site tem de ficar desligada: só reduz as constantes das comparações e estragaria o
 registo da velocidade (o período mínimo seria reduzido mas o inicial não).

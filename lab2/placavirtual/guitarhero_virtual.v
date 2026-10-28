@@ -10,9 +10,9 @@
 module GuitarHeroVirtual #(
     parameter METADE  = 250,
     parameter ESTAVEL = 2000,
-    parameter INICIAL = 100000,
-    parameter PASSO   = 1000,
-    parameter MINIMO  = 40000
+    parameter INICIAL = 150000,     // ~0,5 s por passo a ~300 mil ciclos/s, como na placa real
+    parameter PASSO   = 1500,
+    parameter MINIMO  = 60000       // ~0,2 s por passo no fim da aceleração
     )(
     input CLKBasys,
     input BtnReset,
