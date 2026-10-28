@@ -8,6 +8,7 @@ Realizações diretas: gestão dos displays para o jogo Guitar Hero (Basys3).
 | 1 | Módulos da arquitetura a controlar com os sinais de entrada e saída e a sua natureza; fluxograma do controlo | **`aula1/aula1.pdf`** (arquitetura, fluxograma, equações da realização direta, tabela dos sinais) |
 | 2 | Módulos Verilog (incluindo a máquina de estados) para teste e integração | pastas dos módulos, abaixo; testbenches com verificação automática |
 | 3 | Testes e correções finais com o sistema integrado | `guitarhero/` + `bitstreams/guitarhero.bit` |
+| — | Relatório | **`relatorio/SD2_Lab2_Relatorio.pdf`** (capa oficial + corpo; `.docx` do corpo ao lado) |
 
 ## Módulos
 
@@ -94,11 +95,18 @@ até um passo a cada 0,2 s. BTNU em qualquer momento volta ao início.
   FF_S0 podia sair do PRE (e carregar D = 0) antes de FF_S1 sair do CLR e a máquina ficava sem estado ativo (000000),
   sem recuperação. O mesmo podia acontecer ao configurar a FPGA.
 
-## Pontos a justificar no relatório
+## Relatório
 
-- O `Sincronizador` da tecla Start, o `DivisorClock` e o `Contador4` não são inicializados pela máquina de estados:
-  o primeiro só condiciona uma entrada e os outros dois fazem o varrimento dos displays, que funciona sempre
-  (arrancam com os valores INIT da configuração).
-- Se Start estiver carregada no momento em que se larga Reset, S1 passa logo a S2 e o jogo começa quando Start for largada
-  (o fluxograma só exige ver a tecla carregada e depois largada).
-- ClrMem limpa a memória e também o LED Beat (as duas ações pertencem ao estado S0).
+`relatorio/gerar.sh` volta a gerar o PDF: capa oficial (`capa/capa_original.odt`, preenchida por
+`fonte/preencher_capa.py`) + corpo gerado por `fonte/gerar.js` (docx-js) a partir dos ficheiros do repositório,
+das figuras e dos resultados de `scripts/simula.sh` e `scripts/build.tcl` (correr esses primeiro). Requisitos:
+node com o pacote `docx`, LibreOffice com python3-uno e poppler-utils.
+
+- Diagramas (arquitetura, fluxograma, diagrama de estados, diagrama lógico): `relatorio/figuras/*.drawio`, editáveis
+  no draw.io. Os `.png` ao lado têm o diagrama embebido (também abrem no draw.io) e regeneram-se com
+  `relatorio/fonte/exporta_diagramas.sh` (draw.io desktop + Xvfb).
+- Formas de onda (`relatorio/figuras/viv_*_sim.png`): capturas do Vivado com as vistas `<testbench>.wcfg`
+  (geradas por `scripts/gera_wcfg.py`; ao correr a simulação no projeto, `scripts/abre_wcfg.tcl` abre a vista do
+  testbench que está como top).
+- Falta: fotografias do ensaio na placa e confirmação dos resultados (secção 10.4, a vermelho no relatório);
+  confirmar a data da capa (`fonte/preencher_capa.py`).

@@ -31,6 +31,10 @@ create_project $nome $dir -part $part -force
 foreach f $fontes { add_files -norecurse [file normalize $root/$f] }
 add_files -fileset constrs_1 -norecurse $root/guitarhero/guitarhero.xdc
 foreach t $testes { add_files -fileset sim_1 -norecurse $root/$t }
+# vista das formas de onda (<testbench>.wcfg, gerada por scripts/gera_wcfg.py): com dez testbenches o
+# Vivado so permite uma vista fixa, por isso scripts/abre_wcfg.tcl abre a do testbench que esta como top
+# (caminho relativo a pasta onde corre o simulador, <p>.sim/sim_1/behav/xsim)
+set_property xsim.simulate.tcl.post ../../../../../../scripts/abre_wcfg.tcl [get_filesets sim_1]
 set_property top $topo [current_fileset]
 set_property top guitarhero_teste1 [get_filesets sim_1]
 set_property -name {xsim.simulate.runtime} -value {all} -objects [get_filesets sim_1]

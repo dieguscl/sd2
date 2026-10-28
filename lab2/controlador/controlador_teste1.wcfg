@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="controlador_teste1_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="controlador_teste1" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="100,000 ps"></ZoomStartTime>
+      <ZoomEndTime time="340,000 ps"></ZoomEndTime>
+      <Cursor1Time time="340,000 ps"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="220"></NameColumnWidth>
+      <ValueColumnWidth column_width="90"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="21" />
+   <wvobject type="logic" fp_name="/controlador_teste1/Clock">
+      <obj_property name="ElementShortName">Clock</obj_property>
+      <obj_property name="ObjectShortName">Clock</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/Reset">
+      <obj_property name="ElementShortName">Reset</obj_property>
+      <obj_property name="ObjectShortName">Reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/Start">
+      <obj_property name="ElementShortName">Start</obj_property>
+      <obj_property name="ObjectShortName">Start</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/Tempo">
+      <obj_property name="ElementShortName">Tempo</obj_property>
+      <obj_property name="ObjectShortName">Tempo</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/UUT/S0">
+      <obj_property name="ElementShortName">S0</obj_property>
+      <obj_property name="ObjectShortName">S0</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/UUT/S1">
+      <obj_property name="ElementShortName">S1</obj_property>
+      <obj_property name="ObjectShortName">S1</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/UUT/S2">
+      <obj_property name="ElementShortName">S2</obj_property>
+      <obj_property name="ObjectShortName">S2</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/UUT/S3">
+      <obj_property name="ElementShortName">S3</obj_property>
+      <obj_property name="ObjectShortName">S3</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/UUT/S4">
+      <obj_property name="ElementShortName">S4</obj_property>
+      <obj_property name="ObjectShortName">S4</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/UUT/S5">
+      <obj_property name="ElementShortName">S5</obj_property>
+      <obj_property name="ObjectShortName">S5</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/ClrMem">
+      <obj_property name="ElementShortName">ClrMem</obj_property>
+      <obj_property name="ObjectShortName">ClrMem</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/InitLFSR">
+      <obj_property name="ElementShortName">InitLFSR</obj_property>
+      <obj_property name="ObjectShortName">InitLFSR</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/RstTemp">
+      <obj_property name="ElementShortName">RstTemp</obj_property>
+      <obj_property name="ObjectShortName">RstTemp</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/EnLFSR">
+      <obj_property name="ElementShortName">EnLFSR</obj_property>
+      <obj_property name="ObjectShortName">EnLFSR</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/Ready">
+      <obj_property name="ElementShortName">Ready</obj_property>
+      <obj_property name="ObjectShortName">Ready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/ShiftMem">
+      <obj_property name="ElementShortName">ShiftMem</obj_property>
+      <obj_property name="ObjectShortName">ShiftMem</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/StartTemp">
+      <obj_property name="ElementShortName">StartTemp</obj_property>
+      <obj_property name="ObjectShortName">StartTemp</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/TglBeat">
+      <obj_property name="ElementShortName">TglBeat</obj_property>
+      <obj_property name="ObjectShortName">TglBeat</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/Waiting">
+      <obj_property name="ElementShortName">Waiting</obj_property>
+      <obj_property name="ObjectShortName">Waiting</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/controlador_teste1/Faster">
+      <obj_property name="ElementShortName">Faster</obj_property>
+      <obj_property name="ObjectShortName">Faster</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/controlador_teste1/ref_estado">
+      <obj_property name="ElementShortName">ref_estado[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ref_estado[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>
