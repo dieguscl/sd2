@@ -24,7 +24,7 @@
         <mxCell id="flu19" value="S4" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="138" y="650" width="44" height="22" as="geometry"/></mxCell>
         <mxCell id="flu20" value="010000" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=10;align=right;" vertex="1" parent="1"><mxGeometry x="290" y="642" width="70" height="20" as="geometry"/></mxCell>
         <mxCell id="flu21" value="Tempo" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="200" y="738" width="120" height="60" as="geometry"/></mxCell>
-        <mxCell id="flu22" value="Faster, EnLFSR" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1"><mxGeometry x="160" y="848" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="flu22" value="Faster, EnLFSR" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="160" y="848" width="200" height="46" as="geometry"/></mxCell>
         <mxCell id="flu23" value="S5" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="138" y="836" width="44" height="22" as="geometry"/></mxCell>
         <mxCell id="flu24" value="100000" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=10;align=right;" vertex="1" parent="1"><mxGeometry x="290" y="828" width="70" height="20" as="geometry"/></mxCell>
         <mxCell id="flu25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="flu2" target="flu4"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>

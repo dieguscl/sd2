@@ -45,7 +45,7 @@ module.exports = function controlador(N, R) {
     Bullet('**S4**: LED Waiting aceso enquanto o temporizador conta (Tempo = 1).'),
     Bullet('**S5** (opcional, um ciclo): acelera ligeiramente o temporizador e repete a partir de S3. Sem a parte opcional, o ramo Tempo = 0 iria diretamente para S3.'),
     P('Cada bloco tem um só estado, no máximo uma decisão e um único estado seguinte para cada combinação das entradas, pelo que o fluxograma é válido. O Reset não aparece como decisão porque atua de forma assíncrona, nos PRE e CLR dos *flip-flops*. Se a tecla Start estiver carregada no momento em que se larga Reset, S1 passa logo a S2 e o jogo começa quando Start for largada: o fluxograma só exige ver a tecla carregada e depois largada.'),
-    ...Figura(N, 'fig_fluxo', 'fluxograma.png', 8.2, 'Fluxograma do algoritmo de controlo (S5, a tracejado, é a parte opcional).'),
+    ...Figura(N, 'fig_fluxo', 'fluxograma.png', 8.2, 'Fluxograma do algoritmo de controlo (S5 é a parte opcional do enunciado: acelerar o jogo).'),
 
     H2('9.2 Tabela de estados primitiva (passo 1)'),
     P('A tabela de estados primitiva (' + r('tab_prim') + ') foi lida diretamente do fluxograma: uma linha por estado e uma coluna por combinação das entradas testadas (Start Tempo, em código de Gray). As células a sombreado indicam que o estado se mantém (estado estável para essa combinação). Start só interessa em S1 e S2 e Tempo só em S4: nas outras linhas o estado seguinte é igual nas quatro colunas. A ' + r('fig_diag') + ' mostra o diagrama de estados equivalente.'),
