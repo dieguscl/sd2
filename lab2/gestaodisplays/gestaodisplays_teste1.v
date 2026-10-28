@@ -27,7 +27,7 @@ module gestaodisplays_teste1();
          .Anodos(Anodos)
      );
 
-//   Relógio de 100 MHz (período de 10ns)
+//   Relógio de 100 MHz (período de 10ns): flancos ascendentes em 5, 15, 25, ... ns
      always #5 Clock = ~Clock;
 
 //   Segmentos (abcdefg, ativos a Low) de cada corda
@@ -49,7 +49,7 @@ module gestaodisplays_teste1();
      initial begin
          // Pos0 a Pos3: cima, pausa, baixo, meio
          Pos0 = 2'b01; Pos1 = 2'b00; Pos2 = 2'b11; Pos3 = 2'b10;
-         #100;                                     // configurações iniciais da FPGA (100 ns)
+         #100;                                     // deixa o varrimento correr (começa sozinho)
          @(negedge Anodos[0]) #20;                 // a meio do tempo do display da direita
              confere(4'b1110, MEIO);               // AN0 (direita): Pos3
          #40 confere(4'b1101, BAIXO);              // AN1: Pos2

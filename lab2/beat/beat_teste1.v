@@ -36,7 +36,7 @@ module beat_teste1();
 
      initial begin
          #110;                      // configuração da FPGA (100 ns); entradas a meio do ciclo
-                  confere(0);       // valor inicial (INIT = 0)
+                      confere(0);   // valor inicial (INIT = 0)
          Tgl = 1; #10 confere(1);   // Tgl = 1: troca em cada flanco
                   #10 confere(0);
                   #10 confere(1);

@@ -22,7 +22,7 @@ VISTAS = {
     'sincronizadorreset_teste1': ('sincronizador', 0, 200, [
         ('Clock', 'b', 'clk', False), ('Entrada', 'b', 'ent', False), ('UUT/q1', 'b', 'int', False),
         ('Saida', 'b', 'sai', False)]),
-    'lfsr32_teste1': ('lfsr32', 0, 110, [
+    'lfsr32_teste1': ('lfsr32', 0, 130, [
         ('Clock', 'b', 'clk', False), ('Enable', 'b', 'ent', False), ('Init', 'b', 'ent', False),
         ('UUT/regLFSR', 'h', 'int', False), ('UUT/regXNOR', 'b', 'int', False), ('OutLFSR', 'b', 'sai', False)]),
     'memoria4x2_teste1': ('memoria4x2', 100, 220, [

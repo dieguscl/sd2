@@ -41,8 +41,8 @@ module memoria4x2_teste1();
      endtask
 
      initial begin
-         #110;                                         // configurações iniciais da FPGA (100 ns)
-                                confere(2'b00, 2'b00, 2'b00, 2'b00);   // valor inicial: tudo em pausa
+         #110;                                                               // configurações iniciais da FPGA (100 ns)
+                                      confere(2'b00, 2'b00, 2'b00, 2'b00);   // valor inicial: tudo em pausa
          Shift = 1; Data = 2'b01; #10 confere(2'b01, 2'b00, 2'b00, 2'b00);   // 01 entra em Pos0
                     Data = 2'b10; #10 confere(2'b10, 2'b01, 2'b00, 2'b00);   // e o 01 passa a Pos1
                     Data = 2'b11; #10 confere(2'b11, 2'b10, 2'b01, 2'b00);

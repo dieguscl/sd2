@@ -43,14 +43,14 @@ module sincronizador_teste1();
          // Carregar a tecla com ressaltos
          Entrada = 1; #20 Entrada = 0; #10 Entrada = 1; #20 Entrada = 0; #10 Entrada = 1;
          #50 confere(0);                            // 5 ciclos depois do último ressalto: ainda não
-         #20 confere(1);                            // 7 ciclos depois: Saida = 1 (uma só subida)
-         #100 confere(1);
+         #10 confere(1);                            // 6 ciclos depois: Saida = 1 (uma só subida)
+         #110 confere(1);
 
          // Largar a tecla com ressaltos
          Entrada = 0; #20 Entrada = 1; #10 Entrada = 0;
-         #50 confere(1);                            // ainda não
-         #20 confere(0);                            // Saida = 0 (uma só descida)
-         #100 confere(0);
+         #50 confere(1);                            // 5 ciclos depois: ainda não
+         #10 confere(0);                            // 6 ciclos depois: Saida = 0 (uma só descida)
+         #110 confere(0);
 
          if (erros == 0) $display("Simulacao OK (%0d verificacoes)", verificacoes);
          else            $display("Simulacao FALHOU (%0d erros em %0d verificacoes)", erros, verificacoes);

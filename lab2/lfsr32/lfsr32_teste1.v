@@ -48,6 +48,8 @@ module lfsr32_teste1();
          Enable = 0;    #30 confere(32'h1F18C054, 2'b00);   // Enable = 0: mantém durante 3 flancos
          Enable = 1;    #10 confere(32'h3E3180A9, 2'b01);   // volta a avançar
                         #10 confere(32'h7C630153, 2'b01);
+                        #10 confere(32'hF8C602A6, 2'b10);   // o bit 31 chega a 1
+                        #10 confere(32'hF18C054D, 2'b11);
 
          if (erros == 0) $display("Simulacao OK (%0d verificacoes)", verificacoes);
          else            $display("Simulacao FALHOU (%0d erros em %0d verificacoes)", erros, verificacoes);

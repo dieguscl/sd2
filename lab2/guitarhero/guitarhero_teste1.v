@@ -32,7 +32,7 @@ module guitarhero_teste1();
          .LedEstado(LedEstado)
      );
 
-//   Relógio de 100 MHz (período de 10ns)
+//   Relógio de 100 MHz (período de 10ns): flancos ascendentes em 5, 15, 25, ... ns
      always #5 CLKBasys = ~CLKBasys;
 
 //   Estados one-hot: LedEstado = {S5, S4, S3, S2, S1, S0}
@@ -72,6 +72,14 @@ module guitarhero_teste1();
          end
      endtask
 
+//   Confere os segmentos acesos no display ativo
+     task confere_segmentos(input [6:0] segmentos);
+         begin
+             verificacoes = verificacoes + 1;
+             if (Seg !== segmentos) erro;
+         end
+     endtask
+
 //   Espera pelo passo seguinte do jogo: entrada em S4, quando a memória já deslocou
      task passo;
          begin
@@ -95,8 +103,7 @@ module guitarhero_teste1();
          // e o período diminui 4 ciclos (o S5 do passo anterior) até ao mínimo de 20
          passo; confere_leds(S4, 0, 1, 1); confere_cordas(2'b10, 2'b00, 2'b00, 2'b00); confere_periodo(40);
          @(negedge An[3]) #20;                            // display da esquerda ativo
-         verificacoes = verificacoes + 1;
-         if (Seg !== 7'b1111110) erro;                    // Pos0 = 10: corda do meio (segmento g)
+         confere_segmentos(7'b1111110);                   // Pos0 = 10: corda do meio (segmento g)
          passo; confere_leds(S4, 0, 1, 0); confere_cordas(2'b00, 2'b10, 2'b00, 2'b00); confere_periodo(36);
          passo; confere_leds(S4, 0, 1, 1); confere_cordas(2'b11, 2'b00, 2'b10, 2'b00); confere_periodo(32);
          passo; confere_leds(S4, 0, 1, 0); confere_cordas(2'b00, 2'b11, 2'b00, 2'b10); confere_periodo(28);

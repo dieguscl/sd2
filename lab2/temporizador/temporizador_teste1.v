@@ -56,13 +56,13 @@ module temporizador_teste1();
          Reset = 0;                  #30 confere(0);     // e não volta a contar
          // Reset tem prioridade sobre Start
          Reset = 1; Start = 1;       #10 confere(0);
-         Reset = 0; Start = 0;
          // Start a meio da contagem: recomeça com o novo período
-         Periodo = 3; Start = 1;     #10 confere(1);
+         Reset = 0; Periodo = 3;     #10 confere(1);     // Start continua a 1: carrega 3 ciclos
                       Start = 0;     #10 confere(1);
          Periodo = 4; Start = 1;     #10 confere(1);     // Start outra vez: recomeça com 4 ciclos
-                      Start = 0;     #20 confere(1);     // sem recomeçar já teria acabado
-                                     #20 confere(0);     // acaba 4 ciclos depois do 2.º Start
+                      Start = 0;     #20 confere(1);     // t = 220: sem recomeçar já teria acabado
+                                     #10 confere(1);     // t = 230: se recomeçasse com 3 ciclos já teria acabado
+                                     #10 confere(0);     // t = 240: acaba 4 ciclos depois do 2.º Start
 
          if (erros == 0) $display("Simulacao OK (%0d verificacoes)", verificacoes);
          else            $display("Simulacao FALHOU (%0d erros em %0d verificacoes)", erros, verificacoes);
