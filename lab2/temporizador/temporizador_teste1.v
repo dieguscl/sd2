@@ -61,7 +61,7 @@ module temporizador_teste1();
                       Start = 0;     #10 confere(1);
          Periodo = 4; Start = 1;     #10 confere(1);     // Start outra vez: recomeça com 4 ciclos
                       Start = 0;     #20 confere(1);     // t = 220: sem recomeçar já teria acabado
-                                     #10 confere(1);     // t = 230: se recomeçasse com 3 ciclos já teria acabado
+                                     #10 confere(1);     // t = 230: recomeçando com 3 já teria acabado
                                      #10 confere(0);     // t = 240: acaba 4 ciclos depois do 2.º Start
 
          if (erros == 0) $display("Simulacao OK (%0d verificacoes)", verificacoes);
