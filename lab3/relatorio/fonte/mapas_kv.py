@@ -64,9 +64,9 @@ def trocos(idx, n):
     return [(a, b, volta and k == 0, volta and k == len(runs) - 1) for k, (a, b) in enumerate(runs)]
 
 
-fig = plt.figure(figsize=(13, 8.4))
+fig = plt.figure(figsize=(13.3, 8.4))
 ax = fig.add_axes([0, 0, 1, 1])
-ax.set_xlim(-0.6, 19.0); ax.set_ylim(-1.75, 10.9); ax.invert_yaxis(); ax.axis('off'); ax.set_aspect('equal')
+ax.set_xlim(-0.6, 19.5); ax.set_ylim(-1.75, 10.9); ax.invert_yaxis(); ax.axis('off'); ax.set_aspect('equal')
 for k, (Y, bit, termos) in enumerate(MAPAS):
     # --- confere a cobertura e os acidentes estaticos nas 32 celulas
     for r in range(8):
