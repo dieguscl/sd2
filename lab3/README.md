@@ -11,6 +11,7 @@ Circuitos sequenciais assíncronos: gestão das teclas para o jogo Guitar Hero (
 | Reset nas realimentações (Fig. 3) | `maquinatecla/maquinatecla.v` (`YYi = Yi & ~Clear`) |
 | Simulação, pinos, bitstream | `scripts/simula.sh`, `gestaoteclas/gestaoteclas.xdc`, `bitstreams/gestaoteclas.bit` |
 | Relatório | **`relatorio/SD2_Lab3_Relatorio.pdf`** (capa oficial + corpo; `.docx` do corpo ao lado) |
+| Figuras de referência | `relatorio/SD2_Lab3_Figuras.pdf` (só as figuras e tabelas principais, para mostrar ao docente) |
 
 ## Máquina de estados (resumo)
 
@@ -68,7 +69,8 @@ confirmar a data da capa (`relatorio/fonte/preencher_capa.py`).
 
 ## Relatório
 
-`relatorio/gerar.sh` (capa oficial + corpo gerado por `relatorio/fonte/gerar.js` a partir dos ficheiros
+`relatorio/gerar.sh` gera o relatório (capa oficial + corpo gerado por `relatorio/fonte/gerar.js` a partir dos ficheiros
 do repositório e dos resultados de `scripts/projeto.py`, `scripts/simula.sh`, `scripts/build.tcl` e
-`scripts/mutacoes.sh`). Diagramas: `relatorio/fonte/gera_diagramas.py` → `relatorio/figuras/*.drawio`
+`scripts/mutacoes.sh`) e a folha de figuras (`relatorio/fonte/gerar_figuras.js`; as tabelas da máquina
+vêm de `relatorio/fonte/tabelas_maquina.js`, as mesmas do relatório). Diagramas: `relatorio/fonte/gera_diagramas.py` → `relatorio/figuras/*.drawio`
 (PNG com `relatorio/fonte/exporta_diagramas.sh`); mapas de Karnaugh: `relatorio/fonte/mapas_kv.py`.

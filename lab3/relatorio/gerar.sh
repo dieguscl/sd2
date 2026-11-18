@@ -18,3 +18,9 @@ soffice --headless --convert-to pdf --outdir $TMP capa/SD2_Lab3_Capa.odt >/dev/n
 pdfunite $TMP/SD2_Lab3_Capa.pdf $TMP/corpo.pdf SD2_Lab3_Relatorio.pdf
 rm -rf $TMP fonte/corpo.docx
 echo "relatorio/SD2_Lab3_Relatorio.pdf ($TOTAL paginas)"
+# Folha de figuras de referencia (so figuras e tabelas principais, para mostrar ao docente)
+node fonte/gerar_figuras.js >/dev/null
+TMP=$(mktemp -d)
+python3 fonte/render.py fonte/figuras.docx $TMP/figuras.docx SD2_Lab3_Figuras.pdf >/dev/null
+rm -rf $TMP fonte/figuras.docx
+echo "relatorio/SD2_Lab3_Figuras.pdf ($(pdfinfo SD2_Lab3_Figuras.pdf | awk '/^Pages:/ {print $2}') paginas)"

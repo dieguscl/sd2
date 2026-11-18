@@ -184,7 +184,8 @@ EST = {  # nome: (x, y, codigo, Kd, F, descricao, colunas estaveis)
 ids = {}
 TAM = 110
 for n, (x, y, c, kd, f, desc, est) in EST.items():
-    ids[n] = d.v(f'<b>{n}</b> ({c})<br><font style="font-size:10px">{desc}</font><br>Kd={kd} F={f}', x, y, TAM, TAM, ESTADO)
+    # so o nome do estado: a codificacao so e escolhida depois (secao 3.4, figura codificacao)
+    ids[n] = d.v(f'<b>{n}</b><br><font style="font-size:10px">{desc}</font><br>Kd={kd} F={f}', x, y, TAM, TAM, ESTADO)
     d.v(f'⟲ {est}', x + TAM / 2 - 40, y + TAM - 2 if y > 200 else y - 22, 80, 20, TXTC + 'fontSize=10;fontColor=#555555;')
 # reset
 d.v('', 30, 0, 16, 16, 'ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#272727;')

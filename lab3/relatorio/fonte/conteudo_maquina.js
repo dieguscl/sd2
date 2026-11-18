@@ -1,71 +1,18 @@
 // Seccao 3 do relatorio: projeto da maquina de estados assincrona pelos passos da metodologia.
-// As tabelas sao geradas a partir de simulacao/projeto.json (scripts/projeto.py), para coincidirem
-// com o que o script conferiu.
+// As tabelas do projeto vem de tabelas_maquina.js (geradas a partir de simulacao/projeto.json, para
+// coincidirem com o que o script scripts/projeto.py conferiu).
 const { P, Bullet, H1, H2, Figura, Tabela, Listagem } = require('./lib');
 const { AlignmentType } = require('docx');
+const tabelasMaquina = require('./tabelas_maquina');
 
-const COLS = ['00', '01', '11', '10'];
-const VERDE = 'E2EFDA', LARANJA = 'FCE4D6', CINZA = 'EDEDED';
+const VERDE = 'E2EFDA';
 
 module.exports = function maquina(N, R) {
   const r = id => N.ref(id);
   const esq = (...c) => Object.fromEntries(c.map(i => [i, AlignmentType.LEFT]));
   const PJ = R.projeto;
-  const EST = Object.keys(PJ.prim);
-  const v = R.virgula;
-
-  // --- 1. Tabela primitiva
-  const prim = EST.map(s => {
-    const p = PJ.prim[s];
-    return [s, ...p.prox.map(n => (n === null ? '–' : n === s ? `(${n})` : n)), String(p.kd), String(p.f), p.desc];
-  });
-
-  // --- 3. Tabela de implicacoes (triangular): recalcula os pares implicados para os mostrar
-  const implicados = (x, y) => {
-    const px = PJ.prim[x], py = PJ.prim[y];
-    if (px.kd !== py.kd || px.f !== py.f) return null;          // saidas diferentes
-    const req = [];
-    px.prox.forEach((nx, j) => {
-      const ny = py.prox[j];
-      if (nx === null || ny === null || nx === ny) return;
-      const par = [nx, ny].sort().join(',');
-      if (par !== [x, y].sort().join(',')) req.push(par);
-    });
-    return req;
-  };
-  const compat = new Set(PJ.compativeis.map(p => p.join(',')));
-  const impl = EST.slice(1).map((s, i) => [s, ...EST.slice(0, -1).map((t, j) => {
-    if (j > i) return '';
-    const par = [t, s].join(',');
-    const req = implicados(t, s);
-    if (compat.has(par)) return '✓';
-    if (req === null) return '✗';
-    return req.join('; ') + ' ✗';
-  })]);
-
-  // --- 4. Tabela reduzida
-  const G = PJ.grupos;
-  const red = Object.entries(PJ.reduzida).map(([s, d]) => {
-    const prox = d.prox.map((n, j) => {
-      let t = n === null ? '–' : (n === s ? `(${n})` : n);
-      if (s === 'S0' && (j === 1 || j === 2)) t += '*';
-      return t;
-    });
-    return [s, G[s].join(', '), ...prox, String(d.kd), String(d.f)];
-  });
-
-  // --- 6. Tabela de transicoes (linhas pela ordem do anel de Johnson e depois os codigos nao usados)
-  const NOME = Object.fromEntries(Object.entries(PJ.codigo).map(([k, c]) => [c, k]));
-  const ordem = ['000', '001', '011', '111', '110', '100', '010', '101'];
-  const indiretas = new Set(Object.keys(PJ.indiretas).map(k => { const [g, c] = k.split(','); return PJ.codigo[g] + c; }));
-  const trans = ordem.map(c => [NOME[c] || '–', c, ...PJ.transicoes[c].map(x => x || '–')]);
-  const fillTrans = (l, i) => {
-    if (i < 2) return undefined;
-    if (l[i] === '–') return undefined;
-    if (l[i] === l[1]) return VERDE;
-    if (indiretas.has(l[1] + COLS[i - 2])) return LARANJA;
-    return undefined;
-  };
+  const T = tabelasMaquina(R);   // tabelas geradas de simulacao/projeto.json (tabelas_maquina.js)
+  const NOME = T.NOME;
 
   // --- atrasos (acidentes essenciais)
   const at = [];
@@ -114,11 +61,7 @@ module.exports = function maquina(N, R) {
 
     H2('3.1 Tabela de estados primitiva (passo 1)'),
     P('As entradas da máquina são a tecla K e a saída do temporizador To; as saídas são Kd e F (saídas de Moore, associadas a cada estado). A tabela de estados primitiva (' + r('tab_prim') + ') foi construída pelo grupo a partir da Fig. 2 do enunciado, começando pela situação de repouso (tecla largada e temporizador parado, estado **a**) e criando um estado novo, estável numa só combinação das entradas, para cada situação diferente. As colunas estão em código de Gray (K To = 00, 01, 11, 10); o estado entre parênteses é o estado estável dessa linha.'),
-    ...Tabela(N, 'tab_prim', 'Tabela de estados primitiva (estado seguinte para K To = 00, 01, 11 e 10).',
-      ['Estado', '00', '01', '11', '10', 'Kd', 'F', 'Descrição'], prim,
-      [0.9, 0.9, 0.9, 0.9, 0.9, 0.7, 0.7, 4.6],
-      { juntar: true, alinhar: esq(7), destaque: (l, i) => (i >= 1 && i <= 4 && l[i].startsWith('(') ? VERDE : undefined),
-        negrito: (l, i) => i === 0 || (i >= 1 && i <= 4 && l[i].startsWith('(')) }),
+    ...T.prim(N),
     P('A sequência normal da Fig. 2 é a → b → c → e → f → g → a:'),
     Bullet('**a → b** (K sobe): Kd sobe de imediato; com F = 0, Ti = K sobe e dispara o temporizador.'),
     Bullet('**b → c** (To sobe): temporização ao premir. Os ressaltos levam a máquina entre **c** (K = 1) e **d** (K = 0) sem mudar Kd, e cada regresso de K a 1 é um novo flanco de Ti, que reinicia a temporização.'),
@@ -132,19 +75,13 @@ module.exports = function maquina(N, R) {
     P('**Inspeção visual.** Não há duas linhas iguais (mesmas saídas e mesmos estados seguintes).'),
     P(`**Partições.** Só podem ser idênticos estados com as mesmas saídas e estáveis na mesma combinação das entradas. Os quatro estados com Kd F = 10 (b, c, d, i) são estáveis em colunas diferentes, e o mesmo acontece com os quatro com Kd F = 01 (f, g, h, j); logo, a primeira partição já tem uma classe por estado, P1 = ${PJ.particoes[0].map(b => '(' + b.join('') + ')').join('')}, e não há estados redundantes.`),
     P('**Fusão.** Dois estados são compatíveis se tiverem as mesmas saídas e se, em cada coluna, os estados seguintes forem iguais, um deles for indiferente, ou formarem um par também compatível. A tabela de implicações (' + r('tab_impl') + ') mostra o resultado: ✗ sem mais indicação quando as saídas são diferentes, e o par implicado quando a incompatibilidade vem dos estados seguintes. Por exemplo, (b, c) implica (b, e) na coluna 10, e b e e têm saídas diferentes.'),
-    ...Tabela(N, 'tab_impl', 'Tabela de implicações (✓ compatível; ✗ incompatível; par implicado incompatível antes de ✗).',
-      ['', ...EST.slice(0, -1)], impl, [0.7, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      { juntar: true, tamanho: 16, negrito: (l, i) => i === 0, destaque: (l, i) => (l[i] === '✓' ? VERDE : (i > 0 && l[i] === '' ? CINZA : undefined)) }),
+    ...T.impl(N),
     P(`Os únicos pares compatíveis são ${PJ.compativeis.map(p => '(' + p.join(', ') + ')').join(', ')}, e nenhum deles implica outro par. O diagrama de fusão (${r('fig_fusao')}) tem por isso quatro arestas isoladas e uma só solução: (a), (b, i), (c, d), (e), (f, j), (g, h). Ficam 6 estados, que precisam de 3 variáveis de estado (2² < 6 ≤ 2³).`),
     ...Figura(N, 'fig_fusao', 'diagrama_fusao.png', 7, 'Diagrama de fusão: pares de estados compatíveis e estados da tabela reduzida.'),
 
     H2('3.3 Tabela de estados reduzida (passo 4)'),
     P('A ' + r('tab_red') + ' é a tabela reduzida: cada estado novo reúne os estados primitivos de uma classe. Os seis estados correspondem às fases do funcionamento: **S0** repouso; **S1** tecla premida, à espera que o temporizador arranque; **S2** temporização ao premir; **S3** tecla premida e estável; **S4** tecla largada, à espera que o temporizador arranque; **S5** temporização ao largar. A ' + r('fig_estados') + ' mostra o diagrama de estados.'),
-    ...Tabela(N, 'tab_red', 'Tabela de estados reduzida (K To = 00, 01, 11, 10; * = indiferenças especificadas para o arranque).',
-      ['Estado', 'Primitivos', '00', '01', '11', '10', 'Kd', 'F'], red,
-      [1, 1.3, 1, 1, 1, 1, 0.7, 0.7],
-      { largura: 7600, juntar: true, destaque: (l, i) => (i >= 2 && i <= 5 && l[i].startsWith('(') ? VERDE : (l[i].endsWith('*') ? LARANJA : undefined)),
-        negrito: (l, i) => i === 0 || (i >= 2 && i <= 5 && l[i].startsWith('(')) }),
+    ...T.red(N),
     P('**Arranque (secção 2.1 do enunciado).** O Reset põe a máquina em S0 (000) mas não para o temporizador, que pode estar a contar. As duas células de S0 com To = 1 eram indiferentes na tabela primitiva e foram especificadas para que o arranque seja sempre coerente:'),
     Bullet('**S0 com K To = 01 → S0** (estável): a máquina espera, em repouso, que o temporizador acabe; é o "transitório inicial" que o enunciado manda deixar terminar.'),
     Bullet('**S0 com K To = 11 → S2**: se a tecla for premida durante esse transitório, o seu flanco ascendente (com F = 0, Ti = K) também redispara o temporizador, pelo que a situação é exatamente a de S2 (tecla premida e temporização em curso); Kd sobe de imediato.'),
@@ -158,21 +95,13 @@ module.exports = function maquina(N, R) {
     Bullet('S5 com K To = 10 → **S0** (e S0 com 10 → S1), em vez de S5 → S1;'),
     Bullet('S0 com K To = 11 → **S1** (e S1 com 11 → S2), em vez de S0 → S2 (arranque).'),
     P('As transições que restam formam um só ciclo, S0 → S1 → S2 → S3 → S4 → S5 → S0, que se codifica com um código de Gray de 6 palavras: o código de um contador de Johnson de 3 *bits* (' + r('tab_cod') + ' e ' + r('fig_cod') + '). Os códigos 010 e 101 não são usados.'),
-    ...Tabela(N, 'tab_cod', 'Codificação dos estados (YY2 YY1 YY0) e saídas.',
-      ['Estado', 'YY2 YY1 YY0', 'Kd', 'F', 'Significado'],
-      Object.entries(PJ.codigo).map(([s, c]) => [s, c, String(PJ.reduzida[s].kd), String(PJ.reduzida[s].f),
-        { S0: 'Repouso', S1: 'Premida, espera que To suba', S2: 'Temporização ao premir', S3: 'Premida e estável',
-          S4: 'Largada, espera que To suba', S5: 'Temporização ao largar' }[s]]),
-      [1, 1.6, 0.7, 0.7, 4], { largura: 7600, juntar: true, alinhar: esq(4), mono: { 1: true } }),
+    ...T.cod(N),
     P('Esta codificação tem uma vantagem adicional: **Kd = YY0 e F = YY2** em todos os estados (Kd = 1 em S1, S2, S3 e F = 1 em S3, S4, S5). As saídas são as próprias variáveis de estado, sem lógica de saída.'),
     ...Figura(N, 'fig_cod', 'codificacao.png', 11, 'Codificação dos estados no cubo das variáveis de estado: o ciclo das transições usa só arestas do cubo.'),
 
     H2('3.5 Tabela de transições (passo 6)'),
     P('A ' + r('tab_trans') + ' é a tabela de transições: para cada código presente (YY2 YY1 YY0) e cada combinação de K To, o valor das variáveis secundárias de excitação Y2 Y1 Y0. A verde estão os estados estáveis (Y = YY) e a laranja as transições feitas por um estado intermédio.'),
-    ...Tabela(N, 'tab_trans', 'Tabela de transições: Y2 Y1 Y0 para K To = 00, 01, 11 e 10 (– = indiferente).',
-      ['Estado', 'YY2 YY1 YY0', '00', '01', '11', '10'], trans,
-      [1, 1.6, 1.2, 1.2, 1.2, 1.2], { largura: 7000, juntar: true, mono: { 1: true, 2: true, 3: true, 4: true, 5: true },
-        destaque: fillTrans, negrito: (l, i) => i === 0 }),
+    ...T.trans(N),
 
     H2('3.6 Saídas nas transições (passo 7)'),
     P('Como Kd = YY0 e F = YY2, cada saída só muda quando muda a respetiva variável de estado, e cada transição muda uma só variável de estado de cada vez: nas transições diretas muda no máximo uma saída, uma só vez. Nas transições indiretas (' + r('tab_ind') + ') o estado intermédio também não provoca picos: cada saída muda no máximo uma vez ao longo do caminho, sempre no mesmo sentido. Não foi preciso alterar o valor das saídas em nenhuma transição.'),
@@ -182,16 +111,10 @@ module.exports = function maquina(N, R) {
     P('Em S2 → S3 → S4, F sobe antes de Kd descer, e é a subida de F (com K = 0) que faz Ti subir e disparar a temporização ao largar. Em S5 → S0 → S1, F desce primeiro (com K = 1, Ti sobe e dispara a temporização ao premir) e Kd sobe a seguir.'),
 
     H2('3.7 Equações de excitação e de saída (passos 8 e 9)'),
-    P('Os mapas de Karnaugh da ' + r('fig_kv') + ' foram tirados da tabela de transições. Cada variável secundária só depende de três variáveis: Y2 de To, YY2 e YY1; Y1 de To, YY1 e YY0; Y0 de K, YY2 e YY0. O *script* confere que todas as células da tabela de transições com os mesmos valores dessas três variáveis têm o mesmo valor, pelo que cada mapa tem só 8 células, todas especificadas.'),
-    ...Figura(N, 'fig_kv', 'mapas_kv.png', 16.9, 'Mapas de Karnaugh das variáveis secundárias de excitação, com os agrupamentos usados.'),
-    ...Tabela(N, 'tab_eq', 'Equações de excitação e de saída.',
-      ['Variável', 'Equação', 'Leitura'],
-      [['Y2', PJ.equacoes.Y2, 'Enquanto o temporizador conta, YY2 mantém-se; quando acaba, YY2 copia YY1'],
-       ['Y1', PJ.equacoes.Y1, 'Enquanto o temporizador conta, YY1 copia YY0; quando acaba, YY1 mantém-se'],
-       ['Y0', PJ.equacoes.Y0, 'Função maioria de K, /YY2 e YY0'],
-       ['Kd', 'YY0', 'Saída de Moore, sem lógica'],
-       ['F', 'YY2', 'Saída de Moore, sem lógica']],
-      [0.8, 3.6, 4.4], { alinhar: esq(1, 2), mono: { 1: true } }),
+    P('Os mapas de Karnaugh da ' + r('fig_kv') + ' foram tirados diretamente da tabela de transições, um por variável secundária. Cada variável secundária é uma função das cinco variáveis K, To, YY2, YY1 e YY0, pelo que cada mapa é um mapa de 5 variáveis, desenhado como dois mapas de 4 × 4 (YY2 = 0 à esquerda e YY2 = 1 à direita), com YY1 YY0 nas linhas e K To nas colunas, em código de Gray. As células com – são indiferentes: combinações que não ocorrem em modo fundamental e os códigos não usados (010 e 101). Um agrupamento que aparece nos dois mapas não depende de YY2, e um agrupamento nas colunas 00 e 10 dá a volta ao mapa (To = 0).'),
+    P('Os agrupamentos mostram que cada variável secundária só depende de três das cinco variáveis: Y2 de To, YY2 e YY1 (cada agrupamento cobre as duas colunas de K e as duas linhas de YY0); Y1 de To, YY1 e YY0; Y0 de K, YY2 e YY0. Por isso as equações têm só termos de dois literais e cada uma ocupa um LUT de 3 entradas na FPGA.'),
+    ...Figura(N, 'fig_kv', 'mapas_kv.png', 15, 'Mapas de Karnaugh das variáveis secundárias de excitação (5 variáveis: YY2 = 0 à esquerda, YY2 = 1 à direita), com os agrupamentos usados.'),
+    ...T.eq(N),
     P('**Acidentes estáticos.** Em Y2 e Y1 os dois primeiros termos chegam para a função, mas quando To muda com YY2 = YY1 = 1 (ou YY1 = YY0 = 1) a saída passaria de um termo para o outro e poderia ter um pico a 0: o terceiro termo (YY2·YY1 e YY1·YY0) é o **termo de consenso** que cobre essas duas células adjacentes e elimina o acidente. Em Y0 (função maioria) os três termos são essenciais e cada par de células adjacentes a 1 já está no mesmo termo. O *script* confere, para as três equações e para todas as 32 combinações das cinco variáveis, que duas combinações adjacentes a 1 estão sempre cobertas por um mesmo termo. Sendo somas de produtos (dois níveis), não há acidentes dinâmicos. Na FPGA cada equação é um único LUT, que não preserva a forma em soma de produtos: quando muda uma só entrada e a saída não deve mudar, o LUT passa a ler outra célula de memória com o mesmo valor, o que normalmente não produz picos, embora a folha de características não o garanta. A ausência de acidentes estáticos fica garantida para a realização com portas lógicas (diagrama lógico da secção 3.9).'),
     P(`**Indiferenças.** Os valores que as equações dão às células indiferentes são seguros: S3 com To = 1 vai para S4 (K = 0) ou fica em S3 (K = 1), e os códigos não usados levam sempre a estados válidos (010 → ${PJ.indiferentes.filter(x => x[0] === '010').map(x => NOME[x[2]] || x[2]).join(', ')} e 101 → ${PJ.indiferentes.filter(x => x[0] === '101').map(x => NOME[x[2]] || x[2]).join(', ')}, para K To = 00, 01, 11, 10), pelo que a máquina nunca fica presa fora dos seis estados.`),
 
