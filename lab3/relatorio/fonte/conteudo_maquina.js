@@ -100,7 +100,7 @@ module.exports = function maquina(N, R) {
     ...Figura(N, 'fig_cod', 'codificacao.png', 11, 'Codificação dos estados no cubo das variáveis de estado: o ciclo das transições usa só arestas do cubo.'),
 
     H2('3.5 Tabela de transições (passo 6)'),
-    P('A ' + r('tab_trans') + ' é a tabela de transições: para cada código presente (YY2 YY1 YY0) e cada combinação de K To, o valor das variáveis secundárias de excitação Y2 Y1 Y0. A verde estão os estados estáveis (Y = YY) e a laranja as transições feitas por um estado intermédio.'),
+    P('A ' + r('tab_trans') + ' é a tabela de transições: para cada código presente (YY2 YY1 YY0) e cada combinação de K To, o valor das variáveis secundárias de excitação Y2 Y1 Y0, com o nome do estado que tem esse código (por exemplo, S2 com K To = 00 vai para 111, que é S3). A verde estão os estados estáveis (Y = YY) e a laranja as transições feitas por um estado intermédio.'),
     ...T.trans(N),
 
     H2('3.6 Saídas nas transições (passo 7)'),

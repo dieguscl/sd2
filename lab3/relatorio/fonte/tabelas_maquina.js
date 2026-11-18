@@ -60,11 +60,14 @@ module.exports = function tabelasMaquina(R) {
   const NOME = Object.fromEntries(Object.entries(PJ.codigo).map(([k, c]) => [c, k]));
   const ordem = ['000', '001', '011', '111', '110', '100', '010', '101'];
   const indiretas = new Set(Object.keys(PJ.indiretas).map(k => { const [g, c] = k.split(','); return PJ.codigo[g] + c; }));
-  const trans = ordem.map(c => [NOME[c] || '–', c, ...PJ.transicoes[c].map(x => x || '–')]);
-  const fillTrans = (l, i) => {
+  // cada celula mostra o codigo Y2 Y1 Y0 e o nome do estado com esse codigo
+  const nomeDe = x => { if (!NOME[x]) throw new Error('codigo sem estado: ' + x); return NOME[x]; };
+  const trans = ordem.map(c => [NOME[c] || '–', c, ...PJ.transicoes[c].map(x => (x ? `${x} **${nomeDe(x)}**` : '–'))]);
+  const fillTrans = (l, i) => {             // l[1] e o codigo da linha; o valor vem da tabela, nao do texto
     if (i < 2) return undefined;
-    if (l[i] === '–') return undefined;
-    if (l[i] === l[1]) return VERDE;
+    const x = PJ.transicoes[l[1]][i - 2];
+    if (x === null) return undefined;
+    if (x === l[1]) return VERDE;
     if (indiretas.has(l[1] + COLS[i - 2])) return LARANJA;
     return undefined;
   };
@@ -88,7 +91,7 @@ module.exports = function tabelasMaquina(R) {
       ['Estado', 'YY2 YY1 YY0', 'Kd', 'F', 'Significado'],
       Object.entries(PJ.codigo).map(([s, c]) => [s, c, String(PJ.reduzida[s].kd), String(PJ.reduzida[s].f), SIGNIFICADO[s]]),
       [1, 1.6, 0.7, 0.7, 4], { largura: 7600, juntar: true, alinhar: esq(4), mono: { 1: true } }),
-    trans: N => Tabela(N, 'tab_trans', 'Tabela de transições: Y2 Y1 Y0 para K To = 00, 01, 11 e 10 (– = indiferente).',
+    trans: N => Tabela(N, 'tab_trans', 'Tabela de transições: Y2 Y1 Y0 e estado correspondente, para K To = 00, 01, 11 e 10 (– = indiferente).',
       ['Estado', 'YY2 YY1 YY0', '00', '01', '11', '10'], trans,
       [1, 1.6, 1.2, 1.2, 1.2, 1.2], { largura: 7000, juntar: true, mono: { 1: true, 2: true, 3: true, 4: true, 5: true },
         destaque: fillTrans, negrito: (l, i) => i === 0 }),
