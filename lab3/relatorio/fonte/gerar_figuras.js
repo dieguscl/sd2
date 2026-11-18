@@ -47,7 +47,7 @@ function conteudo(N) {
     ...T.trans(N),
 
     titulo('8 Mapas de Karnaugh e equações'),
-    ...Figura(N, 'fig_kv', 'mapas_kv.png', 15, 'Mapas de Karnaugh de Y2, Y1 e Y0 (5 variáveis: YY2 = 0 à esquerda, YY2 = 1 à direita), com os agrupamentos usados.'),
+    ...Figura(N, 'fig_kv', 'mapas_kv.png', 16.9, 'Mapas de Karnaugh de Y2, Y1 e Y0 (linhas YY2 YY1 YY0, colunas K To), com os agrupamentos usados; as linhas simétricas em relação ao traço grosso também são adjacentes.'),
     ...T.eq(N),
 
     titulo('9 Diagrama lógico'),
