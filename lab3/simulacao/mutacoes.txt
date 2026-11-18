@@ -1,0 +1,22 @@
+Y0 sem o termo /YY2·YY0: testbenches que falharam = 3
+gestaoteclas_teste1 maquinatecla_teste1 tecla_teste1 
+Y2 com To trocado: testbenches que falharam = 3
+gestaoteclas_teste1 maquinatecla_teste1 tecla_teste1 
+F = YY1: testbenches que falharam = 2
+maquinatecla_teste1 tecla_teste1 
+Clear sem efeito em YY0: testbenches que falharam = 3
+gestaoteclas_teste1 maquinatecla_teste1 tecla_teste1 
+temporizador dispara nos dois flancos: testbenches que falharam = 2
+monoestavel_teste1 tecla_teste1 
+temporizador sem redisparo: testbenches que falharam = 1
+monoestavel_teste1 
+M sem o termo K1·K3: testbenches que falharam = 1
+validacao_teste1 
+Ti = K (sem XOR): testbenches que falharam = 1
+tecla_teste1 
+Ti sem a porta do Clear: testbenches que falharam = 1
+tecla_teste1 
+Y2 sem o termo de consenso YY2·YY1: testbenches que falharam = 0
+
+Y1 sem o termo de consenso YY1·YY0: testbenches que falharam = 0
+

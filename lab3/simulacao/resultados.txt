@@ -1,0 +1,5 @@
+gestaoteclas_teste1: Simulacao OK (11 verificacoes)
+maquinatecla_teste1: Simulacao OK (46 verificacoes)
+monoestavel_teste1: Simulacao OK (10 verificacoes)
+tecla_teste1: Simulacao OK (27 verificacoes)
+validacao_teste1: Simulacao OK (8 verificacoes)

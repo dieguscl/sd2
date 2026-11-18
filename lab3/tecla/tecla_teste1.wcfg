@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tecla_teste1_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tecla_teste1" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0 ps"></ZoomStartTime>
+      <ZoomEndTime time="5,300,000 ps"></ZoomEndTime>
+      <Cursor1Time time="5,300,000 ps"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="220"></NameColumnWidth>
+      <ValueColumnWidth column_width="90"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="7" />
+   <wvobject type="logic" fp_name="/tecla_teste1/Clear">
+      <obj_property name="ElementShortName">Clear</obj_property>
+      <obj_property name="ObjectShortName">Clear</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tecla_teste1/K">
+      <obj_property name="ElementShortName">K</obj_property>
+      <obj_property name="ObjectShortName">K</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tecla_teste1/Ti">
+      <obj_property name="ElementShortName">Ti</obj_property>
+      <obj_property name="ObjectShortName">Ti</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tecla_teste1/To">
+      <obj_property name="ElementShortName">To</obj_property>
+      <obj_property name="ObjectShortName">To</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tecla_teste1/Estado">
+      <obj_property name="ElementShortName">Estado[2:0]</obj_property>
+      <obj_property name="ObjectShortName">Estado[2:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tecla_teste1/F">
+      <obj_property name="ElementShortName">F</obj_property>
+      <obj_property name="ObjectShortName">F</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tecla_teste1/Kd">
+      <obj_property name="ElementShortName">Kd</obj_property>
+      <obj_property name="ObjectShortName">Kd</obj_property>
+   </wvobject>
+</wave_config>

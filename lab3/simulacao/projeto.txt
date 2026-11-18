@@ -1,0 +1,127 @@
+== 1. Tabela primitiva
+  a:  (a)    -    -    b   Kd F = 00   Repouso
+  b:    i    -    c  (b)   Kd F = 10   Tecla premida, inicia temporização
+  c:    -    d  (c)    e   Kd F = 10   Temporização ao premir
+  d:    f  (d)    c    -   Kd F = 10   Ressalto ao premir
+  e:    f    -    -  (e)   Kd F = 11   Tecla premida estável
+  f:  (f)    g    -    j   Kd F = 01   Tecla largada, inicia temporização
+  g:    a  (g)    h    -   Kd F = 01   Temporização ao largar
+  h:    -    g  (h)    b   Kd F = 01   Ressalto ao largar
+  i:  (i)    d    -    b   Kd F = 10   Ressalto ao premir, antes da temporização
+  j:    f    -    h  (j)   Kd F = 01   Ressalto ao largar, antes da temporização
+  indiferenças: as que exigiam mudar K e To ao mesmo tempo e ainda a em 01 e e em 11 (To não sobe sem um flanco em Ti)
+
+== 2. Partições
+  P1 = (a) (b) (c) (d) (e) (f) (g) (h) (i) (j)
+  P2 = (a) (b) (c) (d) (e) (f) (g) (h) (i) (j)
+  nenhum par de estados equivalentes (todas as classes têm um só estado)
+
+== 3. Tabela de implicações
+  a,b: incompatível
+  a,c: incompatível
+  a,d: incompatível
+  a,e: incompatível
+  a,f: incompatível
+  a,g: incompatível
+  a,h: incompatível
+  a,i: incompatível
+  a,j: incompatível
+  b,c: incompatível
+  b,d: incompatível
+  b,e: incompatível
+  b,f: incompatível
+  b,g: incompatível
+  b,h: incompatível
+  b,i: compatível (sem implicações)
+  b,j: incompatível
+  c,d: compatível (sem implicações)
+  c,e: incompatível
+  c,f: incompatível
+  c,g: incompatível
+  c,h: incompatível
+  c,i: incompatível
+  c,j: incompatível
+  d,e: incompatível
+  d,f: incompatível
+  d,g: incompatível
+  d,h: incompatível
+  d,i: incompatível
+  d,j: incompatível
+  e,f: incompatível
+  e,g: incompatível
+  e,h: incompatível
+  e,i: incompatível
+  e,j: incompatível
+  f,g: incompatível
+  f,h: incompatível
+  f,i: incompatível
+  f,j: compatível (sem implicações)
+  g,h: compatível (sem implicações)
+  g,i: incompatível
+  g,j: incompatível
+  h,i: incompatível
+  h,j: incompatível
+  i,j: incompatível
+  pares compatíveis: (b,i), (c,d), (f,j), (g,h)
+
+== 4. Tabela reduzida
+  S0 (a):  (S0)     -     -    S1   Kd F = 00
+  S1 (b,i):  (S1)    S2    S2  (S1)   Kd F = 10
+  S2 (c,d):    S4  (S2)  (S2)    S3   Kd F = 10
+  S3 (e):    S4     -     -  (S3)   Kd F = 11
+  S4 (f,j):  (S4)    S5    S5  (S4)   Kd F = 01
+  S5 (g,h):    S0  (S5)  (S5)    S1   Kd F = 01
+  arranque: S0 em 01 -> S0 (estável) e S0 em 11 -> S2
+
+== 5. Codificação
+  transições: S0-S1, S0-S2, S0-S5, S1-S2, S1-S5, S2-S3, S2-S4, S3-S4, S4-S5
+  transições com mais de uma variável a mudar (corridas): S0-S2, S1-S5, S2-S4
+  S2 em 00: S2 -> S3 -> S4 (011 -> 111 -> 110)
+  S5 em 10: S5 -> S0 -> S1 (100 -> 000 -> 001)
+  S0 em 11: S0 -> S1 -> S2 (000 -> 001 -> 011)
+
+== 6. Tabela de transições (Y2 Y1 Y0)
+  000:  000  000  001  001
+  001:  001  011  011  001
+  011:  111  011  011  111
+  111:  110  ---  ---  111
+  110:  110  100  100  110
+  100:  000  100  100  000
+  010:  ---  ---  ---  ---
+  101:  ---  ---  ---  ---
+
+== 8. Equações de excitação
+  Y2 = To·YY2 + /To·YY1 + YY2·YY1
+  Y1 = To·YY0 + /To·YY1 + YY1·YY0
+  Y0 = K·/YY2 + K·YY0 + /YY2·YY0
+  as equações reproduzem todas as células especificadas da tabela de transições
+  sem acidentes estáticos: cada par de combinações adjacentes a 1 está coberto por um mesmo termo
+
+== 9. Equações de saída: Kd = yy0, F = yy2 (iguais às variáveis de estado)
+  células indiferentes preenchidas pelas equações:
+    111 em 01 -> 110
+    111 em 11 -> 111
+    010 em 00 -> 110
+    010 em 01 -> 000
+    010 em 11 -> 001
+    010 em 10 -> 111
+    101 em 00 -> 000
+    101 em 01 -> 110
+    101 em 11 -> 111
+    101 em 10 -> 001
+
+== Corridas (todas as ordens de mudança das variáveis de estado)
+  12 estados totais estáveis, 24 transições: todas chegam a um único estado,
+  mudando uma variável de estado de cada vez, e Kd e F nunca têm picos (mudam no máximo uma vez)
+  libertação do Reset com K To = 00: 000 -> S0
+  libertação do Reset com K To = 01: 000 -> S0
+  libertação do Reset com K To = 11: 000 -> S2
+  libertação do Reset com K To = 10: 000 -> S1
+
+== Acidentes essenciais (uma equação vê a entrada nova mais tarde do que as outras)
+  S1 (001) 00->01: com Y2 ainda a ver To antigo a máquina pode chegar a 000 e acabar em ['S0'] em vez de ['S2']
+  S1 (001) 10->11: com Y2 ainda a ver To antigo a máquina pode chegar a 111 e acabar em ['S3'] em vez de ['S2']
+  S2 (011) 01->00: com Y1 ainda a ver To antigo a máquina pode chegar a 000 e acabar em ['S0'] em vez de ['S4']
+  S4 (110) 00->01: com Y2 ainda a ver To antigo a máquina pode chegar a 000 e acabar em ['S0'] em vez de ['S5']
+  S4 (110) 10->11: com Y2 ainda a ver To antigo a máquina pode chegar a 000 e acabar em ['S2'] em vez de ['S5']
+  S5 (100) 11->10: com Y1 ainda a ver To antigo a máquina pode chegar a 011 e acabar em ['S3'] em vez de ['S1']

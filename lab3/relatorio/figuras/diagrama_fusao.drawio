@@ -1,0 +1,30 @@
+<mxfile host="drawio">
+  <diagram name="diagrama_fusao" id="diagrama_fusao">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="dia2" value="a" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="212.0" y="22.0" width="36" height="36" as="geometry"/></mxCell>
+        <mxCell id="dia3" value="b" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="112.07650711027958" y="54.46711095625892" width="36" height="36" as="geometry"/></mxCell>
+        <mxCell id="dia4" value="i" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50.32039222982391" y="139.46711095625892" width="36" height="36" as="geometry"/></mxCell>
+        <mxCell id="dia5" value="c" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50.32039222982388" y="244.53288904374102" width="36" height="36" as="geometry"/></mxCell>
+        <mxCell id="dia6" value="d" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="112.07650711027955" y="329.5328890437411" width="36" height="36" as="geometry"/></mxCell>
+        <mxCell id="dia7" value="e" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="211.99999999999997" y="362.0" width="36" height="36" as="geometry"/></mxCell>
+        <mxCell id="dia8" value="f" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="311.92349288972036" y="329.5328890437411" width="36" height="36" as="geometry"/></mxCell>
+        <mxCell id="dia9" value="j" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="373.67960777017606" y="244.53288904374108" width="36" height="36" as="geometry"/></mxCell>
+        <mxCell id="dia10" value="g" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="373.6796077701761" y="139.46711095625898" width="36" height="36" as="geometry"/></mxCell>
+        <mxCell id="dia11" value="h" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="311.9234928897205" y="54.46711095625898" width="36" height="36" as="geometry"/></mxCell>
+        <mxCell id="dia12" style="rounded=0;html=1;endArrow=none;strokeWidth=2;" edge="1" parent="1" source="dia3" target="dia4"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="dia13" value="S1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=12;fontColor=#1F3864;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="39.34195356446827" y="73.55658646226178" width="36" height="22" as="geometry"/></mxCell>
+        <mxCell id="dia14" style="rounded=0;html=1;endArrow=none;strokeWidth=2;" edge="1" parent="1" source="dia5" target="dia6"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="dia15" value="S2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=12;fontColor=#1F3864;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="39.34195356446827" y="324.44341353773825" width="36" height="22" as="geometry"/></mxCell>
+        <mxCell id="dia16" style="rounded=0;html=1;endArrow=none;strokeWidth=2;" edge="1" parent="1" source="dia8" target="dia9"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="dia17" value="S4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=12;fontColor=#1F3864;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="384.6580464355317" y="324.44341353773825" width="36" height="22" as="geometry"/></mxCell>
+        <mxCell id="dia18" style="rounded=0;html=1;endArrow=none;strokeWidth=2;" edge="1" parent="1" source="dia10" target="dia11"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="dia19" value="S5" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=12;fontColor=#1F3864;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="384.6580464355318" y="73.55658646226185" width="36" height="22" as="geometry"/></mxCell>
+        <mxCell id="dia20" value="S0" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=12;fontColor=#1F3864;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="212.0" y="-13.5" width="36" height="22" as="geometry"/></mxCell>
+        <mxCell id="dia21" value="S3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=12;fontColor=#1F3864;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="211.99999999999997" y="411.5" width="36" height="22" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
