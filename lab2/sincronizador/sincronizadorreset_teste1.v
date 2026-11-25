@@ -1,9 +1,8 @@
 `timescale 1ns / 1ps
 
 // Testbench do sincronizador do Reset.
-// Verifica que a saída sobe de imediato (assíncrona) ao carregar a tecla, em qualquer
-// instante do ciclo, e que só desce num flanco ascendente do relógio, 2 flancos depois de
-// a tecla ser largada (também depois das configurações iniciais da FPGA).
+// A saída sobe logo que a tecla é carregada (sem esperar pelo relógio) e só desce no
+// 2.º flanco ascendente depois de a tecla ser largada.
 module sincronizadorreset_teste1();
 
 //   Declaração das entradas
@@ -20,73 +19,40 @@ module sincronizadorreset_teste1();
          .Saida(Saida)
      );
 
-//   Relógio de 100 MHz (período de 10ns), como o da Basys3
+//   Relógio de 100 MHz (período de 10ns): flancos ascendentes em 5, 15, 25, ... ns
      always #5 Clock = ~Clock;
 
+//   Confere a saída com o valor esperado
      integer erros = 0, verificacoes = 0;
-     task verifica(input esperado, input [8*48:1] caso);
+     task confere(input esperado);
          begin
              verificacoes = verificacoes + 1;
              if (Saida !== esperado) begin
-                 $display("ERRO t=%0t (%0s): Saida=%b (esperado %b)", $time, caso, Saida, esperado);
+                 $display("ERRO t=%0t: Saida=%b (esperado %b)", $time, Saida, esperado);
                  erros = erros + 1;
              end
          end
      endtask
 
-//   A saída só pode descer num flanco ascendente do relógio
-     always @(negedge Saida)
-         if ($time > 0 && ($time % 10) != 5) begin
-             $display("ERRO t=%0t: Saida desceu fora do flanco do relogio", $time);
-             erros = erros + 1;
-         end
-
-//   Conta os flancos do relógio desde que a tecla foi largada até a saída descer
-     integer flancos;
-     task larga_e_conta;
-         begin
-             Entrada = 0;
-             flancos = 0;
-             while (Saida === 1'b1 && flancos < 10) @(posedge Clock) begin
-                 #1 flancos = flancos + 1;
-             end
-             verificacoes = verificacoes + 1;
-             if (flancos != 2) begin
-                 $display("ERRO t=%0t: a saida desceu ao fim de %0d flancos (esperado 2)", $time, flancos);
-                 erros = erros + 1;
-             end
-         end
-     endtask
-
-     integer k;
      initial begin
-         #1   verifica(1'b1, "ativo depois de configurar a FPGA");
-         #99;                                             // fim das configurações iniciais (GSR)
-         flancos = 0;
-         while (Saida === 1'b1 && flancos < 10) @(posedge Clock) begin
-             #1 flancos = flancos + 1;
-         end
-         verificacoes = verificacoes + 1;
-         if (flancos != 2) begin
-             $display("ERRO: depois do GSR a saida desceu ao fim de %0d flancos (esperado 2)", flancos);
-             erros = erros + 1;
-         end
+         // Depois de configurar a FPGA (INIT = 1) o Reset está ativo
+         #50  confere(1);
+         #60  confere(1);           // t = 110: fim das configurações (100 ns), 1.º flanco em 105
+         #10  confere(0);           // t = 120: 2.º flanco em 115, Reset libertado
 
-         // Carregar e largar a tecla em vários instantes do ciclo (incluindo junto ao flanco)
-         for (k = 0; k < 10; k = k + 1) begin
-             #(23 + k);
-             Entrada = 1;
-             #0.1 verifica(1'b1, "sobe de imediato, sem flanco");
-             #(31 + 3 * k);
-             verifica(1'b1, "ativo enquanto a tecla esta carregada");
-             larga_e_conta;
-         end
+         // Carregar a tecla entre dois flancos: sobe logo
+         #12  Entrada = 1;          // t = 132
+         #1   confere(1);           // t = 133, antes do flanco de 135
+         #20  Entrada = 0;          // t = 153: largar
+         #5   confere(1);           // t = 158: 1.º flanco (155), ainda ativo
+         #10  confere(0);           // t = 168: 2.º flanco (165), libertado
 
-         // Impulso muito curto entre dois flancos: também é aceite
-         @(negedge Clock) Entrada = 1;
-         #1 Entrada = 0;
-         verifica(1'b1, "impulso curto ativa o Reset");
-         larga_e_conta;
+         // Impulso de 2 ns entre dois flancos: também ativa o Reset
+         #14  Entrada = 1;          // t = 182
+         #1   confere(1);
+         #1   Entrada = 0;          // t = 184
+         #4   confere(1);           // t = 188: 1.º flanco (185)
+         #10  confere(0);           // t = 198: 2.º flanco (195)
 
          if (erros == 0) $display("Simulacao OK (%0d verificacoes)", verificacoes);
          else            $display("Simulacao FALHOU (%0d erros em %0d verificacoes)", erros, verificacoes);

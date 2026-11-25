@@ -8,54 +8,14 @@ const {
   Document, Packer, Paragraph, TextRun, Header, Footer, AlignmentType, LevelFormat, TabStopType,
   PageNumber, TableOfContents, BorderStyle,
 } = require('docx');
-const { Numerador, RAIZ, FONTE } = require('./lib');
+const { Numerador, FONTE } = require('./lib');
 const arquitetura = require('./conteudo_arquitetura');
 const controlador = require('./conteudo_controlador');
 const sistema = require('./conteudo_sistema');
 
 const totalPaginas = process.argv[2] || '?';
 
-// --- Dados lidos dos resultados do Vivado e das simulacoes ---------------------------------
-function util(nome) {
-  const t = fs.readFileSync(path.join(RAIZ, 'bitstreams/relatorios', nome + '_utilizacao.txt'), 'utf8');
-  const lut = +t.match(/\| Slice LUTs\s+\|\s+(\d+)/)[1];
-  const ff = +t.match(/\| Slice Registers\s+\|\s+(\d+)/)[1];
-  return { lut, ff };
-}
-function wns(nome) {
-  const t = fs.readFileSync(path.join(RAIZ, 'bitstreams/relatorios', nome + '_tempos.txt'), 'utf8');
-  const m = t.match(/WNS\(ns\)[^\n]*\n[ -]+\n\s+(-?[\d.]+)/);
-  return m[1].replace('.', ',');
-}
-// mensagem final de cada testbench (scripts/simula.sh): "<tb>: Simulacao OK (<n> verificacoes)"
-const resultados = fs.readFileSync(path.join(RAIZ, 'simulacao/resultados.txt'), 'utf8');
-function verificacoes(tb) {
-  const m = resultados.match(new RegExp('^' + tb + ': Simulacao OK \\((\\d+) verificacoes\\)', 'm'));
-  if (!m) throw new Error('resultado da simulacao em falta: ' + tb);
-  return m[1];
-}
-// linhas extra escritas por alguns testbenches (ficam em simulacao/xsim/<tb>.sim.out)
-function linhaSim(tb, inicio) {
-  const t = fs.readFileSync(path.join(RAIZ, 'simulacao/xsim', tb + '.sim.out'), 'utf8');
-  const l = t.split('\n').find(x => x.startsWith(inicio));
-  if (!l) throw new Error('linha em falta em ' + tb + ': ' + inicio);
-  return l;
-}
-const cordas = linhaSim('lfsr32_teste1', 'Cordas').match(/pausa (\d+), cima (\d+), meio (\d+), baixo (\d+)/).slice(1);
-const visitas = linhaSim('controlador_teste1', 'Ciclos').match(/S0 (\d+), S1 (\d+), S2 (\d+), S3 (\d+), S4 (\d+), S5 (\d+)/).slice(1);
-
-const TESTBENCHES = ['sincronizador_teste1', 'sincronizadorreset_teste1', 'lfsr32_teste1', 'memoria4x2_teste1',
-  'temporizador_teste1', 'temporizadorvariavel_teste1', 'beat_teste1', 'gestaodisplays_teste1',
-  'controlador_teste1', 'guitarhero_teste1'];
-const R = {
-  versaoVivado: '2026.1',
-  util: util('guitarhero'),
-  wns: wns('guitarhero'),
-  ver: Object.fromEntries(TESTBENCHES.map(tb => [tb, verificacoes(tb)])),
-  cordas,
-  visitas,
-  numTestbenches: String(TESTBENCHES.length),
-};
+const R = require('./dados');
 
 // --- Conteudo (duas passagens para resolver as referencias a figuras e tabelas) -----------
 function conteudo(N) {

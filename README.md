@@ -6,3 +6,4 @@
 |---|---|
 | [`lab1/`](lab1/) | 1.º Trabalho de Laboratório: gestão do *display* da placa Basys3 (Digital e Vivado) |
 | [`lab2/`](lab2/) | 2.º Trabalho de Laboratório: gestão dos *displays* para o jogo Guitar Hero (realização direta) |
+| [`lab3/`](lab3/) | 3.º Trabalho de Laboratório: gestão das teclas para o jogo Guitar Hero (máquina de estados assíncrona) |

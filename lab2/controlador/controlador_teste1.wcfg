@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="100,000 ps"></ZoomStartTime>
-      <ZoomEndTime time="340,000 ps"></ZoomEndTime>
-      <Cursor1Time time="340,000 ps"></Cursor1Time>
+      <ZoomStartTime time="0 ps"></ZoomStartTime>
+      <ZoomEndTime time="230,000 ps"></ZoomEndTime>
+      <Cursor1Time time="230,000 ps"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="220"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="21" />
+   <WVObjectSize size="20" />
    <wvobject type="logic" fp_name="/controlador_teste1/Clock">
       <obj_property name="ElementShortName">Clock</obj_property>
       <obj_property name="ObjectShortName">Clock</obj_property>
@@ -99,10 +99,5 @@
    <wvobject type="logic" fp_name="/controlador_teste1/Faster">
       <obj_property name="ElementShortName">Faster</obj_property>
       <obj_property name="ObjectShortName">Faster</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/controlador_teste1/ref_estado">
-      <obj_property name="ElementShortName">ref_estado[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ref_estado[31:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

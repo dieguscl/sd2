@@ -16,3 +16,7 @@ __pycache__/
 relatorio/fonte/corpo.docx
 simulacao/xsim/
 simulacao/*.wdb
+relatorio/revisao/
+relatorio/fonte/revisao.docx
+relatorio/gerar_revisao.sh
+relatorio/fonte/revisao.js

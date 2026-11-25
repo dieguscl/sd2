@@ -32,15 +32,15 @@ module.exports = function sistema(N, R) {
     ...Listagem(N, 'lst_xdc', 'guitarhero/guitarhero.xdc', 'Ficheiro de restrições do circuito de topo'),
 
     H2('10.3 Simulação do sistema completo'),
-    P('O *testbench* do sistema (' + r('lst_gh_tb') + ', no Anexo A) usa `METADE = 2`, `ESTAVEL = 4` e um temporizador com `INICIAL = 40`, `PASSO = 4` e `MINIMO = 20` ciclos. É independente da implementação: tem o seu próprio modelo do LFSR e uma fila de referência para a memória, comandados apenas pelos LEDs dos estados (S0 limpa a fila e carrega a semente, S3 desloca). Em cada ciclo verifica que:'),
-    Bullet('há um e um só estado ativo e os LEDs Ready e Waiting correspondem ao estado;'),
-    Bullet('a memória é igual à fila de referência e o *display* ativo mostra a corda da posição certa;'),
-    Bullet('o LED Beat troca de estado uma vez por passo;'),
-    Bullet('o intervalo entre passos é o período do temporizador mais 3 ciclos (40, 36, 32, … até 20).'),
-    P('O percurso inclui o Reset (ativação imediata e libertação síncrona), a espera em S1, a tecla Start com ressaltos, 12 passos do jogo, um Reset a meio do jogo e um novo jogo, que tem de recomeçar com o período inicial. Resultado: `Simulacao OK (' + R.ver.guitarhero_teste1 + ' verificacoes)`.'),
-    P('Na ' + r('fig_viv_gh') + ' vê-se o jogo completo: depois do Reset, Ready acende (S1); `Start` (já sem ressaltos) leva a máquina a S2 e, quando é largada, o jogo começa. As cordas entram em `Pos0` e avançam até `Pos3`, `Periodo` diminui de 40 para 20 ciclos e o LED Beat troca a cada passo. O Reset a meio do jogo limpa a memória e o LED Beat e repõe o período de 40 ciclos.'),
-    ...Figura(N, 'fig_viv_gh', 'viv_guitarhero_sim.png', 16.9, 'Simulação do sistema completo: Reset, Start, 12 passos do jogo, Reset a meio do jogo e novo jogo.'),
-    P('A ' + r('fig_viv_gh_det') + ' mostra o primeiro passo em pormenor. Quando `Start` volta a 0, a máquina passa de S2 a S3: nesse ciclo ShiftMem carrega a corda do LFSR (11) em `Pos0` e StartTemp inicia o temporizador, que mantém `Tempo` a 1 durante 40 ciclos (S4). Quando `Tempo` volta a 0, a máquina passa por S5 (Faster: o período passa a 36) e regressa a S3, onde a corda seguinte (01) entra em `Pos0` e o 11 passa para `Pos1`. Entre os dois passos decorrem 43 ciclos (40 + 3).'),
+    P('O *testbench* do sistema (' + r('lst_gh_tb') + ', no Anexo A) usa `METADE = 2`, `ESTAVEL = 4` e um temporizador com `INICIAL = 40`, `PASSO = 4` e `MINIMO = 20` ciclos. O percurso é o de um jogo: a espera em S1, a tecla Start com um ressalto, sete passos do jogo e um Reset a meio do jogo. Em cada passo confere:'),
+    Bullet('o estado e os LEDs Ready, Waiting e Beat (que troca em cada passo);'),
+    Bullet('as cordas nas quatro posições da memória: a corda nova entra em `Pos0` e as outras avançam uma posição (as cordas são as que o LFSR dá nesta simulação);'),
+    Bullet('o período do temporizador, que diminui 4 ciclos por passo, de 40 até ao mínimo de 20;'),
+    Bullet('no 1.º passo, os segmentos do *display* da esquerda, que mostra `Pos0`.'),
+    P('Depois do Reset confere que a máquina fica em S0 de imediato, com a memória limpa e o LED Beat apagado, e que volta a S1 com o período inicial. Resultado: `Simulacao OK (' + R.ver.guitarhero_teste1 + ' verificacoes)`.'),
+    P('Na ' + r('fig_viv_gh') + ' vê-se o jogo completo: depois de libertado o Reset das configurações iniciais, Ready acende (S1); `Start` (já sem o ressalto) leva a máquina a S2 e, quando é largada, o jogo começa. As cordas entram em `Pos0` e avançam até `Pos3`, `Periodo` diminui de 40 para 20 ciclos e o LED Beat troca a cada passo. O Reset a meio do jogo limpa a memória e o LED Beat e repõe o período de 40 ciclos.'),
+    ...Figura(N, 'fig_viv_gh', 'viv_guitarhero_sim.png', 16.9, 'Simulação do sistema completo: Start, sete passos do jogo e Reset a meio do jogo.'),
+    P('A ' + r('fig_viv_gh_det') + ' mostra o primeiro passo em pormenor. Quando `Start` volta a 0, a máquina passa de S2 a S3: nesse ciclo ShiftMem carrega a corda do LFSR (10) em `Pos0` e StartTemp inicia o temporizador, que mantém `Tempo` a 1 durante 40 ciclos (S4). Quando `Tempo` volta a 0, a máquina passa por S5 (Faster: o período passa a 36) e regressa a S3, onde a corda seguinte (00, pausa) entra em `Pos0` e o 10 passa para `Pos1`. Entre os dois passos decorrem 43 ciclos (40 + 3).'),
     ...Figura(N, 'fig_viv_gh_det', 'viv_guitarhero_detalhe_sim.png', 16.9, 'Pormenor da simulação do sistema: dois passos do jogo (S3, S4, S5 e S3).'),
 
     H2('10.4 Integração faseada e ensaio na placa'),
@@ -72,13 +72,13 @@ module.exports = function sistema(N, R) {
     H2('11.3 Primitivas FDPE e FDCE'),
     P('As primitivas seguem os modelos do Vivado: `PRE` e `CLR` são assíncronos e ativos a *High*, `CE` é ativo a *High* e `INIT` define o valor depois de configurar a FPGA. FF_S0 tem `INIT = 1` e os outros `INIT = 0`, pelo que a máquina arranca em S0 mesmo sem carregar Reset; o sincronizador do Reset também tem `INIT = 1`, mantendo o Reset ativo durante os dois primeiros ciclos depois da configuração.'),
     H2('11.4 IA generativa'),
-    P('Foi usada IA generativa como apoio na escrita dos *testbenches* e dos modelos de referência, na revisão do código Verilog e dos comentários, na preparação dos diagramas no draw.io e na correção da redação deste relatório, bem como para confirmar que o relatório inclui os elementos pedidos no enunciado. Todo o código e todos os diagramas foram revistos pelo grupo e as simulações foram corridas e analisadas pelo grupo.'),
+    P('Foi usada IA generativa como apoio na escrita dos *testbenches*, na revisão do código Verilog e dos comentários, na preparação dos diagramas no draw.io e na correção da redação deste relatório, bem como para confirmar que o relatório inclui os elementos pedidos no enunciado. Todo o código e todos os diagramas foram revistos pelo grupo e as simulações foram corridas e analisadas pelo grupo.'),
 
     // =====================================================================================
     H1('12 Conclusão'),
     P('Desenvolveu-se o sistema de gestão dos *displays* do jogo Guitar Hero: um LFSR de 32 *bits* gera a sequência de cordas e pausas, uma memória 4x2 guarda o que cada *display* mostra e um temporizador variável define e acelera o ritmo do jogo. A gestão dos *displays* reutilizou o sistema do 1.º trabalho, com um novo transcodificador.'),
     P('O controlador, o cerne do trabalho, foi desenhado a partir do fluxograma pelos 11 passos da metodologia e realizado de forma direta, com um *flip-flop* por estado, no modelo estrutural: cada *flip-flop* corresponde a um estado do fluxograma e cada porta a um termo das equações, o que o esquema RTL do Vivado confirmou. O trabalho mostrou também a importância da sincronização das entradas assíncronas: a tecla Start precisa de sincronizador e anti-ressalto, e a libertação do Reset tem de ser síncrona para evitar uma corrida crítica que deixaria a máquina sem estado ativo.'),
-    P('Os ' + R.numTestbenches + ' *testbenches* (um por módulo, o do controlador e o do sistema completo) comparam as saídas com modelos de referência e terminam todos com `Simulacao OK`; a implementação cumpre as restrições temporais.'),
+    P('Os ' + R.numTestbenches + ' *testbenches* (um por módulo, o do controlador e o do sistema completo) conferem as saídas com os valores esperados e terminam todos com `Simulacao OK`; a implementação cumpre as restrições temporais.'),
     PorFazer('acrescentar o resultado do ensaio na placa Basys3 (secção 10.4)'),
 
     // =====================================================================================

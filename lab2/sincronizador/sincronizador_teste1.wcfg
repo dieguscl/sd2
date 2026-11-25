@@ -12,17 +12,25 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0 ps"></ZoomStartTime>
-      <ZoomEndTime time="3,700,000 ps"></ZoomEndTime>
-      <Cursor1Time time="3,700,000 ps"></Cursor1Time>
+      <ZoomEndTime time="560,000 ps"></ZoomEndTime>
+      <Cursor1Time time="560,000 ps"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="220"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="4" />
+   <WVObjectSize size="6" />
+   <wvobject type="logic" fp_name="/sincronizador_teste1/Clock">
+      <obj_property name="ElementShortName">Clock</obj_property>
+      <obj_property name="ObjectShortName">Clock</obj_property>
+   </wvobject>
    <wvobject type="logic" fp_name="/sincronizador_teste1/Entrada">
       <obj_property name="ElementShortName">Entrada</obj_property>
       <obj_property name="ObjectShortName">Entrada</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sincronizador_teste1/UUT/meta">
+      <obj_property name="ElementShortName">meta</obj_property>
+      <obj_property name="ObjectShortName">meta</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/sincronizador_teste1/UUT/sinc">
       <obj_property name="ElementShortName">sinc</obj_property>

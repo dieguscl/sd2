@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="monoestavel_teste1_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="monoestavel_teste1" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0 ps"></ZoomStartTime>
+      <ZoomEndTime time="290,000 ps"></ZoomEndTime>
+      <Cursor1Time time="290,000 ps"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="220"></NameColumnWidth>
+      <ValueColumnWidth column_width="90"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="8" />
+   <wvobject type="logic" fp_name="/monoestavel_teste1/Clock">
+      <obj_property name="ElementShortName">Clock</obj_property>
+      <obj_property name="ObjectShortName">Clock</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/monoestavel_teste1/Ti">
+      <obj_property name="ElementShortName">Ti</obj_property>
+      <obj_property name="ObjectShortName">Ti</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/monoestavel_teste1/UUT/meta">
+      <obj_property name="ElementShortName">meta</obj_property>
+      <obj_property name="ObjectShortName">meta</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/monoestavel_teste1/UUT/sinc">
+      <obj_property name="ElementShortName">sinc</obj_property>
+      <obj_property name="ObjectShortName">sinc</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/monoestavel_teste1/UUT/anterior">
+      <obj_property name="ElementShortName">anterior</obj_property>
+      <obj_property name="ObjectShortName">anterior</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/monoestavel_teste1/UUT/flanco">
+      <obj_property name="ElementShortName">flanco</obj_property>
+      <obj_property name="ObjectShortName">flanco</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/monoestavel_teste1/UUT/contagem">
+      <obj_property name="ElementShortName">contagem[2:0]</obj_property>
+      <obj_property name="ObjectShortName">contagem[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/monoestavel_teste1/To">
+      <obj_property name="ElementShortName">To</obj_property>
+      <obj_property name="ObjectShortName">To</obj_property>
+   </wvobject>
+</wave_config>

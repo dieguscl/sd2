@@ -16,7 +16,9 @@ module SincronizadorReset(
 
      wire q1;
 
-     (* ASYNC_REG = "TRUE" *) FDPE #(.INIT(1'b1)) ff1 (.Q(q1),    .C(Clock), .CE(1'b1), .PRE(Entrada), .D(1'b0));
-     (* ASYNC_REG = "TRUE" *) FDPE #(.INIT(1'b1)) ff2 (.Q(Saida), .C(Clock), .CE(1'b1), .PRE(Entrada), .D(q1));
+     (* ASYNC_REG = "TRUE" *)
+     FDPE #(.INIT(1'b1)) ff1 (.Q(q1),    .C(Clock), .CE(1'b1), .PRE(Entrada), .D(1'b0));
+     (* ASYNC_REG = "TRUE" *)
+     FDPE #(.INIT(1'b1)) ff2 (.Q(Saida), .C(Clock), .CE(1'b1), .PRE(Entrada), .D(q1));
 
 endmodule
