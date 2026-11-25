@@ -1,81 +1,81 @@
 == tecla1
-celula Y2 LUT3 tecla1/maquina/Y2_inferred_i_1 SLICE_X0Y5 SLICEL.C5LUT
-celula Y1 LUT3 tecla1/maquina/Y1_inferred_i_1 SLICE_X0Y5 SLICEL.C6LUT
-celula Y0 LUT3 tecla1/maquina/Y0_inferred_i_1 SLICE_X0Y5 SLICEL.A5LUT
-celula YY2 LUT3 tecla1/maquina/YY2_inferred_i_1 SLICE_X0Y5 SLICEL.D6LUT
-celula YY1 LUT3 tecla1/maquina/YY1_inferred_i_1 SLICE_X0Y5 SLICEL.B5LUT
-celula YY0 LUT3 tecla1/maquina/YY0_inferred_i_1 SLICE_X0Y5 SLICEL.B6LUT
-net To -> tecla1/maquina/Y1_inferred_i_1/I0 (LUT3) fast_min=296 fast_max=357 slow_min=679 slow_max=826
-net To -> tecla1/maquina/Y2_inferred_i_1/I0 (LUT3) fast_min=296 fast_max=357 slow_min=679 slow_max=826
-net To -> tecla1/temporizador/To_i_1/I0 (LUT4) fast_min=184 fast_max=219 slow_min=431 slow_max=521
-net Y2 -> tecla1/maquina/YY2_inferred_i_1/I0 (LUT3) fast_min=242 fast_max=287 slow_min=581 slow_max=698
-net Y1 -> tecla1/maquina/YY1_inferred_i_1/I0 (LUT3) fast_min=155 fast_max=183 slow_min=359 slow_max=430
-net Y0 -> tecla1/maquina/YY0_inferred_i_1/I0 (LUT3) fast_min=559 fast_max=647 slow_min=1121 slow_max=1332
-net YY2 -> LedEstado_OBUF[2]_inst/I (OBUF) fast_min=452 fast_max=734 slow_min=1668 slow_max=1944
-net YY2 -> tecla1/maquina/Ti_inferred_i_1/I0 (LUT4) fast_min=233 fast_max=278 slow_min=543 slow_max=656
-net YY2 -> tecla1/maquina/Y0_inferred_i_1/I1 (LUT3) fast_min=233 fast_max=278 slow_min=543 slow_max=656
-net YY2 -> tecla1/maquina/Y2_inferred_i_1/I2 (LUT3) fast_min=352 fast_max=423 slow_min=827 slow_max=1003
-net YY1 -> LedEstado_OBUF[1]_inst/I (OBUF) fast_min=483 fast_max=771 slow_min=1752 slow_max=2043
-net YY1 -> tecla1/maquina/Y1_inferred_i_1/I1 (LUT3) fast_min=189 fast_max=224 slow_min=425 slow_max=511
-net YY1 -> tecla1/maquina/Y2_inferred_i_1/I1 (LUT3) fast_min=189 fast_max=224 slow_min=425 slow_max=511
-net YY0 -> LedEstado_OBUF[0]_inst/I (OBUF) fast_min=596 fast_max=891 slow_min=1959 slow_max=2274
-net YY0 -> LedKd_OBUF[0]_inst/I (OBUF) fast_min=355 fast_max=611 slow_min=1482 slow_max=1709
-net YY0 -> validacao/M/I0 (LUT3) fast_min=1127 fast_max=1290 slow_min=2172 slow_max=2554
-net YY0 -> validacao/U/I2 (LUT3) fast_min=1127 fast_max=1290 slow_min=2172 slow_max=2554
-net YY0 -> tecla1/maquina/Entrada_inferred_i_1__0/I0 (LUT3) fast_min=843 fast_max=962 slow_min=1634 slow_max=1919
-net YY0 -> tecla1/maquina/Y0_inferred_i_1/I0 (LUT3) fast_min=169 fast_max=199 slow_min=388 slow_max=467
-net YY0 -> tecla1/maquina/Y1_inferred_i_1/I2 (LUT3) fast_min=280 fast_max=329 slow_min=657 slow_max=789
+celula Y2 LUT3 tecla1/maquina/Y2_inferred_i_1 SLICE_X1Y6 SLICEL.C5LUT
+celula Y1 LUT3 tecla1/maquina/Y1_inferred_i_1 SLICE_X1Y6 SLICEL.C6LUT
+celula Y0 LUT3 tecla1/maquina/Y0_inferred_i_1 SLICE_X1Y6 SLICEL.A5LUT
+celula YY2 LUT3 tecla1/maquina/YY2_inferred_i_1 SLICE_X1Y6 SLICEL.D6LUT
+celula YY1 LUT3 tecla1/maquina/YY1_inferred_i_1 SLICE_X1Y6 SLICEL.B5LUT
+celula YY0 LUT3 tecla1/maquina/YY0_inferred_i_1 SLICE_X1Y6 SLICEL.B6LUT
+net To -> tecla1/maquina/Y1_inferred_i_1/I0 (LUT3) fast_min=246 fast_max=294 slow_min=607 slow_max=732
+net To -> tecla1/maquina/Y2_inferred_i_1/I0 (LUT3) fast_min=246 fast_max=294 slow_min=607 slow_max=732
+net To -> tecla1/temporizador/To_i_1/I3 (LUT6) fast_min=175 fast_max=211 slow_min=437 slow_max=533
+net Y2 -> tecla1/maquina/YY2_inferred_i_1/I0 (LUT3) fast_min=204 fast_max=248 slow_min=502 slow_max=609
+net Y1 -> tecla1/maquina/YY1_inferred_i_1/I0 (LUT3) fast_min=143 fast_max=171 slow_min=376 slow_max=454
+net Y0 -> tecla1/maquina/YY0_inferred_i_1/I0 (LUT3) fast_min=280 fast_max=342 slow_min=698 slow_max=853
+net YY2 -> LedEstado_OBUF[2]_inst/I (OBUF) fast_min=438 fast_max=714 slow_min=1627 slow_max=1888
+net YY2 -> tecla1/maquina/Ti_inferred_i_1/I0 (LUT4) fast_min=161 fast_max=189 slow_min=358 slow_max=426
+net YY2 -> tecla1/maquina/Y0_inferred_i_1/I1 (LUT3) fast_min=161 fast_max=189 slow_min=358 slow_max=426
+net YY2 -> tecla1/maquina/Y2_inferred_i_1/I2 (LUT3) fast_min=301 fast_max=362 slow_min=684 slow_max=831
+net YY1 -> LedEstado_OBUF[1]_inst/I (OBUF) fast_min=484 fast_max=772 slow_min=1748 slow_max=2039
+net YY1 -> tecla1/maquina/Y1_inferred_i_1/I1 (LUT3) fast_min=168 fast_max=203 slow_min=404 slow_max=490
+net YY1 -> tecla1/maquina/Y2_inferred_i_1/I1 (LUT3) fast_min=168 fast_max=203 slow_min=404 slow_max=490
+net YY0 -> LedEstado_OBUF[0]_inst/I (OBUF) fast_min=499 fast_max=778 slow_min=1704 slow_max=1972
+net YY0 -> LedKd_OBUF[0]_inst/I (OBUF) fast_min=395 fast_max=658 slow_min=1515 slow_max=1750
+net YY0 -> validacao/M/I0 (LUT3) fast_min=724 fast_max=840 slow_min=1483 slow_max=1760
+net YY0 -> validacao/U/I2 (LUT3) fast_min=724 fast_max=840 slow_min=1483 slow_max=1760
+net YY0 -> tecla1/maquina/Entrada_inferred_i_1__0/I0 (LUT3) fast_min=584 fast_max=676 slow_min=1202 slow_max=1425
+net YY0 -> tecla1/maquina/Y0_inferred_i_1/I0 (LUT3) fast_min=321 fast_max=382 slow_min=739 slow_max=894
+net YY0 -> tecla1/maquina/Y1_inferred_i_1/I2 (LUT3) fast_min=251 fast_max=296 slow_min=563 slow_max=678
 == tecla2
-celula Y2 LUT3 tecla2/maquina/Y2_inferred_i_1__0 SLICE_X1Y21 SLICEL.A6LUT
-celula Y1 LUT3 tecla2/maquina/Y1_inferred_i_1__0 SLICE_X0Y21 SLICEL.A5LUT
-celula Y0 LUT3 tecla2/maquina/Y0_inferred_i_1__0 SLICE_X2Y21 SLICEM.C5LUT
-celula YY2 LUT3 tecla2/maquina/YY2_inferred_i_1__0 SLICE_X2Y21 SLICEM.D5LUT
-celula YY1 LUT3 tecla2/maquina/YY1_inferred_i_1__0 SLICE_X0Y21 SLICEL.B6LUT
-celula YY0 LUT3 tecla2/maquina/YY0_inferred_i_1__0 SLICE_X2Y21 SLICEM.D6LUT
-net To -> tecla2/maquina/Y1_inferred_i_1__0/I0 (LUT3) fast_min=291 fast_max=344 slow_min=670 slow_max=804
-net To -> tecla2/maquina/Y2_inferred_i_1__0/I0 (LUT3) fast_min=222 fast_max=265 slow_min=549 slow_max=663
-net To -> tecla2/temporizador/To_i_1__0/I0 (LUT4) fast_min=180 fast_max=215 slow_min=427 slow_max=517
-net Y2 -> tecla2/maquina/YY2_inferred_i_1__0/I0 (LUT3) fast_min=257 fast_max=347 slow_min=616 slow_max=870
-net Y1 -> tecla2/maquina/YY1_inferred_i_1__0/I0 (LUT3) fast_min=122 fast_max=147 slow_min=300 slow_max=363
-net Y0 -> tecla2/maquina/YY0_inferred_i_1__0/I0 (LUT3) fast_min=265 fast_max=372 slow_min=600 slow_max=899
-net YY2 -> LedEstado_OBUF[5]_inst/I (OBUF) fast_min=1629 fast_max=2042 slow_min=3650 slow_max=4221
-net YY2 -> tecla2/maquina/Ti_inferred_i_1__0/I0 (LUT4) fast_min=266 fast_max=312 slow_min=581 slow_max=697
-net YY2 -> tecla2/maquina/Y0_inferred_i_1__0/I1 (LUT3) fast_min=407 fast_max=486 slow_min=929 slow_max=1127
-net YY2 -> tecla2/maquina/Y2_inferred_i_1__0/I2 (LUT3) fast_min=251 fast_max=295 slow_min=565 slow_max=676
-net YY1 -> LedEstado_OBUF[4]_inst/I (OBUF) fast_min=622 fast_max=926 slow_min=1997 slow_max=2325
-net YY1 -> tecla2/maquina/Y1_inferred_i_1__0/I1 (LUT3) fast_min=170 fast_max=200 slow_min=389 slow_max=468
-net YY1 -> tecla2/maquina/Y2_inferred_i_1__0/I1 (LUT3) fast_min=136 fast_max=155 slow_min=312 slow_max=368
-net YY0 -> LedEstado_OBUF[3]_inst/I (OBUF) fast_min=691 fast_max=1006 slow_min=2153 slow_max=2509
-net YY0 -> LedKd_OBUF[1]_inst/I (OBUF) fast_min=763 fast_max=1074 slow_min=2214 slow_max=2564
-net YY0 -> validacao/U/I1 (LUT3) fast_min=709 fast_max=787 slow_min=1234 slow_max=1420
-net YY0 -> validacao/M/I2 (LUT3) fast_min=709 fast_max=787 slow_min=1234 slow_max=1420
-net YY0 -> tecla1/maquina/Entrada_inferred_i_1__0/I1 (LUT3) fast_min=174 fast_max=200 slow_min=388 slow_max=457
-net YY0 -> tecla2/maquina/Y0_inferred_i_1__0/I0 (LUT3) fast_min=101 fast_max=120 slow_min=244 slow_max=294
-net YY0 -> tecla2/maquina/Y1_inferred_i_1__0/I2 (LUT3) fast_min=174 fast_max=200 slow_min=388 slow_max=457
+celula Y2 LUT3 tecla2/maquina/Y2_inferred_i_1__0 SLICE_X0Y20 SLICEL.B5LUT
+celula Y1 LUT3 tecla2/maquina/Y1_inferred_i_1__0 SLICE_X0Y20 SLICEL.B6LUT
+celula Y0 LUT3 tecla2/maquina/Y0_inferred_i_1__0 SLICE_X0Y19 SLICEL.A5LUT
+celula YY2 LUT3 tecla2/maquina/YY2_inferred_i_1__0 SLICE_X0Y20 SLICEL.A5LUT
+celula YY1 LUT3 tecla2/maquina/YY1_inferred_i_1__0 SLICE_X0Y20 SLICEL.C6LUT
+celula YY0 LUT3 tecla2/maquina/YY0_inferred_i_1__0 SLICE_X0Y20 SLICEL.A6LUT
+net To -> tecla2/maquina/Y1_inferred_i_1__0/I0 (LUT3) fast_min=278 fast_max=337 slow_min=660 slow_max=803
+net To -> tecla2/maquina/Y2_inferred_i_1__0/I0 (LUT3) fast_min=278 fast_max=337 slow_min=660 slow_max=803
+net To -> tecla2/temporizador/To_i_1__0/I3 (LUT6) fast_min=168 fast_max=203 slow_min=415 slow_max=505
+net Y2 -> tecla2/maquina/YY2_inferred_i_1__0/I0 (LUT3) fast_min=305 fast_max=373 slow_min=726 slow_max=890
+net Y1 -> tecla2/maquina/YY1_inferred_i_1__0/I0 (LUT3) fast_min=58 fast_max=67 slow_min=134 slow_max=158
+net Y0 -> tecla2/maquina/YY0_inferred_i_1__0/I0 (LUT3) fast_min=338 fast_max=414 slow_min=817 slow_max=1001
+net YY2 -> LedEstado_OBUF[5]_inst/I (OBUF) fast_min=1662 fast_max=2080 slow_min=3729 slow_max=4314
+net YY2 -> tecla2/maquina/Ti_inferred_i_1__0/I0 (LUT4) fast_min=332 fast_max=397 slow_min=790 slow_max=956
+net YY2 -> tecla2/maquina/Y0_inferred_i_1__0/I1 (LUT3) fast_min=554 fast_max=661 slow_min=1237 slow_max=1494
+net YY2 -> tecla2/maquina/Y2_inferred_i_1__0/I2 (LUT3) fast_min=490 fast_max=587 slow_min=1111 slow_max=1346
+net YY1 -> LedEstado_OBUF[4]_inst/I (OBUF) fast_min=606 fast_max=910 slow_min=1970 slow_max=2295
+net YY1 -> tecla2/maquina/Y1_inferred_i_1__0/I1 (LUT3) fast_min=269 fast_max=319 slow_min=654 slow_max=787
+net YY1 -> tecla2/maquina/Y2_inferred_i_1__0/I1 (LUT3) fast_min=269 fast_max=319 slow_min=654 slow_max=787
+net YY0 -> LedEstado_OBUF[3]_inst/I (OBUF) fast_min=628 fast_max=934 slow_min=1991 slow_max=2319
+net YY0 -> LedKd_OBUF[1]_inst/I (OBUF) fast_min=864 fast_max=1196 slow_min=2439 slow_max=2836
+net YY0 -> validacao/U/I1 (LUT3) fast_min=542 fast_max=624 slow_min=1106 slow_max=1310
+net YY0 -> validacao/M/I2 (LUT3) fast_min=542 fast_max=624 slow_min=1106 slow_max=1310
+net YY0 -> tecla1/maquina/Entrada_inferred_i_1__0/I1 (LUT3) fast_min=314 fast_max=355 slow_min=615 slow_max=717
+net YY0 -> tecla2/maquina/Y0_inferred_i_1__0/I0 (LUT3) fast_min=238 fast_max=278 slow_min=520 slow_max=622
+net YY0 -> tecla2/maquina/Y1_inferred_i_1__0/I2 (LUT3) fast_min=135 fast_max=153 slow_min=270 slow_max=317
 == tecla3
-celula Y2 LUT3 tecla3/maquina/Y2_inferred_i_1__1 SLICE_X63Y25 SLICEL.B5LUT
-celula Y1 LUT3 tecla3/maquina/Y1_inferred_i_1__1 SLICE_X63Y25 SLICEL.B6LUT
-celula Y0 LUT3 tecla3/maquina/Y0_inferred_i_1__1 SLICE_X32Y23 SLICEL.A6LUT
-celula YY2 LUT3 tecla3/maquina/YY2_inferred_i_1__1 SLICE_X62Y25 SLICEL.B6LUT
-celula YY1 LUT3 tecla3/maquina/YY1_inferred_i_1__1 SLICE_X62Y25 SLICEL.A6LUT
+celula Y2 LUT3 tecla3/maquina/Y2_inferred_i_1__1 SLICE_X58Y29 SLICEL.B5LUT
+celula Y1 LUT3 tecla3/maquina/Y1_inferred_i_1__1 SLICE_X58Y29 SLICEL.B6LUT
+celula Y0 LUT3 tecla3/maquina/Y0_inferred_i_1__1 SLICE_X34Y27 SLICEM.A6LUT
+celula YY2 LUT3 tecla3/maquina/YY2_inferred_i_1__1 SLICE_X58Y29 SLICEL.C6LUT
+celula YY1 LUT3 tecla3/maquina/YY1_inferred_i_1__1 SLICE_X58Y29 SLICEL.A6LUT
 celula YY0 LUT3 tecla3/maquina/YY0_inferred_i_1__1 SLICE_X2Y22 SLICEM.A6LUT
-net To -> tecla3/maquina/Y1_inferred_i_1__1/I0 (LUT3) fast_min=285 fast_max=346 slow_min=671 slow_max=819
-net To -> tecla3/maquina/Y2_inferred_i_1__1/I0 (LUT3) fast_min=285 fast_max=346 slow_min=671 slow_max=819
-net To -> tecla3/temporizador/To_i_1__1/I0 (LUT4) fast_min=168 fast_max=203 slow_min=415 slow_max=505
-net Y2 -> tecla3/maquina/YY2_inferred_i_1__1/I0 (LUT3) fast_min=188 fast_max=224 slow_min=464 slow_max=559
-net Y1 -> tecla3/maquina/YY1_inferred_i_1__1/I0 (LUT3) fast_min=200 fast_max=228 slow_min=432 slow_max=508
-net Y0 -> tecla3/maquina/YY0_inferred_i_1__1/I0 (LUT3) fast_min=789 fast_max=903 slow_min=1577 slow_max=1858
-net YY2 -> LedEstado_OBUF[8]_inst/I (OBUF) fast_min=1131 fast_max=1513 slow_min=2941 slow_max=3439
-net YY2 -> tecla3/maquina/Ti_inferred_i_1__1/I0 (LUT4) fast_min=182 fast_max=212 slow_min=401 slow_max=480
-net YY2 -> tecla3/maquina/Y0_inferred_i_1__1/I1 (LUT3) fast_min=921 fast_max=1048 slow_min=1778 slow_max=2084
-net YY2 -> tecla3/maquina/Y2_inferred_i_1__1/I2 (LUT3) fast_min=255 fast_max=306 slow_min=569 slow_max=691
-net YY1 -> LedEstado_OBUF[7]_inst/I (OBUF) fast_min=453 fast_max=731 slow_min=1657 slow_max=1923
-net YY1 -> tecla3/maquina/Y1_inferred_i_1__1/I1 (LUT3) fast_min=170 fast_max=206 slow_min=418 slow_max=510
-net YY1 -> tecla3/maquina/Y2_inferred_i_1__1/I1 (LUT3) fast_min=170 fast_max=206 slow_min=418 slow_max=510
-net YY0 -> LedEstado_OBUF[6]_inst/I (OBUF) fast_min=1647 fast_max=2066 slow_min=3741 slow_max=4328
-net YY0 -> LedKd_OBUF[2]_inst/I (OBUF) fast_min=451 fast_max=723 slow_min=1712 slow_max=1980
-net YY0 -> validacao/U/I0 (LUT3) fast_min=569 fast_max=660 slow_min=1171 slow_max=1390
-net YY0 -> validacao/M/I1 (LUT3) fast_min=569 fast_max=660 slow_min=1171 slow_max=1390
-net YY0 -> tecla1/maquina/Entrada_inferred_i_1__0/I2 (LUT3) fast_min=307 fast_max=366 slow_min=696 slow_max=841
-net YY0 -> tecla3/maquina/Y0_inferred_i_1__1/I0 (LUT3) fast_min=711 fast_max=804 slow_min=1309 slow_max=1528
-net YY0 -> tecla3/maquina/Y1_inferred_i_1__1/I2 (LUT3) fast_min=1102 fast_max=1231 slow_min=1976 slow_max=2283
+net To -> tecla3/maquina/Y1_inferred_i_1__1/I0 (LUT3) fast_min=253 fast_max=299 slow_min=606 slow_max=726
+net To -> tecla3/maquina/Y2_inferred_i_1__1/I0 (LUT3) fast_min=253 fast_max=299 slow_min=606 slow_max=726
+net To -> tecla3/temporizador/To_i_1__1/I3 (LUT6) fast_min=168 fast_max=203 slow_min=415 slow_max=505
+net Y2 -> tecla3/maquina/YY2_inferred_i_1__1/I0 (LUT3) fast_min=173 fast_max=208 slow_min=409 slow_max=495
+net Y1 -> tecla3/maquina/YY1_inferred_i_1__1/I0 (LUT3) fast_min=145 fast_max=175 slow_min=364 slow_max=443
+net Y0 -> tecla3/maquina/YY0_inferred_i_1__1/I0 (LUT3) fast_min=869 fast_max=984 slow_min=1633 slow_max=1908
+net YY2 -> LedEstado_OBUF[8]_inst/I (OBUF) fast_min=1084 fast_max=1468 slow_min=2960 slow_max=3468
+net YY2 -> tecla3/maquina/Ti_inferred_i_1__1/I0 (LUT4) fast_min=178 fast_max=206 slow_min=381 slow_max=450
+net YY2 -> tecla3/maquina/Y0_inferred_i_1__1/I1 (LUT3) fast_min=610 fast_max=717 slow_min=1278 slow_max=1529
+net YY2 -> tecla3/maquina/Y2_inferred_i_1__1/I2 (LUT3) fast_min=365 fast_max=436 slow_min=846 slow_max=1023
+net YY1 -> LedEstado_OBUF[7]_inst/I (OBUF) fast_min=431 fast_max=708 slow_min=1631 slow_max=1895
+net YY1 -> tecla3/maquina/Y1_inferred_i_1__1/I1 (LUT3) fast_min=110 fast_max=128 slow_min=245 slow_max=292
+net YY1 -> tecla3/maquina/Y2_inferred_i_1__1/I1 (LUT3) fast_min=110 fast_max=128 slow_min=245 slow_max=292
+net YY0 -> LedEstado_OBUF[6]_inst/I (OBUF) fast_min=1557 fast_max=1961 slow_min=3642 slow_max=4211
+net YY0 -> LedKd_OBUF[2]_inst/I (OBUF) fast_min=395 fast_max=664 slow_min=1580 slow_max=1833
+net YY0 -> validacao/U/I0 (LUT3) fast_min=375 fast_max=432 slow_min=743 slow_max=876
+net YY0 -> validacao/M/I1 (LUT3) fast_min=375 fast_max=432 slow_min=743 slow_max=876
+net YY0 -> tecla1/maquina/Entrada_inferred_i_1__0/I2 (LUT3) fast_min=369 fast_max=429 slow_min=778 slow_max=928
+net YY0 -> tecla3/maquina/Y0_inferred_i_1__1/I0 (LUT3) fast_min=786 fast_max=881 slow_min=1432 slow_max=1664
+net YY0 -> tecla3/maquina/Y1_inferred_i_1__1/I2 (LUT3) fast_min=1188 fast_max=1334 slow_min=2171 slow_max=2522

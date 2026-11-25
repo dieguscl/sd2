@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2026.1 (lin64) Build 6511674 Tue Jun 16 11:01:26 MDT 2026
-| Date         : Wed Nov 18 06:32:32 2026
+| Date         : Wed Nov 25 11:27:52 2026
 | Host         : diegus running 64-bit Linux Mint 22.2
 | Command      : report_methodology -file /home/diegus/Documents/uni/sd2/lab3/bitstreams/relatorios/gestaoteclas_metodologia.txt
 | Design       : GestaoTeclas

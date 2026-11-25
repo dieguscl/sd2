@@ -9,7 +9,7 @@
 //   - circuito auxiliar de ensaio: conta os flancos das teclas antes e depois da eliminação dos
 //     ressaltos e mostra as duas contagens nos displays (sistema do 1.º trabalho).
 module GestaoTeclas #(
-    parameter T = 1000000,          // impulso do temporizador: 10 ms a 100 MHz
+    parameter T = 100000000,        // impulso do temporizador: 1 s a 100 MHz (versão de demonstração; o relatório usa 10 ms = 1000000)
     parameter METADE = 25000        // varrimento dos displays: 100 MHz / (2 x 25000) = 2 kHz
     )(
     input CLKBasys,

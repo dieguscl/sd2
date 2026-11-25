@@ -10,7 +10,7 @@
 // estados não o interrompe (secção 2.1 do enunciado).
 module Monoestavel #(
     parameter T = 1000000,          // duração do impulso em ciclos: 10 ms a 100 MHz
-    parameter N = 20                // bits do contador (2^20 > 1000000)
+    parameter N = $clog2(T) + 1     // bits do contador, calculados a partir de T (20 bits só chegam a ~10,5 ms)
     )(
     input Clock,
     input Ti,
